@@ -1,0 +1,3 @@
+[submodule "fonts/cascadia-code"]
+	path = fonts/cascadia-code
+	url = https://github.com/microsoft/cascadia-code.git
