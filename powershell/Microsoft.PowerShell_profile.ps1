@@ -2,15 +2,16 @@
 Set-Alias touch New-Item
 Set-Alias g git
 Set-Alias gg gitui
-Set-Alias lg lazygit
 Set-Alias vim nvim
+Set-Alias code vscodium
 
 # Prompt
 oh-my-posh init pwsh --config C:\code\config\PowerShell\ahmetcetinkaya.omp.json | Invoke-Expression
+# oh-my-posh disable notice # Disable available update notice
 
 # Posh Git
-$env:POSH_GIT_ENABLED = $true
-Import-Module posh-git
+#$env:POSH_GIT_ENABLED = $true
+#Import-Module posh-git
 
 # PSReadLine 
 Set-PSReadLineOption -PredictionSource HistoryAndPlugin
@@ -31,9 +32,9 @@ Register-ArgumentCompleter -Native -CommandName winget -ScriptBlock {
 }
 
 # PSFzf
-Import-Module PSFzf 
-Set-PsFzfOption -PSReadlineChordProvider 'Ctrl+f' -PSReadlineChordReverseHistory 'Ctrl+r'
-Import-Module posh-git
+#Import-Module PSFzf 
+#Set-PsFzfOption -PSReadlineChordProvider 'Ctrl+f' -PSReadlineChordReverseHistory 'Ctrl+r'
+#Import-Module posh-git
 
 
 # Utilities
