@@ -1,9 +1,10 @@
 # Aliases
 Set-Alias touch New-Item
+Set-Alias cp copy
 Set-Alias g git
 Set-Alias gg gitui
 Set-Alias vim nvim
-Set-Alias code vscodium
+Set-Alias codi codium
 
 # Prompt
 oh-my-posh init pwsh --config C:\code\config\PowerShell\ahmetcetinkaya.omp.json | Invoke-Expression
