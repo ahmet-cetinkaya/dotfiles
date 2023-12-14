@@ -1,10 +1,10 @@
 # Aliases
 Set-Alias touch New-Item
-Set-Alias cp copy
 Set-Alias g git
 Set-Alias gg gitui
 Set-Alias vim nvim
 Set-Alias codi codium
+Set-Alias exp explorer
 
 # Prompt
 oh-my-posh init pwsh --config C:\code\config\PowerShell\ahmetcetinkaya.omp.json | Invoke-Expression
@@ -47,7 +47,7 @@ function pubip {
 }
 function del-history($command) {
     $history = Get-History
-    $commandEntries = $history | Where-Object { $_.CommandLine -match $Command }
+    $commandEntries = $history | Where-Object { $_.CommandLine -match $command }
     if ($commandEntries.Count -eq 0) {
         Write-Host "No matching commands found."
         return
@@ -56,4 +56,11 @@ function del-history($command) {
         Clear-History -Id $entry.Id
         Write-Host "Command deleted: $($entry.CommandLine)"
     }
+}
+function mklink {
+    param(
+        [string]$source,
+        [string]$destination
+    )
+    New-Item -ItemType SymbolicLink -Path $source -Target $destination
 }
