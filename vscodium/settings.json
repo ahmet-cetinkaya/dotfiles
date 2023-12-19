@@ -1,0 +1,144 @@
+{
+  "workbench.settings.applyToAllProfiles": [
+    "editor.fontFamily",
+    "editor.showFoldingControls",
+    "editor.minimap.showSlider",
+    "editor.scrollbar.horizontal",
+    "editor.fontLigatures",
+    "editor.inlineSuggest.enabled",
+    "workbench.tree.renderIndentGuides",
+    "workbench.colorTheme",
+    "workbench.iconTheme",
+    "workbench.colorCustomizations",
+    "explorer.fileNesting.enabled",
+    "explorer.fileNesting.patterns",
+    "terminal.integrated.cursorStyle",
+    "terminal.integrated.fontFamily",
+    "git.autofetch",
+    "editor.guides.indentation",
+    "indentRainbow.indicatorStyle",
+    "indentRainbow.lightIndicatorStyleLineWidth",
+    "indentRainbow.colors",
+    "peacock.affectActivityBar",
+    "peacock.affectTitleBar",
+    "peacock.surpriseMeOnStartup",
+    "better-comments.multilineComments",
+    "better-comments.tags",
+    "github.copilot.enable",
+    "errorLens.enabledDiagnosticLevels",
+    "inline-parameters.borderRadius",
+    "inline-parameters.fontSize",
+    "inline-parameters.fontStyle",
+    "inline-parameters.fontWeight",
+    "extensions.experimental.affinity",
+    "[jsonc]",
+    "editor.defaultFormatter"
+  ],
+
+  "editor.fontFamily": "'CascaydiaCove NF', 'Cascadia Code', Consolas",
+  "editor.showFoldingControls": "always",
+  "editor.minimap.showSlider": "always",
+  "editor.scrollbar.horizontal": "visible",
+  "editor.fontLigatures": true,
+  "editor.inlineSuggest.enabled": true,
+
+  "workbench.tree.renderIndentGuides": "always",
+  "workbench.colorCustomizations": {
+    "editorLineNumber.foreground": "#f5d34b"
+  },
+  "workbench.iconTheme": "material-icon-theme",
+
+  "explorer.fileNesting.enabled": true,
+  "explorer.fileNesting.patterns": {},
+
+  "terminal.integrated.cursorStyle": "line",
+  "terminal.integrated.fontFamily": "CaskaydiaCove NF",
+
+  "git.autofetch": true,
+
+  "[jsonc]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+
+  "editor.guides.indentation": false,
+  "indentRainbow.indicatorStyle": "light",
+  "indentRainbow.lightIndicatorStyleLineWidth": 4,
+  "indentRainbow.colors": [
+    "rgba(255,255,64,0.07)",
+    "rgba(255,127,255,0.07)",
+    "rgba(79,236,236,0.07)"
+  ],
+
+  "peacock.affectActivityBar": false,
+  "peacock.affectTitleBar": false,
+  "peacock.surpriseMeOnStartup": true,
+
+  "better-comments.multilineComments": true,
+  "better-comments.tags": [
+    {
+      "tag": "TODO", //TODO
+      "backgroundColor": "#13522f",
+      "color": "#1f5980",
+      "strikethrough": false
+    },
+    {
+      "tag": "*", //* Warning
+      "backgroundColor": "transparent",
+      "color": "#666600",
+      "strikethrough": false
+    },
+    {
+      "tag": "!", //! Important
+      "backgroundColor": "transparent",
+      "color": "#b32100",
+      "strikethrough": false
+    },
+    {
+      "tag": ":", //: Info
+      "backgroundColor": "transparent",
+      "color": "#7291a6",
+      "strikethrough": false
+    },
+    {
+      "tag": "=", //= Result
+      "backgroundColor": "transparent",
+      "color": "#1f5980",
+      "strikethrough": false
+    },
+    {
+      "tag": "//", //// Comment in comment
+      "backgroundColor": "transparent",
+      "color": "#13522f",
+      "strikethrough": false
+    },
+    {
+      "tag": "#", //# Title
+      "backgroundColor": "#f034341a",
+      "strikethrough": false
+    },
+    {
+      "tag": "-", //- Deleted
+      "backgroundColor": "transparent",
+      "color": "#474747",
+      "strikethrough": true
+    }
+  ],
+
+  "github.copilot.enable": {
+    "*": true,
+    "plaintext": true,
+    "markdown": false,
+    "scminput": false
+  },
+
+  "errorLens.enabledDiagnosticLevels": ["error", "warning"],
+
+  "inline-parameters.borderRadius": "2em",
+  "inline-parameters.fontSize": "0.6em",
+  "inline-parameters.fontStyle": "normal",
+  "inline-parameters.fontWeight": "100",
+
+  "extensions.experimental.affinity": {
+    "asvetliakov.vscode-neovim": 1
+  }
+}
