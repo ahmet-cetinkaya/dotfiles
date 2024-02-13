@@ -1,0 +1,50 @@
+{
+  "id": "24471dbb-f42c-4372-9085-7c908136c21a",
+  "name": "My Visual Studio extensions",
+  "description": "A collection of my Visual Studio extensions",
+  "version": "1.0",
+  "extensions": [
+    {
+      "name": "CSharpier",
+      "vsixId": "83d6b6a0-9e25-4034-80f3-38445d8a8837",
+      "moreInfoUrl": "https://marketplace.visualstudio.com/items?itemName=csharpier.CSharpier",
+      "downloadUrl": "https://csharpier.gallery.vsassets.io:443/_apis/public/gallery/publisher/csharpier/extension/CSharpier/1.5.1/assetbyname/Microsoft.VisualStudio.Ide.Payload?redirect=true&update=true"
+    },
+    {
+      "name": "Extension Manager 2022",
+      "vsixId": "3d183c28-64c6-4efb-a201-50310d65e675",
+      "moreInfoUrl": "https://marketplace.visualstudio.com/items?itemName=Loop8ack.ExtensionManager2022",
+      "downloadUrl": "https://loop8ack.gallery.vsassets.io:443/_apis/public/gallery/publisher/Loop8ack/extension/ExtensionManager2022/1.2.180/assetbyname/Microsoft.VisualStudio.Ide.Payload?redirect=true&update=true"
+    },
+    {
+      "name": "File Icons",
+      "vsixId": "3a7b4930-a5fb-46ec-a9b8-9610c8f953b8",
+      "moreInfoUrl": "https://marketplace.visualstudio.com/items?itemName=MadsKristensen.FileIcons",
+      "downloadUrl": "https://madskristensen.gallery.vsassets.io:443/_apis/public/gallery/publisher/MadsKristensen/extension/FileIcons/2.8.239/assetbyname/Microsoft.VisualStudio.Ide.Payload?redirect=true&update=true"
+    },
+    {
+      "name": "GitHub Copilot",
+      "vsixId": "GitHub.Copilot",
+      "moreInfoUrl": "https://marketplace.visualstudio.com/items?itemName=GitHub.copilotvs",
+      "downloadUrl": "https://github.gallery.vsassets.io:443/_apis/public/gallery/publisher/GitHub/extension/copilotvs/1.139.0.0/assetbyname/Microsoft.VisualStudio.Ide.Payload?redirect=true&update=true"
+    },
+    {
+      "name": "Open in Visual Studio Code",
+      "vsixId": "e99dde0e-e023-410d-bc5d-3f76db71e3f0",
+      "moreInfoUrl": "https://marketplace.visualstudio.com/items?itemName=MadsKristensen.OpeninVisualStudioCode",
+      "downloadUrl": "https://madskristensen.gallery.vsassets.io:443/_apis/public/gallery/publisher/MadsKristensen/extension/OpeninVisualStudioCode/1.4.58/assetbyname/Microsoft.VisualStudio.Ide.Payload?redirect=true&update=true"
+    },
+    {
+      "name": "Output enhancer",
+      "vsixId": "VSOutputEnhancer.Nikolay Balakin.a06be4c3-f97e-425c-8a0d-bdef08ac2abb",
+      "moreInfoUrl": "https://marketplace.visualstudio.com/items?itemName=NikolayBalakin.Outputenhancer",
+      "downloadUrl": "https://nikolaybalakin.gallery.vsassets.io:443/_apis/public/gallery/publisher/NikolayBalakin/extension/Outputenhancer/1.8/assetbyname/Microsoft.VisualStudio.Ide.Payload?redirect=true&update=true"
+    },
+    {
+      "name": "VsVim 2022",
+      "vsixId": "VsVim.Microsoft.e97cd707-324b-4e35-a669-eef8dae4b8cf",
+      "moreInfoUrl": "https://marketplace.visualstudio.com/items?itemName=JaredParMSFT.VsVim2022Preview",
+      "downloadUrl": "https://jaredparmsft.gallery.vsassets.io:443/_apis/public/gallery/publisher/JaredParMSFT/extension/VsVim2022Preview/2.10.0.6/assetbyname/Microsoft.VisualStudio.Ide.Payload?redirect=true&update=true"
+    }
+  ]
+}
