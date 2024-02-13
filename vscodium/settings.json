@@ -31,11 +31,17 @@
     "inline-parameters.fontStyle",
     "inline-parameters.fontWeight",
     "extensions.experimental.affinity",
+    "[json]",
     "[jsonc]",
-    "editor.defaultFormatter"
+    "editor.defaultFormatter",
+    "vscode-neovim.completionDelay",
+    "vscode-neovim.ctrlKeysForInsertMode",
+    "vscode-neovim.ctrlKeysForNormalMode",
+    "explorer.compactFolders",
+    "workbench.startupEditor"
   ],
 
-  "editor.fontFamily": "'CascaydiaCove NF', 'Cascadia Code', Consolas",
+  "editor.fontFamily": "'Cascadia Code', Consolas",
   "editor.showFoldingControls": "always",
   "editor.minimap.showSlider": "always",
   "editor.scrollbar.horizontal": "visible",
@@ -44,21 +50,21 @@
 
   "workbench.tree.renderIndentGuides": "always",
   "workbench.colorCustomizations": {
-    "editorLineNumber.foreground": "#f5d34b"
+    "editorLineNumber.foreground": "#f5d34b",
+    "statusBar.background": "#372a6c",
+    "statusBar.foreground": "#fff"
   },
   "workbench.iconTheme": "material-icon-theme",
+  "workbench.startupEditor": "none",
 
   "explorer.fileNesting.enabled": true,
   "explorer.fileNesting.patterns": {},
+  "explorer.compactFolders": false,
 
   "terminal.integrated.cursorStyle": "line",
-  "terminal.integrated.fontFamily": "CaskaydiaCove NF",
+  "terminal.integrated.fontFamily": "'CaskaydiaCove NF Mono'",
 
   "git.autofetch": true,
-
-  "[jsonc]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
-  },
 
   "editor.guides.indentation": false,
   "indentRainbow.indicatorStyle": "light",
@@ -68,10 +74,6 @@
     "rgba(255,127,255,0.07)",
     "rgba(79,236,236,0.07)"
   ],
-
-  "peacock.affectActivityBar": false,
-  "peacock.affectTitleBar": false,
-  "peacock.surpriseMeOnStartup": true,
 
   "better-comments.multilineComments": true,
   "better-comments.tags": [
@@ -140,5 +142,52 @@
 
   "extensions.experimental.affinity": {
     "asvetliakov.vscode-neovim": 1
-  }
+  },
+  "vscode-neovim.completionDelay": 1000,
+  "vscode-neovim.ctrlKeysForInsertMode": ["t"],
+  "vscode-neovim.ctrlKeysForNormalMode": [
+    "a",
+    "b",
+    "d",
+    "e",
+    "i",
+    "j",
+    "k",
+    "l",
+    "o",
+    "r",
+    "t",
+    "u",
+    "y",
+    "/",
+    "]",
+    "right",
+    "left",
+    "up",
+    "down",
+    "backspace",
+    "delete"
+  ],
+
+  "[json]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[jsonc]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[typescript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[typescriptreact]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[css]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[javascript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[html]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
 }
