@@ -38,7 +38,12 @@
     "vscode-neovim.ctrlKeysForInsertMode",
     "vscode-neovim.ctrlKeysForNormalMode",
     "explorer.compactFolders",
-    "workbench.startupEditor"
+    "workbench.startupEditor",
+    "files.eol",
+    "prettier.endOfLine",
+    "tabby.api.endpoint",
+    "tabby.inlineCompletion.triggerMode",
+    "tabby.usage.anonymousUsageTracking"
   ],
 
   "editor.fontFamily": "'Cascadia Code', Consolas",
@@ -190,4 +195,13 @@
   "[html]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
+  "[scss]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[yaml]": {
+    "editor.defaultFormatter": "redhat.vscode-yaml"
+  },
+  "files.eol": "\n",
+  "tabby.api.endpoint": "http://192.168.0.9:6001",
+  "tabby.usage.anonymousUsageTracking": true,
 }
