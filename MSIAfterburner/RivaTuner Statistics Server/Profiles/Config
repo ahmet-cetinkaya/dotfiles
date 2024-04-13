@@ -57,8 +57,8 @@ Version=00000009
 [Settings]
 LastUpdateCheck=6616F1FBh
 Skin=default.usf
-WindowX=1474
-WindowY=264
+WindowX=864
+WindowY=302
 FirstRun=0
 StartMinimized=1
 StartWithWindows=0
@@ -72,7 +72,12 @@ Language=
 LayeredWindowMode=1
 LayeredWindowAlpha=244
 ScaleFactor=100
+PreviewWindowX=959
+PreviewWindowY=764
+PreviewWindowW=476
+PreviewWindowH=329
 [Shared]
 Flags=00000001
 [Plugins]
 OverlayEditor.dll=1
+HotkeyHandler.dll=1
