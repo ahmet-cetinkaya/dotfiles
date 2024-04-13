@@ -3,7 +3,7 @@ Set-Alias touch New-Item
 Set-Alias g git
 Set-Alias gg gitui
 Set-Alias vim nvim
-Set-Alias codi codium
+Set-Alias code codium
 Set-Alias exp explorer
 
 # Prompt
@@ -63,4 +63,42 @@ function mklink {
         [string]$destination
     )
     New-Item -ItemType SymbolicLink -Path $source -Target $destination
+}
+function dotnet-tools-update {
+    param (
+        [switch]$global
+    )
+
+    try {
+        # List dotnet tools
+        if ($global) {
+            $tools = dotnet tool list --global | Select-String "^\S+" | ForEach-Object { $_.Matches[0].Value }
+        } else {
+            $tools = dotnet tool list | Select-String "^\S+" | ForEach-Object { $_.Matches[0].Value }
+        }
+
+        if ($tools) {
+            Write-Host "Updating..."
+            foreach ($tool in $tools) {
+                # Update dotnet tools
+                try {
+                    if ($global) {
+                        dotnet tool update -g $tool -v diag
+                    } else {
+                        dotnet tool update $tool -v diag
+                    }
+                }
+                catch {
+                    Write-Host "Failed to update $($tool): $_"
+                }
+            }
+            Write-Host "Update completed."
+        }
+        else {
+            Write-Host "No dotnet tools to update found."
+        }
+    }
+    catch {
+        Write-Host "An error occurred: $_"
+    }
 }
