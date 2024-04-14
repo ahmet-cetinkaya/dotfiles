@@ -14,6 +14,7 @@
 
 # General Tools
 - [Terminal Tools](https://github.com/ahmet-cetinkaya/dotfiles-public/blob/main/powershell/README.md)
+  - [Winfetch AtlasOS configration](https://github.com/ahmet-cetinkaya/dotfiles-public/blob/main/atlas-os/winfetch)
 - [Powertoys](https://github.com/microsoft/PowerToys)
 - [simplewall](https://github.com/henrypp/simplewall)
 - [Traymond](https://github.com/fcFn/traymond)
