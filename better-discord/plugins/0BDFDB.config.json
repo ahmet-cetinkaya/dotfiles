@@ -1,0 +1,23 @@
+{
+	"all": {
+		"changeLogs": {
+			"BDFDB": "3.6.4",
+			"ReadAllNotificationsButton": "1.7.6",
+			"SpellCheck": "1.6.9",
+			"SplitLargeMessages": "1.8.2"
+		},
+		"choices": {
+			"toastPosition": "right"
+		},
+		"general": {
+			"shareData": true,
+			"showToasts": true,
+			"showSupportBadges": false,
+			"useChromium": false
+		},
+		"hashes": {
+			"0BDFDB.data.json": "b61f37ee408c593dad8a89ca0875ce61af1627dd",
+			"0BDFDB.raw.css": "a0d78e91c26de487f794582adc781e60d32b2445"
+		}
+	}
+}

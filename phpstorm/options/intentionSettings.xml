@@ -1,9 +1,0 @@
-<application>
-  <component name="IntentionManagerSettings">
-    <ignoreAction name="PHP/Convert array to traditional syntax" />
-    <ignoreAction name="PHP/Generate PHPDoc" />
-    <ignoreAction name="PHP/Add @property" />
-    <ignoreAction name="PHP/Add PHPDoc comment" />
-    <ignoreAction name="PHP/Inject language using PHPDoc" />
-  </component>
-</application>

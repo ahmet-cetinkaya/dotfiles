@@ -6,13 +6,16 @@ Set-Alias vim nvim
 Set-Alias code codium
 Set-Alias exp explorer
 
-# Prompt
-oh-my-posh init pwsh --config C:\code\config\PowerShell\ahmetcetinkaya.omp.json | Invoke-Expression
-# oh-my-posh disable notice # Disable available update notice
+# Starship
+$env:STARSHIP_CONFIG = "C:\Users\ahmetcetinkaya\Configs\starship\starship.toml"
+Invoke-Expression (&starship init powershell)
 
+# Oh My Posh
+# oh-my-posh init pwsh --config C:\code\config\PowerShell\ahmetcetinkaya.omp.json | Invoke-Expression
+# oh-my-posh disable notice # Disable available update notice
 # Posh Git
-#$env:POSH_GIT_ENABLED = $true
-#Import-Module posh-git
+# $env:POSH_GIT_ENABLED = $true
+# Import-Module posh-git
 
 # PSReadLine 
 Set-PSReadLineOption -PredictionSource HistoryAndPlugin
@@ -20,8 +23,11 @@ Set-PSReadLineOption -PredictionViewStyle ListView
 Set-PSReadLineOption -BellStyle None
 Set-PSReadlineKeyHandler -Key 'Ctrl+Spacebar' -Function MenuComplete
 
+# PSFzf
+#Import-Module PSFzf
+#Set-PsFzfOption -PSReadlineChordProvider 'Ctrl+t' #-PSReadlineChordReverseHistory 'Ctrl+r'
+
 # Winget
-## Completion
 Register-ArgumentCompleter -Native -CommandName winget -ScriptBlock {
     param($wordToComplete, $commandAst, $cursorPosition)
         [Console]::InputEncoding = [Console]::OutputEncoding = $OutputEncoding = [System.Text.Utf8Encoding]::new()
@@ -32,19 +38,15 @@ Register-ArgumentCompleter -Native -CommandName winget -ScriptBlock {
         }
 }
 
-# PSFzf
-#Import-Module PSFzf 
-#Set-PsFzfOption -PSReadlineChordProvider 'Ctrl+f' -PSReadlineChordReverseHistory 'Ctrl+r'
-#Import-Module posh-git
-
-
 # Utilities
 function which($command) {
 	Get-Command -Name $command -ErrorAction SilentlyContinue | Select-Object -ExpandProperty Path -ErrorAction SilentlyContinue
 }
+
 function pubip {
 	(Invoke-WebRequest http://ifconfig.me/ip).Content
 }
+
 function del-history($command) {
     $history = Get-History
     $commandEntries = $history | Where-Object { $_.CommandLine -match $command }
@@ -57,6 +59,7 @@ function del-history($command) {
         Write-Host "Command deleted: $($entry.CommandLine)"
     }
 }
+
 function mklink {
     param(
         [string]$source,
