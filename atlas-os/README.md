@@ -11,6 +11,7 @@
 - [Lumicons](https://www.deviantart.com/niivu/art/Lumicons-Installer-812994066) : Icon Pack
 - Nircmd: Hide Taskbar (`nircmd win trans class Shell_TrayWnd 256`)
 - OldNewExplorer: Explorer configuration (`Hide caption text in File Explorer windows`, `Hide caption icon in File Explorer windows`, `Hide Up (go to parent folder) button`)
+- [Wallpaper](https://steamcommunity.com/sharedfiles/filedetails/?id=3036895455)
 
 # General Tools
 - [Terminal Tools](https://github.com/ahmet-cetinkaya/dotfiles-public/blob/main/powershell/README.md)

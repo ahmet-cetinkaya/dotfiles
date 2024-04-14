@@ -1,9 +1,8 @@
 # Tools
 
 - [Starship](https://github.com/starship/starship) - [config](https://github.com/ahmet-cetinkaya/dotfiles-public/tree/main/starship)
-	- alternative: 
-	[Oh My Posh](https://github.com/JanDeDobbeleer/oh-my-posh) - [config](https://github.com/ahmet-cetinkaya/dotfiles-public/tree/main/oh-my-posh)
-	[PoshGit](https://github.com/dahlbyk/posh-git)
+	- alternative: [Oh My Posh](https://github.com/JanDeDobbeleer/oh-my-posh) & [PoshGit](https://github.com/dahlbyk/posh-git) - [config](https://github.com/ahmet-cetinkaya/dotfiles-public/tree/main/oh-my-posh)
+
 - [PSReadLine](https://github.com/PowerShell/PSReadLine)
 - [GitUI](https://github.com/extrawurst/gitui)
 - [PSFzf](https://github.com/kelleyma49/PSFzf)
