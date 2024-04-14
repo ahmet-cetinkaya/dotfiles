@@ -1,6 +1,0 @@
-<keymap version="1" name="ahmetcetinkaya" parent="Visual Studio">
-  <action id="SaveAll">
-    <keyboard-shortcut first-keystroke="ctrl s" />
-  </action>
-  <action id="SaveDocument" />
-</keymap>

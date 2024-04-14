@@ -1,5 +1,0 @@
-<application>
-  <component name="NotificationConfiguration">
-    <notification groupId="Force Shortcuts" shouldLog="false" />
-  </component>
-</application>
