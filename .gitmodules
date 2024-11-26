@@ -1,6 +1,3 @@
-[submodule "fonts/cascadia-code"]
-	path = fonts/cascadia-code
-	url = https://github.com/microsoft/cascadia-code.git
 [submodule "zsh/zaw"]
 	path = zsh/zaw
 	url = https://github.com/zsh-users/zaw.git
