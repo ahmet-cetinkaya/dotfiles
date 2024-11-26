@@ -19,5 +19,6 @@
     "SpellCheck": true,
     "DoNotTrack": true,
     "InvisibleTyping": true,
-    "enhancecodeblocks": true
+    "enhancecodeblocks": true,
+    "BetterAnimations": false
 }

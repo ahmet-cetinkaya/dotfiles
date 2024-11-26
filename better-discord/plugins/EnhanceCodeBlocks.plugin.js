@@ -1,7 +1,7 @@
 /**
  * @name enhancecodeblocks
  * @description Enhances Discords Codeblocks & Text File Attachments
- * @version 1.0.22
+ * @version 1.0.24
  * @author Doggybootsy
  */
 "use strict";
@@ -709,15 +709,15 @@ var import_react14, import_react_spring3, thin, openModal, codeblock_default, in
     init_components();
     init_data();
     init_util();
-    ({ thin } = BdApi.Webpack.getModule((m) => m.thin && m.none)), openModal = BdApi.Webpack.getModule((m) => m.openModal).openModal;
+    ({ thin } = BdApi.Webpack.getModule((m) => m.thin && m.none)), openModal = BdApi.Webpack.getModule((m) => m.openModal && m.closeModal).openModal;
     codeblock_default = (0, import_react14.memo)(CodeBlock);
   }
 });
 
 // src/attachment/wrapper.tsx
-function AttachmentWrapper({ attachment: attachment2, onContextMenu, className, remove, canDeleteAttachments }) {
-  let content = useFetchContent(attachment2.url), lang = (0, import_react15.useMemo)(() => {
-    let spl = attachment2.filename.split(".");
+function AttachmentWrapper({ item, onContextMenu, className, remove, canDeleteAttachments }) {
+  let content = useFetchContent(item.originalItem.url), lang = (0, import_react15.useMemo)(() => {
+    let spl = item.originalItem.filename.split(".");
     return spl.length - 1 ? spl.pop() : "";
   }, []);
   return BdApi.React.createElement("div", { className: `ECBlock-file ${className}`, onContextMenu }, BdApi.React.createElement(
@@ -726,7 +726,7 @@ function AttachmentWrapper({ attachment: attachment2, onContextMenu, className, 
       content: content || "",
       lang,
       modal: !1,
-      fileName: () => attachment2.filename,
+      fileName: () => item.originalItem.filename,
       loading: typeof content != "string",
       remove: canDeleteAttachments ? remove : !1
     }
@@ -743,9 +743,9 @@ var import_react15, wrapper_default, init_wrapper = __esm({
 });
 
 // src/attachment/index.tsx
-function Attachment({ props, attachment: attachment2, renderPlaintextFilePreview, canDeleteAttachments }) {
-  let [maxFileBytes] = useData("maxFileBytes", 2e8), [error, setError] = useStateDeps(() => attachment2.attachment.size > maxFileBytes, [maxFileBytes]);
-  return error ? BdApi.React.createElement("div", { className: "ECBlock ECBlock-error" }, BdApi.React.createElement("div", { className: "react-error", onClick: () => setError(!1) }, "File is too large for Enhance Codeblocks to handle. Click to try anyways"), renderPlaintextFilePreview.call(attachment2, props)) : BdApi.React.createElement(ErrorBoundary, { fallback: renderPlaintextFilePreview.call(attachment2, props) }, BdApi.React.createElement(wrapper_default, { ...props, canDeleteAttachments, remove: () => attachment2.onRemoveAttachment(attachment2.attachment) }));
+function Attachment({ props, item: attachment2, renderPlaintextFilePreview, canDeleteAttachments }) {
+  let [maxFileBytes] = useData("maxFileBytes", 2e8), [error, setError] = useStateDeps(() => attachment2.item.originalItem.size > maxFileBytes, [maxFileBytes]);
+  return error ? BdApi.React.createElement("div", { className: "ECBlock ECBlock-error" }, BdApi.React.createElement("div", { className: "react-error", onClick: () => setError(!1) }, "File is too large for Enhance Codeblocks to handle. Click to try anyways"), renderPlaintextFilePreview.call(attachment2, props)) : BdApi.React.createElement(ErrorBoundary, { fallback: renderPlaintextFilePreview.call(attachment2, props) }, BdApi.React.createElement(wrapper_default, { ...props, canDeleteAttachments, remove: () => attachment2.onRemoveAttachment(attachment2.item) }));
 }
 var import_react16, attachment_default, init_attachment2 = __esm({
   "src/attachment/index.tsx"() {
@@ -971,9 +971,9 @@ var BdApi2, codeBlock, MessageAttachment, messageListItem, ECBlocks, src_default
       start() {
         BdApi2.Patcher.after(codeBlock, "react", (that, [props], res) => BdApi2.React.createElement(ErrorBoundary, { fallback: res }, BdApi2.React.createElement(codeblock_default, { ...props, modal: !1, fileName: () => `codeblock-${Date.now()}.${props.lang || "txt"}` }))), BdApi2.Patcher.after(MessageAttachment.prototype, "renderAttachments", (that, props, res) => {
           if (res)
-            for (let attachment2 of res.props.attachments) {
+            for (let attachment2 of res.props.items) {
               let { renderPlaintextFilePreview } = attachment2;
-              attachment2.renderPlaintextFilePreview = (props2) => BdApi2.React.createElement(attachment_default, { props: props2, attachment: attachment2, canDeleteAttachments: that.props.canDeleteAttachments, renderPlaintextFilePreview });
+              attachment2.renderPlaintextFilePreview = (props2) => BdApi2.React.createElement(attachment_default, { props: props2, item: attachment2, canDeleteAttachments: that.props.canDeleteAttachments, renderPlaintextFilePreview });
             }
         }), BdApi2.DOM.addStyle(css_default), this.forceUpdateMessages();
       }
