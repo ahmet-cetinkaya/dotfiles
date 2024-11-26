@@ -1,95 +1,58 @@
 format = """
-$username\
+[](#f4d03e)\
 $directory\
+[](#f4d03e)\
 $git_branch\
-$git_status
-"""
-
-right_format = """
-$time\
-$all\
-$character
-"""
-
-[username]
-show_always = true
-style_user = "fg:#ffffff bg:#372A6C"
-style_root = "fg:#ffffff bg:#372A6C"
-format = '[ $user ]($style)'
-disabled = false
+$git_status\
+$nodejs\
+$dotnet\
+$golang\
+$java\
+$rust\
+\n """
 
 [directory]
-style = "fg:#000000 bg:#eac54f"
+style = "fg:#38296e bg:#f4d03e"
 format = "[ $path ]($style)"
-disabled = false
+truncation_length = 3
+truncation_symbol = "…/"
 
 [directory.substitutions]
-"Documents" = " "
+"Code" = " "
+"Documents" = "󰈙 "
 "Downloads" = " "
 "Music" = " "
 "Pictures" = " "
 
 [git_branch]
 symbol = ""
-style = "fg:#ffffff bg:#e44729"
-format = '[ $symbol $branch ]($style)'
-disabled = false
+style = "bg:#f2714f"
+format = '[[ $symbol $branch ](fg:#fff bg:#f2714f)]($style)'
 
 [git_status]
-style = "fg:#ffffff bg:#e44729"
-format = '[$all_status$ahead_behind ]($style)'
-disabled = false
-
-[c]
-symbol = ""
-style = "fg:#ffffff bg:#840a2c"
-format = '[ $symbol ($version) ]($style)'
-disabled = false
-
-[kubernetes]
-style = "fg:#ffffff bg:#326ce5"
-format = '[ on ﴱ ($user on )($cluster in )$context \($namespace\) ]($style)'
-disabled = false
-
-[golang]
-symbol = ""
-style = "fg:#ffffff bg:#007d9c"
-format = '[ $symbol ($version) ]($style)'
-disabled = false
-
-[java]
-symbol = ""
-style = "fg:#ffffff bg:#007396"
-format = '[ $symbol ($version) ]($style)'
-disabled = false
+style = "bg:#f2714f"
+format = '[[($all_status$ahead_behind )](fg:#fff bg:#f2714f)]($style)'
 
 [nodejs]
 symbol = ""
-style = "fg:#ffffff bg:#5fa04e"
-format = '[ $symbol ($version) ]($style)'
-disabled = false
+format = '[[ $symbol ($version) ](fg:#80bd00)]($style)'
 
-[php]
-symbol = ''
-style = "fg:#ffffff bg:#4F5B93"
-format = '[ $symbol ($version) ]($style)'
-disabled = false
+[dotnet]
+symbol = ""
+format = '[[ $symbol ($version) ](fg:#6C7CDB)]($style)'
+detect_extensions = ['csproj', 'fsproj', 'xproj', 'sln']
+
+[golang]
+symbol = ""
+format = '[[ $symbol ($version) ](fg:#00acd7)]($style)'
+detect_files = ['go.mod']
+
+[java]
+symbol = ""
+format = '[[ $symbol ($version) ](fg:#5382a1)]($style)'
+detect_files = ['pom.xml']
 
 [rust]
-symbol = ""
-style = "fg:#ffffff bg:#a72145"
-format = '[ $symbol ($version) ]($style)'
-disabled = false
-
-[time]
-disabled = false
-time_format = "%R" # Hour:Minute Format
-style = "fg:#ffffff bg:#8250df"
-format = '[  $time ]($style)'
-
-[cmd_duration]
-style = "fg:#000000 bg:yellow"
-format = "[ took $duration ]($style)"
-
-[character]
-format = " $symbol"
+symbol = "🦀"
+format = '[[ $symbol ($version) ](fg:#dea584)]($style)'
+detect_files = ['Cargo.toml']
