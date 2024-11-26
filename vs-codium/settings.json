@@ -1,4 +1,5 @@
 {
+  // Settings applied to all profiles
   "workbench.settings.applyToAllProfiles": [
     "editor.fontFamily",
     "editor.showFoldingControls",
@@ -8,16 +9,13 @@
     "editor.inlineSuggest.enabled",
     "workbench.tree.renderIndentGuides",
     "workbench.colorTheme",
-    "workbench.iconTheme",
     "workbench.colorCustomizations",
     "explorer.fileNesting.enabled",
-    "explorer.fileNesting.patterns",
     "terminal.integrated.cursorStyle",
     "terminal.integrated.fontFamily",
     "git.autofetch",
     "editor.guides.indentation",
     "indentRainbow.indicatorStyle",
-    "indentRainbow.lightIndicatorStyleLineWidth",
     "indentRainbow.colors",
     "peacock.affectActivityBar",
     "peacock.affectTitleBar",
@@ -41,114 +39,143 @@
     "workbench.startupEditor",
     "files.eol",
     "prettier.endOfLine",
-    "tabby.api.endpoint",
-    "tabby.inlineCompletion.triggerMode",
-    "tabby.usage.anonymousUsageTracking"
+    "turboConsoleLog.logMessagePrefix",
+    "turboConsoleLog.logType",
+    "turboConsoleLog.quote",
+    "turboConsoleLog.delimiterInsideMessage",
+    "workbench.statusBar.visible",
+    "redhat.telemetry.enabled",
+    "[xml]",
+    "errorLens.messageBackgroundMode",
+    "terminal.integrated.defaultProfile.linux",
+    "editor.cursorSmoothCaretAnimation",
+    "scm.experimental.showHistoryGraph",
+    "workbench.productIconTheme",
+    "workbench.iconTheme",
+    "editor.formatOnType",
+    "workbench.activityBar.location",
+    "editor.lineNumbers",
+    "window.commandCenter",
+    "workbench.layoutControl.enabled",
+    "github.copilot.editor.enableAutoCompletions",
+    "gitlens.outputLevel"
   ],
 
-  "editor.fontFamily": "'Cascadia Code', Consolas",
+  // Editor settings
   "editor.showFoldingControls": "always",
   "editor.minimap.showSlider": "always",
   "editor.scrollbar.horizontal": "visible",
   "editor.fontLigatures": true,
   "editor.inlineSuggest.enabled": true,
+  "editor.guides.indentation": false,
+  "editor.fontFamily": "'CaskaydiaCove NF', Consolas, 'Droid Sans Mono', 'monospace', monospace",
+  "editor.cursorSmoothCaretAnimation": "on",
+  "editor.formatOnType": true,
+  "editor.lineNumbers": "relative",
 
+  // Workbench settings
   "workbench.tree.renderIndentGuides": "always",
   "workbench.colorCustomizations": {
-    "editorLineNumber.foreground": "#f5d34b",
+    "tab.activeBorderTop": "#f4d03e",
+    "activityBar.activeBorder": "#181818",
+    "activityBar.border": "#181818",
+    "activityBar.foreground": "#f4d03e",
+    "activityBarBadge.background": "#f4d03e",
+    "activityBarBadge.foreground": "#372a6c",
+    "editorGroup.border": "#f4d03e",
+    "editorGroup.dropBackground": "#f4d03e",
+    "editorGroup.focusedEmptyBorder": "#f4d03e",
+    "editorLineNumber.foreground": "#f4d03e",
+    "sideBarSectionHeader.border": "#181818",
+    "tab.border": "#181818",
+    "commandCenter.border": "#181818",
+    "titleBar.border": "#181818",
     "statusBar.background": "#372a6c",
     "statusBar.foreground": "#fff"
   },
-  "workbench.iconTheme": "material-icon-theme",
   "workbench.startupEditor": "none",
+  "workbench.productIconTheme": "icons-carbon",
+  "workbench.iconTheme": "bearded-icons",
+  "workbench.activityBar.location": "top",
+  "workbench.statusBar.visible": false,
+  "workbench.colorTheme": "Dark Plus - Darker",
+  "workbench.layoutControl.enabled": false,
 
+  // Explorer settings
   "explorer.fileNesting.enabled": true,
-  "explorer.fileNesting.patterns": {},
   "explorer.compactFolders": false,
 
+  // Terminal settings
   "terminal.integrated.cursorStyle": "line",
-  "terminal.integrated.fontFamily": "'CaskaydiaCove NF Mono'",
+  "terminal.integrated.fontFamily": "'CaskaydiaCove NF', Consolas",
+  "terminal.integrated.defaultProfile.linux": "zsh",
 
+  // Git settings
   "git.autofetch": true,
 
-  "editor.guides.indentation": false,
-  "indentRainbow.indicatorStyle": "light",
-  "indentRainbow.lightIndicatorStyleLineWidth": 4,
+  // Indent Rainbow settings
   "indentRainbow.colors": [
     "rgba(255,255,64,0.07)",
     "rgba(255,127,255,0.07)",
     "rgba(79,236,236,0.07)"
   ],
+  "indentRainbow.indicatorStyle": "light",
 
+  // Better Comments settings
   "better-comments.multilineComments": true,
   "better-comments.tags": [
     {
       "tag": "TODO", //TODO
-      "backgroundColor": "#13522f",
-      "color": "#1f5980",
-      "strikethrough": false
+      "color": "#ffaa00"
     },
     {
       "tag": "*", //* Warning
-      "backgroundColor": "transparent",
-      "color": "#666600",
-      "strikethrough": false
+      "color": "#666600"
     },
     {
       "tag": "!", //! Important
-      "backgroundColor": "transparent",
-      "color": "#b32100",
-      "strikethrough": false
-    },
-    {
-      "tag": ":", //: Info
-      "backgroundColor": "transparent",
-      "color": "#7291a6",
-      "strikethrough": false
-    },
-    {
-      "tag": "=", //= Result
-      "backgroundColor": "transparent",
-      "color": "#1f5980",
-      "strikethrough": false
+      "color": "#b32100"
     },
     {
       "tag": "//", //// Comment in comment
-      "backgroundColor": "transparent",
-      "color": "#13522f",
-      "strikethrough": false
+      "color": "#13522f"
     },
     {
-      "tag": "#", //# Title
-      "backgroundColor": "#f034341a",
-      "strikethrough": false
+      "tag": "#", //# Title,
+      "color": "#1f5980"
     },
     {
       "tag": "-", //- Deleted
-      "backgroundColor": "transparent",
-      "color": "#474747",
+      "color": "#888888",
       "strikethrough": true
     }
   ],
 
+  // GitHub Copilot settings
   "github.copilot.enable": {
     "*": true,
     "plaintext": true,
-    "markdown": false,
+    "markdown": true,
     "scminput": false
   },
+  "github.copilot.config.experimental.inlineChatCompletionTrigger.enabled": true,
+  "github.copilot.editor.enableAutoCompletions": true,
+  "github.copilot.chat.codeGeneration.instructions": [
+    {
+      "text": "Write Clean Code"
+    }
+  ],
 
+  // Error Lens settings
   "errorLens.enabledDiagnosticLevels": ["error", "warning"],
+  "errorLens.messageBackgroundMode": "message",
 
-  "inline-parameters.borderRadius": "2em",
-  "inline-parameters.fontSize": "0.6em",
-  "inline-parameters.fontStyle": "normal",
-  "inline-parameters.fontWeight": "100",
-
+  // Extensions settings
   "extensions.experimental.affinity": {
     "asvetliakov.vscode-neovim": 1
   },
-  "vscode-neovim.completionDelay": 1000,
+
+  // VSCode Neovim settings
   "vscode-neovim.ctrlKeysForInsertMode": ["t"],
   "vscode-neovim.ctrlKeysForNormalMode": [
     "a",
@@ -164,6 +191,7 @@
     "t",
     "u",
     "y",
+    "w",
     "/",
     "]",
     "right",
@@ -174,6 +202,7 @@
     "delete"
   ],
 
+  // Language-specific settings
   "[json]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
@@ -201,7 +230,29 @@
   "[yaml]": {
     "editor.defaultFormatter": "redhat.vscode-yaml"
   },
+  "[astro]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[markdown]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[xml]": {
+    "editor.defaultFormatter": "redhat.vscode-xml"
+  },
+
+  // Miscellaneous settings
   "files.eol": "\n",
-  "tabby.api.endpoint": "http://192.168.0.9:6001",
-  "tabby.usage.anonymousUsageTracking": true,
+  "redhat.telemetry.enabled": false,
+  "window.menuBarVisibility": "toggle",
+  "turboConsoleLog.logType": "debug",
+  "luahelper.format.align_parameter": true,
+  "luahelper.format.spaces_inside_table_braces": true,
+  "luahelper.format.align_args": true,
+  "luahelper.format.break_after_table_lb": true,
+  "luahelper.format.break_before_table_rb": true,
+  "luahelper.format.break_before_functioncall_rp": true,
+  "luahelper.format.break_before_functiondef_rp": true,
+  "luahelper.format.chop_down_parameter": true,
+  "luahelper.format.chop_down_table": true,
+  "gitlens.outputLevel": "off"
 }
