@@ -137,31 +137,6 @@ bindkey "^[m" copy-prev-shell-word
 SAVEHIST=10000
 HISTFILE=$HOME/.zsh_history
 
-# Paths
-export PATH=/bin:/usr/bin:/usr/local/bin:${PATH}
-
-## NVM
-export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
-
-## Bun
-export BUN_INSTALL="$HOME/.bun"
-export PATH=${PATH}:$BUN_INSTALL/bin
-
-## Qemu
-export LIBVIRT_DEFAULT_URI="qemu:///system"
-
-## Dotnet
-export DOTNET_CLI_TELEMETRY_OPTOUT=1
-export DOTNET_SVCUTIL_TELEMETRY_OPTOUT=1
-
-## Dart
-export PATH=${PATH}:$HOME/.pub-cache/bin
-
-## Nvim
-export EDITOR='nvim'
-
 # Plugins
 plugins=(git zaw)
 
@@ -183,17 +158,54 @@ eval "$(zoxide init zsh)"
 source $HOME/Configs/zsh/zaw/zaw.zsh
 bindkey '^r' zaw-history
 
+# Paths
+export PATH=/bin:/usr/bin:/usr/local/bin:${PATH}
+
+# Programs
+## NVM
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+
+## Bun
+export BUN_INSTALL="$HOME/.bun"
+export PATH=${PATH}:$BUN_INSTALL/bin
+
+## Qemu
+export LIBVIRT_DEFAULT_URI="qemu:///system"
+
+## Dotnet
+export DOTNET_CLI_TELEMETRY_OPTOUT=1
+export DOTNET_SVCUTIL_TELEMETRY_OPTOUT=1
+
+## Neovim
+export EDITOR='nvim'
+
+# Angular CLI
+source <(ng completion script)
+
+## Dart & Flutter
+[[ -f $HOME/.dart-cli-completion/zsh-config.zsh ]] && . $HOME/.dart-cli-completion/zsh-config.zsh || true
+export PATH="$HOME/.pub-cache/bin:$PATH"
+export PATH="$HOME/fvm/default/bin:$PATH"
+
+## Android
+export ANDROID_HOME=$HOME/Android/Sdk
+export PATH=$PATH:$ANDROID_HOME/emulator
+export PATH=$PATH:$ANDROID_HOME/platform-tools
+
+## BunJS
+[ -s "/home/ac/.bun/_bun" ] && source "/home/ac/.bun/_bun"
+
+## .NET Core
+export PATH="$PATH:/home/ac/.dotnet/tools"
+
+# Startup
 ## Inshellisense
 is -s zsh
 
+## Fastfetch
 clear
-
 if [[ "$LINES" -gt 20 ]]; then
   fastfetch --config $HOME/Configs/fastfetch/mini-config.jsonc
 fi
-
-# Completion
-# Angular CLI
-source <(ng completion script)
-# Dart CLI
-[[ -f $HOME/.dart-cli-completion/zsh-config.zsh ]] && . $HOME/.dart-cli-completion/zsh-config.zsh || true

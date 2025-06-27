@@ -2,6 +2,8 @@
 
 This guide helps you set up symbolic links to use custom Zsh configuration files.
 
+![zsh on Kitty terminal](../kitty/Screenshot_20250627_212837.png)
+
 ## ⚙️ Setup
 
 1. **Open a terminal**.
