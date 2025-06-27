@@ -1,9 +1,0 @@
-{
-    "version": "1.10.1",
-    "drawerStates": {
-        "settings": {
-            "customcss": true,
-            "editor": true
-        }
-    }
-}
