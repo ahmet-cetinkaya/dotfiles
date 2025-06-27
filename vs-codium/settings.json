@@ -1,6 +1,455 @@
 {
-  // Settings applied to all profiles
+  "[dart]": {
+    "editor.formatOnSave": true,
+    "editor.formatOnType": true,
+    "editor.rulers": [
+      80
+    ],
+    "editor.selectionHighlight": false,
+    "editor.suggestSelection": "first",
+    "editor.tabCompletion": "onlySnippets",
+    "editor.wordBasedSuggestions": "off"
+  },
+  "[json]": {
+    "editor.defaultFormatter": "vscode.json-language-features"
+  },
+  "[jsonc]": {
+    "editor.defaultFormatter": "vscode.json-language-features"
+  },
+  "[markdown]": {
+    "editor.wordWrap": "on",
+    "files.autoSave": "afterDelay",
+    "editor.defaultFormatter": "yzhang.markdown-all-in-one"
+  },
+  "[xml]": {
+    "editor.defaultFormatter": "redhat.vscode-xml"
+  },
+  "[yaml]": {
+    "editor.defaultFormatter": "redhat.vscode-yaml"
+  },
+  "better-comments.multilineComments": true,
+  "better-comments.tags": [
+    {
+      "color": "#ffaa00",
+      "tag": "todo"
+    },
+    {
+      "color": "#666600",
+      "tag": "*"
+    },
+    {
+      "color": "#b32100",
+      "tag": "!"
+    },
+    {
+      "color": "#13522f",
+      "tag": "//"
+    },
+    {
+      "color": "#1f5980",
+      "tag": "#"
+    },
+    {
+      "color": "#888888",
+      "strikethrough": true,
+      "tag": "-"
+    }
+  ],
+  "chat.agent.enabled": true,
+  "chat.agent.maxRequests": 999,
+  "chat.commandCenter.enabled": false,
+  "chat.mcp.discovery.enabled": true,
+  "chat.tools.autoApprove": true,
+  "cSpell.ignorePaths": [
+    "package-lock.json",
+    "node_modules",
+    "vscode-extension",
+    ".git/{info,lfs,logs,refs,objects}/**",
+    ".git/{index,*refs,*HEAD}",
+    ".vscode",
+    ".vscode-insiders",
+    ".gitignore",
+    "**/settings.json"
+  ],
+  "dart.lineLength": 120,
+  "diffEditor.ignoreTrimWhitespace": false,
+  "diffEditor.renderSideBySide": false,
+  "editor.codeActionsOnSave": {
+    "source.fixAll": "always",
+    "source.removeUnusedImports": "explicit"
+  },
+  "editor.lineNumbers": "relative",
+  "errorLens.enabledDiagnosticLevels": [
+    "error",
+    "warning"
+  ],
+  "extensions.experimental.affinity": {
+    "asvetliakov.vscode-neovim": 1
+  },
+  "extensionSync": [
+    "aaron-bond.better-comments",
+    "adamvoss.vscode-languagetool",
+    "adrianwilczynski.namespace",
+    "adrianwilczynski.user-secrets",
+    "amiralizadeh9480.flutter-widget-wrap",
+    "Angular.ng-template",
+    "antfu.icons-carbon",
+    "astro-build.astro-vscode",
+    "Augment.vscode-augment",
+    "BeardedBear.beardedicons",
+    "bennycode.sort-everything",
+    "bierner.color-info",
+    "bierner.markdown-preview-github-styles",
+    "bradlc.vscode-tailwindcss",
+    "ChakrounAnas.turbo-console-log",
+    "christian-kohler.path-intellisense",
+    "circlecodesolution.ccs-flutter-color",
+    "corylulu.csharp-interpolated-string-converter",
+    "cyrilletuzi.angular-schematics",
+    "Dart-Code.dart-code",
+    "Dart-Code.flutter",
+    "davidwoo.flutter-auto-import",
+    "deerawan.vscode-faker",
+    "Dheovani.svg-viewer",
+    "doggy8088.quicktype-refresh",
+    "e4mi.extension-sync",
+    "eamodio.gitlens",
+    "esafirm.kotlin-formatter",
+    "esbenp.prettier-vscode",
+    "esskar.vscode-flutter-i18n-json",
+    "everettjf.pubspec-dependency-search",
+    "fernandoescolar.vscode-solution-explorer",
+    "formulahendry.dotnet-test-explorer",
+    "fwcd.kotlin",
+    "GitHub.copilot",
+    "GitHub.copilot-chat",
+    "github.vscode-github-actions",
+    "hbenl.vscode-test-explorer",
+    "hirantha.json-to-dart",
+    "IBM.output-colorizer",
+    "JannisX11.batch-rename-extension",
+    "jebbs.plantuml",
+    "jeroen-meijer.pubspec-assist",
+    "jesschadwick.nuget-reverse-package-search",
+    "jock.svg",
+    "johnsoncodehk.vscode-tsconfig-helper",
+    "josefpihrt-vscode.roslynator",
+    "kamikillerto.vscode-colorize",
+    "lokalise.i18n-ally",
+    "luanpotter.dart-import",
+    "marcelovelasquez.flutter-tree",
+    "mikestead.dotenv",
+    "mrmlnc.vscode-attrs-sorter",
+    "mrmlnc.vscode-scss",
+    "ms-azuretools.vscode-containers",
+    "ms-azuretools.vscode-docker",
+    "ms-dotnettools.csdevkit",
+    "ms-dotnettools.csharp",
+    "ms-dotnettools.vscode-dotnet-runtime",
+    "ms-vscode.copilot-mermaid-diagram",
+    "ms-vscode.test-adapter-converter",
+    "ms-vscode.vscode-websearchforcopilot",
+    "muhammad-sammy.csharp",
+    "nhoizey.gremlins",
+    "nikiforovall.sync-namespaces-dotnet",
+    "oderwat.indent-rainbow",
+    "patcx.vscode-nuget-gallery",
+    "redhat.java",
+    "redhat.vscode-xml",
+    "redhat.vscode-yaml",
+    "richardwillis.vscode-entity-framework",
+    "rinckodev.default-dark-plus",
+    "RobertOstermann.inline-parameters-extended",
+    "rogalmic.vscode-xml-complete",
+    "RooVeterinaryInc.roo-cline",
+    "SantaCodes.santacodes-region-viewer",
+    "stivo.tailwind-fold",
+    "streetsidesoftware.code-spell-checker",
+    "streetsidesoftware.code-spell-checker-turkish",
+    "tomwhite007.rename-angular-component",
+    "ultram4rine.vscode-choosealicense",
+    "unifiedjs.vscode-mdx",
+    "usernamehw.errorlens",
+    "vinicioslc.adb-interface-vscode",
+    "VisualStudioExptTeam.intellicode-api-usage-examples",
+    "VisualStudioExptTeam.vscodeintellicode",
+    "vmware.vscode-boot-dev-pack",
+    "vmware.vscode-spring-boot",
+    "vscjava.vscode-gradle",
+    "vscjava.vscode-java-debug",
+    "vscjava.vscode-java-dependency",
+    "vscjava.vscode-java-pack",
+    "vscjava.vscode-java-test",
+    "vscjava.vscode-maven",
+    "vscjava.vscode-spring-boot-dashboard",
+    "vscjava.vscode-spring-initializr",
+    "wassim-k.rename-replace-extension",
+    "wmaurer.change-case",
+    "YoavBls.pretty-ts-errors",
+    "yzhang.markdown-all-in-one"
+  ],
+  "files.eol": "\n",
+  "git.autofetch": true,
+  "git.openRepositoryInParentFolders": "always",
+  "github.copilot.chat.agent.thinkingTool": true,
+  "github.copilot.chat.codeGeneration.instructions": [
+    {
+      "text": "Follow SOLID principles to ensure code is modular and maintainable."
+    },
+    {
+      "text": "Use clear, descriptive names and consistent formatting for readability."
+    },
+    {
+      "text": "Add explanatory comments only for logic that is non-obvious or involves complex algorithms. Avoid comments for straightforward or self-explanatory code."
+    },
+    {
+      "text": "Optimize performance and resource usage without sacrificing clarity. Consider time and space complexity. Don't use magic strings or numbers; use constants or enum instead."
+    },
+    {
+      "text": "Implement robust error handling and input validation."
+    },
+    {
+      "text": "Leverage standard libraries and frameworks instead of reinventing common functionality."
+    },
+    {
+      "text": "Design code to be modular and loosely coupled to improve testability."
+    },
+    {
+      "text": "Avoid duplicating logic; adhere to DRY principles."
+    },
+    {
+      "text": "Follow security best practices (e.g., sanitize inputs) to prevent vulnerabilities."
+    },
+    {
+      "text": "Apply defensive programming techniques: validate all inputs, anticipate incorrect usage, and fail gracefully with informative errors."
+    }
+  ],
+  "github.copilot.chat.codesearch.enabled": true,
+  "github.copilot.chat.commitMessageGeneration.instructions": [
+    {
+      "text": "Use an imperative style in commit messages (e.g., 'Add feature', not 'Added')."
+    },
+    {
+      "text": "Keep the summary concise (<=50 characters), capitalized, and without a period."
+    },
+    {
+      "text": "Follow Conventional Commits format (type: subject) using types like feat, fix, docs, etc."
+    },
+    {
+      "text": "Separate the summary and body with a blank line; explain the what and why in the body."
+    },
+    {
+      "text": "Wrap lines in the commit message body at 72 characters for readability."
+    },
+    {
+      "text": "Reference related issues or tickets (e.g., 'Closes #123') when applicable."
+    },
+    {
+      "text": "Indicate breaking changes by including 'BREAKING CHANGE:' in the body."
+    }
+  ],
+  "github.copilot.chat.pullRequestDescriptionGeneration.instructions": [
+    {
+      "text": "Craft a clear, descriptive title summarizing the changes (e.g., 'feat: add user authentication')."
+    },
+    {
+      "text": "Begin the title with a type prefix (feat/fix/docs) and a concise summary of the change."
+    },
+    {
+      "text": "In the description, explain what changed and why, providing relevant context."
+    },
+    {
+      "text": "List key changes, design decisions, and any migration or testing steps needed."
+    },
+    {
+      "text": "Include instructions for testing or verifying the changes."
+    },
+    {
+      "text": "Reference related issues or ticket numbers (e.g., 'Fixes #45') in the description."
+    },
+    {
+      "text": "Organize the description using headings or bullet points for clarity."
+    },
+    {
+      "text": "Use professional, concise language and focus on the impact of the changes."
+    }
+  ],
+  "github.copilot.chat.reviewSelection.instructions": [
+    {
+      "text": "Review the code for readability, maintainability, and adherence to project guidelines."
+    },
+    {
+      "text": "Verify that the implementation meets the requirements and has no obvious bugs."
+    },
+    {
+      "text": "Ensure adequate test coverage and documentation accompany new or changed code."
+    },
+    {
+      "text": "Identify any potential security, performance, or concurrency issues."
+    },
+    {
+      "text": "Suggest refactorings to improve clarity and reduce duplication."
+    },
+    {
+      "text": "Check consistency of naming and style with the rest of the codebase."
+    },
+    {
+      "text": "Provide feedback in a concise, respectful, and constructive manner."
+    }
+  ],
+  "github.copilot.chat.testGeneration.instructions": [
+    {
+      "text": "Write tests for expected behavior, edge cases, and error conditions."
+    },
+    {
+      "text": "Use descriptive test names that clearly indicate the scenario being tested."
+    },
+    {
+      "text": "Structure tests with Arrange-Act-Assert or following the project's testing conventions."
+    },
+    {
+      "text": "Mock or stub external dependencies to keep tests isolated and reliable."
+    },
+    {
+      "text": "Ensure tests are independent and produce deterministic results."
+    },
+    {
+      "text": "Include assertions for both expected successes and expected failures."
+    },
+    {
+      "text": "Use the project's standard testing framework and follow its style conventions."
+    }
+  ],
+  "github.copilot.enable": {
+    "*": false
+  },
+  "github.copilot.nextEditSuggestions.enabled": true,
+  "gitlens.outputLevel": "off",
+  "gitlens.telemetry.enabled": false,
+  "indentRainbow.indicatorStyle": "light",
+  "inlineChat.enableV2": true,
+  "kotlin.languageServer.enabled": false,
+  "NugetGallery.credentialProviderFolder": "{user-profile}/.nuget/plugins/netcore/CredentialProvider.Microsoft",
+  "NugetGallery.skipRestore": false,
+  "NugetGallery.sources": [
+    "{\"name\":\"nuget.org\",\"url\":\"https://api.nuget.org/v3/index.json\"}"
+  ],
+  "redhat.telemetry.enabled": false,
+  "svg.preview.autoShow": true,
+  "tailwind-fold.autoFold": true,
+  "tailwind-fold.unfoldedTextOpacity": 0.6,
+  "tailwindCSS.classAttributes": [
+    "class",
+    "className",
+    "ngClass",
+    "styleClass"
+  ],
+  "tailwindCSS.emmetCompletions": true,
+  "tailwindCSS.experimental.classRegex": [
+    "tw`([^`]+)`",
+    "class$",
+    "className$",
+    "ngClass$",
+    "styleClass$",
+    "\\w+Class\\s*=\\s*['\"][^'\"]*['\"]",
+    "classnames\\(([^)]*)\\)",
+    "[\"'`]([^\"'`]*)[\"'`]",
+    "clsx\\(.*?\\)(?!\\])(?:'|\"|`)([^\"'`]*)(?:'|\"|`)",
+    "(?:enter|leave)(?:From|To)?=\\s*(?:\"|'|{`)([^(?:\"|'|`})]*)",
+    "classnames\\(([^)]*)\\)[\"'`]([^\"'`]*)[\"'`]",
+    ":\\s*?[\"'`]([^\"'`]*).*?,",
+    "(?:const|let|var)\\s+[\\w$_][_\\w\\d]*\\s*=\\s*['\\\"](.*?)['\\\"]",
+    "(?:\\b(?:const|let|var)\\s+)?[\\w$_]*(?:[Ss]tyles|[Cc]lasses|[Cc]lassnames)[\\w\\d]*\\s*(?:=|\\+=)\\s*['\"]([^'\"]*)['\"]",
+    "Styles\\s*(?::\\s*[^=]+)?\\s*=\\s*([^;]*);['\"`]([^'\"`]*)['\"`]",
+    "tailwind\\('([^)]*)\\')(?:'|\"|`)([^\"'`]*)(?:'|\"|`)",
+    "cva\\(([^)]*)\\)[\"'`]([^\"'`]*)[\"'`]",
+    "classList={{([^;]*)}}\\s*?[\"'`]([^\"'`]*).*?:",
+    "twJoin\\(([^)]*)\\)[\"'`]([^\"'`]*)[\"'`]",
+    "(?:twMerge|twJoin)\\(([^;]*)[\\);][`'\"`]([^'\"`;]*)[`'\"`]",
+    "tv\\(([^)]*)\\){?\\s?[\\w].*:\\s*?[\"'`]([^\"'`]*).*?,?\\s?}?",
+    "(?:add|remove)Class\\(([^)]*)\\)(?:'|\"|`)([^\"'`]*)(?:'|\"|`)",
+    "classList.(?:add|remove)\\(([^)]*)\\)(?:'|\"|`)([^\"'`]*)(?:'|\"|`)",
+    "@tw\\s\\*\\/\\s+[\"'`]([^\"'`]*)",
+    "data-.*-class=['\"]([^'\"]*)"
+  ],
+  "tailwindCSS.includeLanguages": {
+    "ts": "ts"
+  },
+  "terminal.integrated.cursorStyle": "line",
+  "terminal.integrated.defaultProfile.linux": "zsh",
+  "terminal.integrated.fontFamily": "'CaskaydiaCove NF', Consolas",
+  "vscode-neovim.ctrlKeysForInsertMode": [
+    "t"
+  ],
+  "vscode-neovim.ctrlKeysForNormalMode": [
+    "a",
+    "b",
+    "d",
+    "e",
+    "i",
+    "j",
+    "k",
+    "l",
+    "o",
+    "r",
+    "t",
+    "u",
+    "y",
+    "w",
+    "/",
+    "]",
+    "right",
+    "left",
+    "up",
+    "down",
+    "backspace",
+    "delete"
+  ],
+  "window.commandCenter": false,
+  "window.customTitleBarVisibility": "never",
+  "window.menuBarVisibility": "toggle",
+  "window.titleBarStyle": "native",
+  "workbench.activityBar.location": "top",
+  "workbench.colorCustomizations": {
+    "activityBar.activeBorder": "#181818",
+    "activityBar.border": "#181818",
+    "activityBar.foreground": "#f4d03e",
+    "activityBarBadge.background": "#f4d03e",
+    "activityBarBadge.foreground": "#372a6c",
+    "commandCenter.border": "#181818",
+    "editorGroup.border": "#181818",
+    "editorGroup.dropBackground": "#f4d03e",
+    "editorGroup.focusedEmptyBackground": "#181818",
+    "editorGroup.focusedEmptyBorder": "#f4d03e",
+    "editorGroupHeader.border": "#181818",
+    "editorGroupHeader.noTabsBackground": "#181818",
+    "editorGroupHeader.tabsBackground": "#181818",
+    "editorGroupHeader.tabsBorder": "#181818",
+    "editorLineNumber.foreground": "#f4d03e",
+    "panel.border": "#181818",
+    "sideBar.border": "#181818",
+    "sideBarSectionHeader.border": "#181818",
+    "statusBar.background": "#372a6c",
+    "statusBar.foreground": "#fff",
+    "tab.activeBackground": "#2d2d2d",
+    "tab.activeBorderTop": "#f4d03e",
+    "tab.activeForeground": "#f4d03e",
+    "tab.border": "#181818",
+    "tab.inactiveBackground": "#181818",
+    "tab.inactiveForeground": "#f4d03e",
+    "tab.unfocusedActiveBackground": "#181818",
+    "tab.unfocusedActiveForeground": "#f4d03e",
+    "tab.unfocusedInactiveBackground": "#181818",
+    "tab.unfocusedInactiveForeground": "#f4d03e",
+    "titleBar.border": "#181818"
+  },
+  "workbench.colorTheme": "Default Dark Modern",
+  "workbench.editor.wrapTabs": true,
+  "workbench.iconTheme": "bearded-icons",
+  "workbench.layoutControl.enabled": false,
+  "workbench.productIconTheme": "icons-carbon",
   "workbench.settings.applyToAllProfiles": [
+    "workbench.editor.wrapTabs",
     "editor.fontFamily",
     "editor.showFoldingControls",
     "editor.minimap.showSlider",
@@ -17,9 +466,6 @@
     "editor.guides.indentation",
     "indentRainbow.indicatorStyle",
     "indentRainbow.colors",
-    "peacock.affectActivityBar",
-    "peacock.affectTitleBar",
-    "peacock.surpriseMeOnStartup",
     "better-comments.multilineComments",
     "better-comments.tags",
     "github.copilot.enable",
@@ -58,201 +504,56 @@
     "window.commandCenter",
     "workbench.layoutControl.enabled",
     "github.copilot.editor.enableAutoCompletions",
-    "gitlens.outputLevel"
+    "gitlens.outputLevel",
+    "cSpell.ignorePaths",
+    "github.copilot.chat.pullRequestDescriptionGeneration.instructions",
+    "github.copilot.chat.testGeneration.instructions",
+    "gitlens.telemetry.enabled",
+    "editor.experimental.treeSitterTelemetry",
+    "github.copilot.nextEditSuggestions.enabled",
+    "github.copilot.chat.codeGeneration.instructions",
+    "github.copilot.chat.commitMessageGeneration.instructions",
+    "github.copilot.chat.codesearch.enabled",
+    "github.copilot.chat.agent.thinkingTool",
+    "chat.agent.enabled",
+    "github.copilot.chat.reviewSelection.instructions",
+    "editor.codeActionsOnSave",
+    "vscode_custom_css.imports",
+    "chat.mcp.discovery.enabled",
+    "chat.agent.maxRequests",
+    "inlineChat.enableV2",
+    "diffEditor.renderSideBySide",
+    "diffEditor.ignoreTrimWhitespace",
+    "dart.lineLength",
+    "kotlin.languageServer.enabled",
+    "window.customTitleBarVisibility",
+    "window.titleBarStyle",
+    "svg.preview.autoShow",
+    "tailwind-fold.autoFold",
+    "tailwind-fold.unfoldedTextOpacity",
+    "tailwindCSS.classAttributes",
+    "tailwindCSS.emmetCompletions",
+    "tailwindCSS.experimental.classRegex",
+    "tailwindCSS.includeLanguages",
+    "git.openRepositoryInParentFolders",
+    "chat.commandCenter.enabled",
+    "search.exclude",
+    "files.exclude",
+    "cSpell.userWords",
+    "turboConsoleLog.includeFileNameAndLineNum",
+    "[dart]",
+    "[html]",
+    "[javascript]",
+    "[typescript]",
+    "[typescriptreact]",
+    "NugetGallery.credentialProviderFolder",
+    "NugetGallery.sources",
+    "NugetGallery.skipRestore",
+    "csharpier.diagnosticsLevel",
+    "chat.tools.autoApprove",
+    "extensionSync"
   ],
-
-  // Editor settings
-  "editor.showFoldingControls": "always",
-  "editor.minimap.showSlider": "always",
-  "editor.scrollbar.horizontal": "visible",
-  "editor.fontLigatures": true,
-  "editor.inlineSuggest.enabled": true,
-  "editor.guides.indentation": false,
-  "editor.fontFamily": "'CaskaydiaCove NF', Consolas, 'Droid Sans Mono', 'monospace', monospace",
-  "editor.cursorSmoothCaretAnimation": "on",
-  "editor.formatOnType": true,
-  "editor.lineNumbers": "relative",
-
-  // Workbench settings
-  "workbench.tree.renderIndentGuides": "always",
-  "workbench.colorCustomizations": {
-    "tab.activeBorderTop": "#f4d03e",
-    "activityBar.activeBorder": "#181818",
-    "activityBar.border": "#181818",
-    "activityBar.foreground": "#f4d03e",
-    "activityBarBadge.background": "#f4d03e",
-    "activityBarBadge.foreground": "#372a6c",
-    "editorGroup.border": "#f4d03e",
-    "editorGroup.dropBackground": "#f4d03e",
-    "editorGroup.focusedEmptyBorder": "#f4d03e",
-    "editorLineNumber.foreground": "#f4d03e",
-    "sideBarSectionHeader.border": "#181818",
-    "tab.border": "#181818",
-    "commandCenter.border": "#181818",
-    "titleBar.border": "#181818",
-    "statusBar.background": "#372a6c",
-    "statusBar.foreground": "#fff"
-  },
   "workbench.startupEditor": "none",
-  "workbench.productIconTheme": "icons-carbon",
-  "workbench.iconTheme": "bearded-icons",
-  "workbench.activityBar.location": "top",
   "workbench.statusBar.visible": false,
-  "workbench.colorTheme": "Dark Plus - Darker",
-  "workbench.layoutControl.enabled": false,
-
-  // Explorer settings
-  "explorer.fileNesting.enabled": true,
-  "explorer.compactFolders": false,
-
-  // Terminal settings
-  "terminal.integrated.cursorStyle": "line",
-  "terminal.integrated.fontFamily": "'CaskaydiaCove NF', Consolas",
-  "terminal.integrated.defaultProfile.linux": "zsh",
-
-  // Git settings
-  "git.autofetch": true,
-
-  // Indent Rainbow settings
-  "indentRainbow.colors": [
-    "rgba(255,255,64,0.07)",
-    "rgba(255,127,255,0.07)",
-    "rgba(79,236,236,0.07)"
-  ],
-  "indentRainbow.indicatorStyle": "light",
-
-  // Better Comments settings
-  "better-comments.multilineComments": true,
-  "better-comments.tags": [
-    {
-      "tag": "TODO", //TODO
-      "color": "#ffaa00"
-    },
-    {
-      "tag": "*", //* Warning
-      "color": "#666600"
-    },
-    {
-      "tag": "!", //! Important
-      "color": "#b32100"
-    },
-    {
-      "tag": "//", //// Comment in comment
-      "color": "#13522f"
-    },
-    {
-      "tag": "#", //# Title,
-      "color": "#1f5980"
-    },
-    {
-      "tag": "-", //- Deleted
-      "color": "#888888",
-      "strikethrough": true
-    }
-  ],
-
-  // GitHub Copilot settings
-  "github.copilot.enable": {
-    "*": true,
-    "plaintext": true,
-    "markdown": true,
-    "scminput": false
-  },
-  "github.copilot.config.experimental.inlineChatCompletionTrigger.enabled": true,
-  "github.copilot.editor.enableAutoCompletions": true,
-  "github.copilot.chat.codeGeneration.instructions": [
-    {
-      "text": "Write Clean Code"
-    }
-  ],
-
-  // Error Lens settings
-  "errorLens.enabledDiagnosticLevels": ["error", "warning"],
-  "errorLens.messageBackgroundMode": "message",
-
-  // Extensions settings
-  "extensions.experimental.affinity": {
-    "asvetliakov.vscode-neovim": 1
-  },
-
-  // VSCode Neovim settings
-  "vscode-neovim.ctrlKeysForInsertMode": ["t"],
-  "vscode-neovim.ctrlKeysForNormalMode": [
-    "a",
-    "b",
-    "d",
-    "e",
-    "i",
-    "j",
-    "k",
-    "l",
-    "o",
-    "r",
-    "t",
-    "u",
-    "y",
-    "w",
-    "/",
-    "]",
-    "right",
-    "left",
-    "up",
-    "down",
-    "backspace",
-    "delete"
-  ],
-
-  // Language-specific settings
-  "[json]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
-  },
-  "[jsonc]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
-  },
-  "[typescript]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
-  },
-  "[typescriptreact]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
-  },
-  "[css]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
-  },
-  "[javascript]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
-  },
-  "[html]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
-  },
-  "[scss]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
-  },
-  "[yaml]": {
-    "editor.defaultFormatter": "redhat.vscode-yaml"
-  },
-  "[astro]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
-  },
-  "[markdown]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
-  },
-  "[xml]": {
-    "editor.defaultFormatter": "redhat.vscode-xml"
-  },
-
-  // Miscellaneous settings
-  "files.eol": "\n",
-  "redhat.telemetry.enabled": false,
-  "window.menuBarVisibility": "toggle",
-  "turboConsoleLog.logType": "debug",
-  "luahelper.format.align_parameter": true,
-  "luahelper.format.spaces_inside_table_braces": true,
-  "luahelper.format.align_args": true,
-  "luahelper.format.break_after_table_lb": true,
-  "luahelper.format.break_before_table_rb": true,
-  "luahelper.format.break_before_functioncall_rp": true,
-  "luahelper.format.break_before_functiondef_rp": true,
-  "luahelper.format.chop_down_parameter": true,
-  "luahelper.format.chop_down_table": true,
-  "gitlens.outputLevel": "off"
+  "workbench.tree.renderIndentGuides": "always"
 }
