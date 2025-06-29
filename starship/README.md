@@ -2,6 +2,8 @@
 
 Starship is a minimal, fast, and customizable shell prompt. This guide will show you how to configure [**Starship**](https://github.com/starship/starship) to use a custom configuration file by setting the `STARSHIP_CONFIG` environment variable. Instructions are provided for both **Windows** and **Linux** systems.
 
+![zsh on Kitty terminal](../kitty/Screenshot_20250627_212837.png)
+
 ## ⚙️ Setup
 
 ### 🪟 Windows
