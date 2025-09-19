@@ -1,19 +1,16 @@
-# General
+## General
 ENABLE_CORRECTION="true"
+export EDITOR='nvim'
+export LANG=en_US.UTF-8
 export LANGUAGE=en_US.UTF-8
 export LC_ALL=en_US.UTF-8
-export LANG=en_US.UTF-8
 export LC_TYPE=en_US.UTF-8
+export PATH="/bin:/usr/bin:/usr/local/bin"
+export PATH="$HOME/.local/bin:$PATH"
+HISTFILE=$HOME/.zsh_history
+SAVEHIST=10000
 
-# Aliases
-alias g="git"
-alias gg="gitui"
-alias ls='exa -lah --color=always --group-directories-first --icons --hyperlink'
-alias lls='exa -lah -T --color=always --group-directories-first --icons --hyperlink'
-alias vim='NVIM_APPNAME=nvim-ac nvim'
-# alias flutter='echo fvm flutter && fvm flutter'
-
-# Keybindings
+## Keybindings
 if (( ${+terminfo[smkx]} )) && (( ${+terminfo[rmkx]} )); then
   function zle-line-init() {
     echoti smkx
@@ -133,79 +130,79 @@ bindkey '\C-x\C-e' edit-command-line
 # file rename magick
 bindkey "^[m" copy-prev-shell-word
 
-# History
-SAVEHIST=10000
-HISTFILE=$HOME/.zsh_history
-
-# Plugins
-plugins=(git zaw)
-
-## zsh-autosuggestions
-source $HOME/Configs/zsh/zsh-autosuggestions/zsh-autosuggestions.zsh
-bindkey '^ ' autosuggest-accept
-
-## zsh-syntax-highlighting
-source $HOME/Configs/zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
-
-## Starship
-export STARSHIP_CONFIG=$HOME/Configs/starship/starship.toml
-eval "$(starship init zsh)"
-
-## Zoxide
-eval "$(zoxide init zsh)"
-
-## zaw
-source $HOME/Configs/zsh/zaw/zaw.zsh
-bindkey '^r' zaw-history
-
-# Paths
-export PATH=/bin:/usr/bin:/usr/local/bin:${PATH}
-
-# Programs
-## NVM
+## Plugins
+# NodeJS - NVM
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
-## Bun
-export BUN_INSTALL="$HOME/.bun"
-export PATH=${PATH}:$BUN_INSTALL/bin
+# Bun
+export PATH="$PATH:$HOME/.bun/bin"
 
-## Qemu
-export LIBVIRT_DEFAULT_URI="qemu:///system"
-
-## Dotnet
+# Dotnet
 export DOTNET_CLI_TELEMETRY_OPTOUT=1
 export DOTNET_SVCUTIL_TELEMETRY_OPTOUT=1
+export PATH="$PATH:$HOME/.dotnet/tools"
 
-## Neovim
-export EDITOR='nvim'
+# .NET - DNVM
+if [ -f "$HOME/.local/share/dnvm/env" ]; then
+    . "$HOME/.local/share/dnvm/env"
+fi
+export PATH="$PATH:$HOME/.local/share/dnvm/dn"
 
-# Angular CLI
-source <(ng completion script)
+# Flutter - FVM
+#export PATH="$PATH:$HOME/.fvm_flutter/bin"
+#export PATH="$PATH:$HOME/fvm/default/bin"
+export PATH="$PATH:$HOME/.pub-cache/bin"
+#export PATH="$PATH:/usr/lib/dart/bin"
 
-## Dart & Flutter
-[[ -f $HOME/.dart-cli-completion/zsh-config.zsh ]] && . $HOME/.dart-cli-completion/zsh-config.zsh || true
-export PATH="$HOME/.pub-cache/bin:$PATH"
-export PATH="$HOME/fvm/default/bin:$PATH"
+# Android
+export ANDROID_HOME="/opt/android-sdk"
+export ANDROID_SDK_ROOT="/opt/android-sdk"
+export PATH="$PATH:$ANDROID_HOME/platform-tools"
+export PATH="$PATH:$ANDROID_HOME/emulator"
+export PATH="$PATH:$ANDROID_HOME/cmdline-tools/latest/bin"
 
-## Android
-export ANDROID_HOME=$HOME/Android/Sdk
-export PATH=$PATH:$ANDROID_HOME/emulator
-export PATH=$PATH:$ANDROID_HOME/platform-tools
+export NDK_HOME=/opt/android-ndk
+export PATH=$PATH:$ANDROID_HOME/tools:$ANDROID_HOME/platform-tools:$NDK_HOME
 
-## BunJS
-[ -s "/home/ac/.bun/_bun" ] && source "/home/ac/.bun/_bun"
+# zsh-autosuggestions
+source $HOME/Configs/zsh/zsh-autosuggestions/zsh-autosuggestions.zsh
+bindkey '^ ' autosuggest-accept
 
-## .NET Core
-export PATH="$PATH:/home/ac/.dotnet/tools"
+# zsh-syntax-highlighting
+source $HOME/Configs/zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
-# Startup
-## Inshellisense
-is -s zsh
+# zaw
+source $HOME/Configs/zsh/zaw/zaw.zsh
+bindkey '^r' zaw-history
 
-## Fastfetch
-clear
+# Starship
+export STARSHIP_CONFIG=$HOME/Configs/starship/starship.toml
+
+# Chrome
+export CHROME_PATH="/var/lib/flatpak/app/org.chromium.Chromium/x86_64/stable/93d3dffae6ab60e67227db235cbadbdd5a56516ac24803764749706bd28f6bc8/files/chromium/chrome"
+
+## Plugins
+plugins=(git zaw)
+
+## Startup
+# Starship
+eval "$(starship init zsh)"
+
+# Zoxide
+eval "$(zoxide init zsh)"
+
+# Inshellisense
+# is -s zsh
+
+# Fastfetch
 if [[ "$LINES" -gt 20 ]]; then
   fastfetch --config $HOME/Configs/fastfetch/mini-config.jsonc
 fi
+
+## Aliases
+alias ls='exa -lah --color=always --group-directories-first --icons --hyperlink'
+alias lls='exa -lah -T --color=always --group-directories-first --icons --hyperlink'
+alias vim='NVIM_APPNAME=nvim-ac nvim'
+alias flutter='fvm flutter'
