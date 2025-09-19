@@ -6,8 +6,8 @@
 PACMAN_UPDATE_CMD="sudo pacman -Syu"
 PACMAN_REPO_UPDATE_CMD="sudo pacman -Syy"
 UNUSED_PACKAGES_CMD="pacman -Qqdt"
-YAY_UPDATE_CMD="yay -Syu --noconfirm"
-AUR_UPDATE_CMD="yay -Sua"
+PARU_UPDATE_CMD="paru -Syu --noconfirm"
+AUR_UPDATE_CMD="paru -Sua"
 SNAPPER_CREATE_CMD="sudo snapper create -d"
 FLATPAK_UPDATE_CMD="flatpak update -y"
 REBOOT_CMD="sudo reboot"
@@ -39,14 +39,7 @@ if [[ $? -ne 0 ]]; then
   exit 1
 fi
 
-# Update yay itself
-echo "🆙 Updating yay..."
-echo "Command: $YAY_UPDATE_CMD"
-$YAY_UPDATE_CMD
-if [[ $? -ne 0 ]]; then
-  echo "❌ Error updating yay. Please check for errors."
-  exit 1
-fi
+
 
 # Update AUR packages
 echo "🔄 Updating AUR packages..."
@@ -66,6 +59,34 @@ if [[ $? -ne 0 ]]; then
   exit 1
 fi
 
+# Update bun packages if bun is installed
+if command -v bun &> /dev/null
+then
+    echo "📦 Updating bun packages..."
+    bun update -g
+fi
+
+# Update dotnet tools if dotnet is installed
+if command -v dotnet &> /dev/null
+then
+    echo "📦 Updating dotnet tools..."
+    dotnet tool update --global --all
+fi
+
+# Update uv global tools if uv is installed
+if command -v uv &> /dev/null
+then
+    echo "📦 Updating uv global tools..."
+    # uv doesn't have a single command to update all tools.
+    # This loop iterates through installed tools and reinstalls them to update.
+    uv tool list | awk 'NR>2 {print $1}' | while read -r tool; do
+      if [ -n "$tool" ]; then
+        echo "Updating $tool..."
+        uv tool install "$tool" --reinstall
+      fi
+    done
+fi
+
 # Clean up unused packages
 echo "🧹 Removing unused packages..."
 UNUSED_PACKAGES=$($UNUSED_PACKAGES_CMD)
@@ -76,6 +97,8 @@ if [[ -n "$UNUSED_PACKAGES" ]]; then
 else
   echo "No unused packages to remove."
 fi
+
+
 
 # Take a snapshot after the update using Snapper
 echo "📸 Creating a post-update snapshot with Snapper..."
