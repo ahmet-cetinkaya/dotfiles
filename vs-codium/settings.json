@@ -19,7 +19,7 @@
   "[markdown]": {
     "editor.wordWrap": "on",
     "files.autoSave": "afterDelay",
-    "editor.defaultFormatter": "yzhang.markdown-all-in-one"
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
   "[xml]": {
     "editor.defaultFormatter": "redhat.vscode-xml"
@@ -73,7 +73,7 @@
   ],
   "dart.lineLength": 120,
   "diffEditor.ignoreTrimWhitespace": false,
-  "diffEditor.renderSideBySide": false,
+  "diffEditor.renderSideBySide": true,
   "editor.codeActionsOnSave": {
     "source.fixAll": "always",
     "source.removeUnusedImports": "explicit"
@@ -336,7 +336,7 @@
   ],
   "redhat.telemetry.enabled": false,
   "svg.preview.autoShow": true,
-  "tailwind-fold.autoFold": true,
+  "tailwind-fold.autoFold": false,
   "tailwind-fold.unfoldedTextOpacity": 0.6,
   "tailwindCSS.classAttributes": [
     "class",
@@ -377,7 +377,7 @@
   },
   "terminal.integrated.cursorStyle": "line",
   "terminal.integrated.defaultProfile.linux": "zsh",
-  "terminal.integrated.fontFamily": "'CaskaydiaCove NF', Consolas",
+  "terminal.integrated.fontFamily": "'CaskaydiaCove NFM', Consolas",
   "vscode-neovim.ctrlKeysForInsertMode": [
     "t"
   ],
@@ -406,9 +406,6 @@
     "delete"
   ],
   "window.commandCenter": false,
-  "window.customTitleBarVisibility": "never",
-  "window.menuBarVisibility": "toggle",
-  "window.titleBarStyle": "native",
   "workbench.activityBar.location": "top",
   "workbench.colorCustomizations": {
     "activityBar.activeBorder": "#181818",
@@ -443,11 +440,10 @@
     "tab.unfocusedInactiveForeground": "#f4d03e",
     "titleBar.border": "#181818"
   },
-  "workbench.colorTheme": "Default Dark Modern",
+  "workbench.colorTheme": "Dark Plus - Darker",
   "workbench.editor.wrapTabs": true,
   "workbench.iconTheme": "bearded-icons",
   "workbench.layoutControl.enabled": false,
-  "workbench.productIconTheme": "icons-carbon",
   "workbench.settings.applyToAllProfiles": [
     "workbench.editor.wrapTabs",
     "editor.fontFamily",
@@ -529,7 +525,6 @@
     "window.customTitleBarVisibility",
     "window.titleBarStyle",
     "svg.preview.autoShow",
-    "tailwind-fold.autoFold",
     "tailwind-fold.unfoldedTextOpacity",
     "tailwindCSS.classAttributes",
     "tailwindCSS.emmetCompletions",
@@ -551,9 +546,56 @@
     "NugetGallery.skipRestore",
     "csharpier.diagnosticsLevel",
     "chat.tools.autoApprove",
-    "extensionSync"
+    "extensionSync",
+    "files.watcherExclude",
+    "dotnet.autoInsert.enableAutoInsert",
+    "dotnet.projects.enableFileBasedPrograms",
+    "csharp.format.enable",
+    "omnisharp.enableDecompilationSupport",
+    "dotnet.formatting.organizeImportsOnFormat",
+    "tailwind-fold.autoFold"
   ],
   "workbench.startupEditor": "none",
   "workbench.statusBar.visible": false,
-  "workbench.tree.renderIndentGuides": "always"
+  "workbench.tree.renderIndentGuides": "always",
+  "files.watcherExclude": {
+    "**/fdroid/build/**/**": true
+  },
+  "[typescript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[csharp]": {
+    "editor.defaultFormatter": "csharpier.csharpier-vscode",
+  },
+  "files.exclude": {
+    "**/bin": true,
+    "**/obj": true
+  },
+  "csharpier.diagnosticsLevel": "3",
+  "cSpell.userWords": [
+    "prefs",
+    "roslynator"
+  ],
+  "[scss]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "dotnet.autoInsert.enableAutoInsert": false,
+  "dotnet.projects.enableFileBasedPrograms": true,
+  "csharp.format.enable": false,
+  "omnisharp.enableDecompilationSupport": true,
+  "dotnet.formatting.organizeImportsOnFormat": true,
+  "editor.fontFamily": "'CaskaydiaCove NFM', 'monospace', monospace",
+  "[astro]": {
+    "editor.defaultFormatter": "astro-build.astro-vscode"
+  },
+  "[javascript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[typescriptreact]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "window.menuBarVisibility": "compact",
+  "window.customTitleBarVisibility": "never",
+  "window.menuStyle": "custom",
+  "window.titleBarStyle": "native"
 }
