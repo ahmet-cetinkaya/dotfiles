@@ -7,6 +7,7 @@ export LC_ALL=en_US.UTF-8
 export LC_TYPE=en_US.UTF-8
 export PATH="/bin:/usr/bin:/usr/local/bin"
 export PATH="$HOME/.local/bin:$PATH"
+export PATH="$PATH:$(go env GOPATH)/bin"
 HISTFILE=$HOME/.zsh_history
 SAVEHIST=10000
 
@@ -135,6 +136,7 @@ bindkey "^[m" copy-prev-shell-word
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+export NODE_OPTIONS="--max-old-space-size=8192"
 
 # Bun
 export PATH="$PATH:$HOME/.bun/bin"
