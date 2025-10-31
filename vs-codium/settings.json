@@ -1,4 +1,13 @@
 {
+  "[astro]": {
+    "editor.defaultFormatter": "astro-build.astro-vscode"
+  },
+  "[csharp]": {
+    "editor.defaultFormatter": "csharpier.csharpier-vscode"
+  },
+  "[css]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
   "[dart]": {
     "editor.formatOnSave": true,
     "editor.formatOnType": true,
@@ -10,6 +19,15 @@
     "editor.tabCompletion": "onlySnippets",
     "editor.wordBasedSuggestions": "off"
   },
+  "[github-actions-workflow]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[html]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[javascript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
   "[json]": {
     "editor.defaultFormatter": "vscode.json-language-features"
   },
@@ -17,8 +35,20 @@
     "editor.defaultFormatter": "vscode.json-language-features"
   },
   "[markdown]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
     "editor.wordWrap": "on",
-    "files.autoSave": "afterDelay",
+    "files.autoSave": "afterDelay"
+  },
+  "[scss]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[svg]": {
+    "editor.defaultFormatter": "jock.svg"
+  },
+  "[typescript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[typescriptreact]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
   "[xml]": {
@@ -58,8 +88,15 @@
   "chat.agent.enabled": true,
   "chat.agent.maxRequests": 999,
   "chat.commandCenter.enabled": false,
-  "chat.mcp.discovery.enabled": true,
+  "chat.mcp.discovery.enabled": {
+    "claude-desktop": true,
+    "cursor-global": true,
+    "cursor-workspace": true,
+    "windsurf": true
+  },
   "chat.tools.autoApprove": true,
+  "csharp.format.enable": false,
+  "csharpier.diagnosticsLevel": "3",
   "cSpell.ignorePaths": [
     "package-lock.json",
     "node_modules",
@@ -71,13 +108,21 @@
     ".gitignore",
     "**/settings.json"
   ],
+  "cSpell.userWords": [
+    "prefs",
+    "roslynator"
+  ],
   "dart.lineLength": 120,
   "diffEditor.ignoreTrimWhitespace": false,
   "diffEditor.renderSideBySide": true,
+  "dotnet.autoInsert.enableAutoInsert": false,
+  "dotnet.formatting.organizeImportsOnFormat": true,
+  "dotnet.projects.enableFileBasedPrograms": true,
   "editor.codeActionsOnSave": {
     "source.fixAll": "always",
     "source.removeUnusedImports": "explicit"
   },
+  "editor.fontFamily": "'CaskaydiaCove NFM', 'monospace', monospace",
   "editor.lineNumbers": "relative",
   "errorLens.enabledDiagnosticLevels": [
     "error",
@@ -189,6 +234,13 @@
     "yzhang.markdown-all-in-one"
   ],
   "files.eol": "\n",
+  "files.exclude": {
+    "**/bin": true,
+    "**/obj": true
+  },
+  "files.watcherExclude": {
+    "**/fdroid/build/**/**": true
+  },
   "git.autofetch": true,
   "git.openRepositoryInParentFolders": "always",
   "github.copilot.chat.agent.thinkingTool": true,
@@ -334,6 +386,7 @@
   "NugetGallery.sources": [
     "{\"name\":\"nuget.org\",\"url\":\"https://api.nuget.org/v3/index.json\"}"
   ],
+  "omnisharp.enableDecompilationSupport": true,
   "redhat.telemetry.enabled": false,
   "svg.preview.autoShow": true,
   "tailwind-fold.autoFold": false,
@@ -406,6 +459,10 @@
     "delete"
   ],
   "window.commandCenter": false,
+  "window.customTitleBarVisibility": "never",
+  "window.menuBarVisibility": "compact",
+  "window.menuStyle": "custom",
+  "window.titleBarStyle": "native",
   "workbench.activityBar.location": "top",
   "workbench.colorCustomizations": {
     "activityBar.activeBorder": "#181818",
@@ -557,45 +614,5 @@
   ],
   "workbench.startupEditor": "none",
   "workbench.statusBar.visible": false,
-  "workbench.tree.renderIndentGuides": "always",
-  "files.watcherExclude": {
-    "**/fdroid/build/**/**": true
-  },
-  "[typescript]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
-  },
-  "[csharp]": {
-    "editor.defaultFormatter": "csharpier.csharpier-vscode",
-  },
-  "files.exclude": {
-    "**/bin": true,
-    "**/obj": true
-  },
-  "csharpier.diagnosticsLevel": "3",
-  "cSpell.userWords": [
-    "prefs",
-    "roslynator"
-  ],
-  "[scss]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
-  },
-  "dotnet.autoInsert.enableAutoInsert": false,
-  "dotnet.projects.enableFileBasedPrograms": true,
-  "csharp.format.enable": false,
-  "omnisharp.enableDecompilationSupport": true,
-  "dotnet.formatting.organizeImportsOnFormat": true,
-  "editor.fontFamily": "'CaskaydiaCove NFM', 'monospace', monospace",
-  "[astro]": {
-    "editor.defaultFormatter": "astro-build.astro-vscode"
-  },
-  "[javascript]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
-  },
-  "[typescriptreact]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
-  },
-  "window.menuBarVisibility": "compact",
-  "window.customTitleBarVisibility": "never",
-  "window.menuStyle": "custom",
-  "window.titleBarStyle": "native"
+  "workbench.tree.renderIndentGuides": "always"
 }
