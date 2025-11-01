@@ -1,6 +1,5 @@
 #!/bin/bash
 
-# Paths for mode config files and the symlink
 CONFIG_DIR="/home/ac/Configs/hyprland/modes"
 SYMLINK_PATH="$CONFIG_DIR/current_mode.conf"
 STATE_FILE="/tmp/hypr_mode"
@@ -25,5 +24,4 @@ else
     notify-send "Hyprland Layout" "Switched to Tiled Mode" -i "view-grid"
 fi
 
-# Reload Hyprland to apply changes
 hyprctl reload
