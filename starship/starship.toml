@@ -1,14 +1,20 @@
 format = """
+$os\
+$username\
 [](#f4d03e)\
 $directory\
 [](#f4d03e)\
 $git_branch\
 $git_status\
+$container\
 $nodejs\
+$bun\
 $dotnet\
 $golang\
 $java\
 $rust\
+$dart\
+$cmd_duration\
 \n """
 
 [directory]
@@ -18,14 +24,14 @@ truncation_length = 3
 
 [directory.substitutions]
 truncation_symbol = "…/"
-"Code" = ""
-"Documents" = "󰈙"
-"Downloads" = ""
-"Music" = ""
-"Pictures" = ""
+"Code" = "" # Code icon
+"Documents" = "󰈙" # Documents icon
+"Downloads" = "" # Downloads icon
+"Music" = "" # Music icon
+"Pictures" = "" # Pictures icon
 
 [git_branch]
-symbol = ""
+symbol = "" # Git branch icon
 style = "bg:#f2714f"
 format = '[[ $symbol $branch ](fg:#fff bg:#f2714f)]($style)'
 
@@ -34,25 +40,68 @@ style = "bg:#f2714f"
 format = '[[($all_status$ahead_behind )](fg:#fff bg:#f2714f)]($style)'
 
 [nodejs]
-symbol = ""
+symbol = "" # Node.js icon
 format = '[[ $symbol ($version) ](fg:#80bd00)]($style)'
 
+[bun]
+symbol = "" # Bun icon
+format = '[[ $symbol ($version) ](fg:#fb923c)]($style)'
+detect_files = ['bun.lock', 'bun.lockb', 'bunfig.toml']
+
 [dotnet]
-symbol = ""
+symbol = "" # .NET icon
 format = '[[ $symbol ($version) ](fg:#6C7CDB)]($style)'
 detect_extensions = ['csproj', 'fsproj', 'xproj', 'sln']
 
 [golang]
-symbol = ""
+symbol = "" # Go icon
 format = '[[ $symbol ($version) ](fg:#00acd7)]($style)'
 detect_files = ['go.mod']
 
 [java]
-symbol = ""
+symbol = "" # Java icon
 format = '[[ $symbol ($version) ](fg:#5382a1)]($style)'
 detect_files = ['pom.xml']
 
 [rust]
-symbol = "🦀"
+symbol = "" # Rust icon
 format = '[[ $symbol ($version) ](fg:#dea584)]($style)'
 detect_files = ['Cargo.toml']
+
+[dart]
+symbol = "" # Dart icon
+format = '[[ $symbol ($version) ](fg:#00b4d8)]($style)'
+detect_files = ['pubspec.yaml', 'pubspec.yml', 'pubspec.lock']
+detect_folders = ['.dart_tool']
+
+[cmd_duration]
+min_time = 2_000
+format = '[[  $duration ](fg:#8b5cf6)]($style)' # Clock icon with value
+style = "bold #8b5cf6"
+
+[container]
+symbol = "" # Container icon
+format = '[[ $symbol \[$name\] ](fg:#06b6d4)]($style)'
+style = "bold #06b6d4"
+
+[os]
+disabled = false
+format = "[$symbol]($style)"
+style = "bold"
+
+[os.symbols]
+Arch = " " # Arch icon
+CachyOS = " " # CachyOS icon (reusing Arch icon)
+Debian = " " # Debian icon
+Fedora = " " # Fedora icon
+Linux = " " # Linux icon
+Macos = " " # macOS icon
+Ubuntu = " " # Ubuntu icon
+Windows = " " # Windows icon
+
+[username]
+disabled = false
+show_always = true
+format = "[$user]($style) "
+style_user = "bold"
+style_root = "bold #ef4444"
