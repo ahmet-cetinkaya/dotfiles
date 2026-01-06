@@ -376,7 +376,7 @@
     "*": false
   },
   "github.copilot.nextEditSuggestions.enabled": true,
-  "gitlens.outputLevel": "off",
+  "gitlens.outputLevel": "debug",
   "gitlens.telemetry.enabled": false,
   "indentRainbow.indicatorStyle": "light",
   "inlineChat.enableV2": true,
@@ -501,6 +501,7 @@
   "workbench.editor.wrapTabs": true,
   "workbench.iconTheme": "bearded-icons",
   "workbench.layoutControl.enabled": false,
+  "workbench.productIconTheme": "icons-carbon",
   "workbench.settings.applyToAllProfiles": [
     "workbench.editor.wrapTabs",
     "editor.fontFamily",
