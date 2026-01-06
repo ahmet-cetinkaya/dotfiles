@@ -79,8 +79,8 @@ then
     echo "📦 Updating uv global tools..."
     # uv doesn't have a single command to update all tools.
     # This loop iterates through installed tools and reinstalls them to update.
-    uv tool list | awk 'NR>2 {print $1}' | while read -r tool; do
-      if [ -n "$tool" ]; then
+    uv tool list | awk 'NR>2 && NF>0 {print $1}' | while read -r tool; do
+      if [ -n "$tool" ] && [ "$tool" != "-" ]; then
         echo "Updating $tool..."
         uv tool install "$tool" --reinstall
       fi
@@ -107,6 +107,35 @@ $SNAPPER_CREATE_CMD "backup: post-system update"
 if [[ $? -ne 0 ]]; then
   echo "❌ Error creating post-update snapshot. Please check and try again."
   exit 1
+fi
+
+# Clean up old snapshots - keep only the most recent 100
+echo "🧹 Cleaning up old snapshots (keeping only the most recent 100)..."
+# Get list of snapshots sorted by date, keep the most recent 100, delete the rest
+SNAPPER_LIST_CMD="sudo snapper list"
+SNAPPER_DELETE_CMD="sudo snapper delete"
+
+# Get snapshot numbers (skip header, last row which is the "current" system, and snapshot 0)
+OLD_SNAPSHOTS=$($SNAPPER_LIST_CMD | awk 'NR>2 && NR!=$NR-1 && $1!=0 {print $1}' | head -n -100)
+
+if [[ -n "$OLD_SNAPSHOTS" ]]; then
+  echo "Found old snapshots to clean up:"
+  echo "$OLD_SNAPSHOTS"
+
+  # Delete old snapshots one by one to avoid command line length limits
+  for snapshot in $OLD_SNAPSHOTS; do
+    if [ -n "$snapshot" ]; then
+      echo "Deleting snapshot $snapshot..."
+      $SNAPPER_DELETE_CMD "$snapshot"
+      if [[ $? -eq 0 ]]; then
+        echo "✅ Successfully deleted snapshot $snapshot"
+      else
+        echo "❌ Error deleting snapshot $snapshot"
+      fi
+    fi
+  done
+else
+  echo "No old snapshots to clean up (keeping most recent 100)."
 fi
 
 # Ask if the user wants to reboot after the update
