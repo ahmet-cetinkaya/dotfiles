@@ -9,11 +9,10 @@
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
   "[dart]": {
+    "dart.lineLength": 120,
     "editor.formatOnSave": true,
     "editor.formatOnType": true,
-    "editor.rulers": [
-      80
-    ],
+    "editor.rulers": [80],
     "editor.selectionHighlight": false,
     "editor.suggestSelection": "first",
     "editor.tabCompletion": "onlySnippets",
@@ -32,7 +31,10 @@
     "editor.defaultFormatter": "vscode.json-language-features"
   },
   "[jsonc]": {
-    "editor.defaultFormatter": "vscode.json-language-features"
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[less]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
   "[markdown]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode",
@@ -52,7 +54,7 @@
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
   "[xml]": {
-    "editor.defaultFormatter": "redhat.vscode-xml"
+    "editor.defaultFormatter": "csharpier.csharpier-vscode"
   },
   "[yaml]": {
     "editor.defaultFormatter": "redhat.vscode-yaml"
@@ -85,34 +87,21 @@
       "tag": "-"
     }
   ],
-  "chat.agent.enabled": true,
-  "chat.agent.maxRequests": 999,
-  "chat.commandCenter.enabled": false,
-  "chat.mcp.discovery.enabled": {
-    "claude-desktop": true,
-    "cursor-global": true,
-    "cursor-workspace": true,
-    "windsurf": true
-  },
-  "chat.tools.autoApprove": true,
   "csharp.format.enable": false,
   "csharpier.diagnosticsLevel": "3",
+  "cSpell.diagnosticLevel": "Hint",
   "cSpell.ignorePaths": [
-    "package-lock.json",
-    "node_modules",
-    "vscode-extension",
-    ".git/{info,lfs,logs,refs,objects}/**",
     ".git/{index,*refs,*HEAD}",
-    ".vscode",
-    ".vscode-insiders",
+    ".git/{info,lfs,logs,refs,objects}/**",
     ".gitignore",
-    "**/settings.json"
+    ".vscode-insiders",
+    ".vscode",
+    "**/settings.json",
+    "node_modules",
+    "package-lock.json",
+    "vscode-extension"
   ],
-  "cSpell.userWords": [
-    "prefs",
-    "roslynator"
-  ],
-  "dart.lineLength": 120,
+  "cSpell.userWords": ["prefs", "roslynator"],
   "diffEditor.ignoreTrimWhitespace": false,
   "diffEditor.renderSideBySide": true,
   "dotnet.autoInsert.enableAutoInsert": false,
@@ -122,41 +111,43 @@
     "source.fixAll": "always",
     "source.removeUnusedImports": "explicit"
   },
-  "editor.fontFamily": "'CaskaydiaCove NFM', 'monospace', monospace",
+  "editor.fontFamily": "'SauceCodePro NFM'",
   "editor.lineNumbers": "relative",
-  "errorLens.enabledDiagnosticLevels": [
-    "error",
-    "warning"
-  ],
+  "errorLens.enabledDiagnosticLevels": ["error", "warning"],
   "extensions.experimental.affinity": {
     "asvetliakov.vscode-neovim": 1
   },
   "extensionSync": [
     "aaron-bond.better-comments",
-    "adamvoss.vscode-languagetool",
     "adrianwilczynski.namespace",
     "adrianwilczynski.user-secrets",
+    "alfish.godot-files",
     "amiralizadeh9480.flutter-widget-wrap",
     "Angular.ng-template",
     "antfu.icons-carbon",
+    "Anthropic.claude-code",
     "astro-build.astro-vscode",
-    "Augment.vscode-augment",
-    "BeardedBear.beardedicons",
     "bennycode.sort-everything",
     "bierner.color-info",
+    "bierner.github-markdown-preview",
+    "bierner.markdown-checkbox",
+    "bierner.markdown-emoji",
+    "bierner.markdown-footnotes",
+    "bierner.markdown-mermaid",
     "bierner.markdown-preview-github-styles",
+    "bierner.markdown-yaml-preamble",
     "bradlc.vscode-tailwindcss",
-    "ChakrounAnas.turbo-console-log",
     "christian-kohler.path-intellisense",
     "circlecodesolution.ccs-flutter-color",
     "corylulu.csharp-interpolated-string-converter",
+    "csharpier.csharpier-vscode",
     "cyrilletuzi.angular-schematics",
     "Dart-Code.dart-code",
     "Dart-Code.flutter",
     "davidwoo.flutter-auto-import",
-    "deerawan.vscode-faker",
-    "Dheovani.svg-viewer",
+    "Delgan.qml-format",
     "doggy8088.quicktype-refresh",
+    "dustypomerleau.rust-syntax",
     "e4mi.extension-sync",
     "eamodio.gitlens",
     "esafirm.kotlin-formatter",
@@ -164,74 +155,71 @@
     "esskar.vscode-flutter-i18n-json",
     "everettjf.pubspec-dependency-search",
     "fernandoescolar.vscode-solution-explorer",
-    "formulahendry.dotnet-test-explorer",
+    "foxundermoon.shell-format",
     "fwcd.kotlin",
-    "GitHub.copilot",
-    "GitHub.copilot-chat",
-    "github.vscode-github-actions",
-    "hbenl.vscode-test-explorer",
+    "google.gemini-cli-vscode-ide-companion",
+    "heybourn.headwind",
     "hirantha.json-to-dart",
     "IBM.output-colorizer",
     "JannisX11.batch-rename-extension",
     "jebbs.plantuml",
     "jeroen-meijer.pubspec-assist",
     "jesschadwick.nuget-reverse-package-search",
+    "jnoortheen.nix-ide",
     "jock.svg",
-    "johnsoncodehk.vscode-tsconfig-helper",
-    "josefpihrt-vscode.roslynator",
     "kamikillerto.vscode-colorize",
+    "kilocode.kilo-code",
+    "kisstkondoros.vscode-gutter-preview",
     "lokalise.i18n-ally",
     "luanpotter.dart-import",
     "marcelovelasquez.flutter-tree",
     "mikestead.dotenv",
+    "mkhl.shfmt",
     "mrmlnc.vscode-attrs-sorter",
     "mrmlnc.vscode-scss",
     "ms-azuretools.vscode-containers",
-    "ms-azuretools.vscode-docker",
-    "ms-dotnettools.csdevkit",
     "ms-dotnettools.csharp",
     "ms-dotnettools.vscode-dotnet-runtime",
-    "ms-vscode.copilot-mermaid-diagram",
+    "ms-vscode.mono-debug",
     "ms-vscode.test-adapter-converter",
-    "ms-vscode.vscode-websearchforcopilot",
-    "muhammad-sammy.csharp",
     "nhoizey.gremlins",
     "nikiforovall.sync-namespaces-dotnet",
     "oderwat.indent-rainbow",
     "patcx.vscode-nuget-gallery",
+    "PKief.material-icon-theme",
     "redhat.java",
     "redhat.vscode-xml",
     "redhat.vscode-yaml",
+    "RedMser.godot-hover-docs",
     "richardwillis.vscode-entity-framework",
     "rinckodev.default-dark-plus",
-    "RobertOstermann.inline-parameters-extended",
-    "rogalmic.vscode-xml-complete",
-    "RooVeterinaryInc.roo-cline",
+    "rust-lang.rust-analyzer",
     "SantaCodes.santacodes-region-viewer",
     "stivo.tailwind-fold",
     "streetsidesoftware.code-spell-checker",
+    "streetsidesoftware.code-spell-checker-cspell-bundled-dictionaries",
     "streetsidesoftware.code-spell-checker-turkish",
-    "tomwhite007.rename-angular-component",
+    "tamasfe.even-better-toml",
+    "theqtcompany.qt-core",
+    "theqtcompany.qt-qml",
+    "toroxx.vscode-avdmanager",
     "ultram4rine.vscode-choosealicense",
     "unifiedjs.vscode-mdx",
     "usernamehw.errorlens",
     "vinicioslc.adb-interface-vscode",
     "VisualStudioExptTeam.intellicode-api-usage-examples",
     "VisualStudioExptTeam.vscodeintellicode",
-    "vmware.vscode-boot-dev-pack",
-    "vmware.vscode-spring-boot",
     "vscjava.vscode-gradle",
     "vscjava.vscode-java-debug",
     "vscjava.vscode-java-dependency",
     "vscjava.vscode-java-pack",
-    "vscjava.vscode-java-test",
     "vscjava.vscode-maven",
-    "vscjava.vscode-spring-boot-dashboard",
-    "vscjava.vscode-spring-initializr",
     "wassim-k.rename-replace-extension",
     "wmaurer.change-case",
     "YoavBls.pretty-ts-errors",
-    "yzhang.markdown-all-in-one"
+    "yoshinorin.image-metadata-viewer",
+    "yzhang.markdown-all-in-one",
+    "ZhangYue.rust-mod-generator"
   ],
   "files.eol": "\n",
   "files.exclude": {
@@ -239,142 +227,14 @@
     "**/obj": true
   },
   "files.watcherExclude": {
-    "**/fdroid/build/**/**": true
+    "**/.git/objects/**": true,
+    "**/.git/subtree-cache/**": true,
+    "**/.hg/store/**": true,
+    "**/fdroid/**/**": true,
+    "**/node_modules/*/**": true
   },
   "git.autofetch": true,
   "git.openRepositoryInParentFolders": "always",
-  "github.copilot.chat.agent.thinkingTool": true,
-  "github.copilot.chat.codeGeneration.instructions": [
-    {
-      "text": "Follow SOLID principles to ensure code is modular and maintainable."
-    },
-    {
-      "text": "Use clear, descriptive names and consistent formatting for readability."
-    },
-    {
-      "text": "Add explanatory comments only for logic that is non-obvious or involves complex algorithms. Avoid comments for straightforward or self-explanatory code."
-    },
-    {
-      "text": "Optimize performance and resource usage without sacrificing clarity. Consider time and space complexity. Don't use magic strings or numbers; use constants or enum instead."
-    },
-    {
-      "text": "Implement robust error handling and input validation."
-    },
-    {
-      "text": "Leverage standard libraries and frameworks instead of reinventing common functionality."
-    },
-    {
-      "text": "Design code to be modular and loosely coupled to improve testability."
-    },
-    {
-      "text": "Avoid duplicating logic; adhere to DRY principles."
-    },
-    {
-      "text": "Follow security best practices (e.g., sanitize inputs) to prevent vulnerabilities."
-    },
-    {
-      "text": "Apply defensive programming techniques: validate all inputs, anticipate incorrect usage, and fail gracefully with informative errors."
-    }
-  ],
-  "github.copilot.chat.codesearch.enabled": true,
-  "github.copilot.chat.commitMessageGeneration.instructions": [
-    {
-      "text": "Use an imperative style in commit messages (e.g., 'Add feature', not 'Added')."
-    },
-    {
-      "text": "Keep the summary concise (<=50 characters), capitalized, and without a period."
-    },
-    {
-      "text": "Follow Conventional Commits format (type: subject) using types like feat, fix, docs, etc."
-    },
-    {
-      "text": "Separate the summary and body with a blank line; explain the what and why in the body."
-    },
-    {
-      "text": "Wrap lines in the commit message body at 72 characters for readability."
-    },
-    {
-      "text": "Reference related issues or tickets (e.g., 'Closes #123') when applicable."
-    },
-    {
-      "text": "Indicate breaking changes by including 'BREAKING CHANGE:' in the body."
-    }
-  ],
-  "github.copilot.chat.pullRequestDescriptionGeneration.instructions": [
-    {
-      "text": "Craft a clear, descriptive title summarizing the changes (e.g., 'feat: add user authentication')."
-    },
-    {
-      "text": "Begin the title with a type prefix (feat/fix/docs) and a concise summary of the change."
-    },
-    {
-      "text": "In the description, explain what changed and why, providing relevant context."
-    },
-    {
-      "text": "List key changes, design decisions, and any migration or testing steps needed."
-    },
-    {
-      "text": "Include instructions for testing or verifying the changes."
-    },
-    {
-      "text": "Reference related issues or ticket numbers (e.g., 'Fixes #45') in the description."
-    },
-    {
-      "text": "Organize the description using headings or bullet points for clarity."
-    },
-    {
-      "text": "Use professional, concise language and focus on the impact of the changes."
-    }
-  ],
-  "github.copilot.chat.reviewSelection.instructions": [
-    {
-      "text": "Review the code for readability, maintainability, and adherence to project guidelines."
-    },
-    {
-      "text": "Verify that the implementation meets the requirements and has no obvious bugs."
-    },
-    {
-      "text": "Ensure adequate test coverage and documentation accompany new or changed code."
-    },
-    {
-      "text": "Identify any potential security, performance, or concurrency issues."
-    },
-    {
-      "text": "Suggest refactorings to improve clarity and reduce duplication."
-    },
-    {
-      "text": "Check consistency of naming and style with the rest of the codebase."
-    },
-    {
-      "text": "Provide feedback in a concise, respectful, and constructive manner."
-    }
-  ],
-  "github.copilot.chat.testGeneration.instructions": [
-    {
-      "text": "Write tests for expected behavior, edge cases, and error conditions."
-    },
-    {
-      "text": "Use descriptive test names that clearly indicate the scenario being tested."
-    },
-    {
-      "text": "Structure tests with Arrange-Act-Assert or following the project's testing conventions."
-    },
-    {
-      "text": "Mock or stub external dependencies to keep tests isolated and reliable."
-    },
-    {
-      "text": "Ensure tests are independent and produce deterministic results."
-    },
-    {
-      "text": "Include assertions for both expected successes and expected failures."
-    },
-    {
-      "text": "Use the project's standard testing framework and follow its style conventions."
-    }
-  ],
-  "github.copilot.enable": {
-    "*": false
-  },
   "github.copilot.nextEditSuggestions.enabled": true,
   "gitlens.outputLevel": "debug",
   "gitlens.telemetry.enabled": false,
@@ -387,6 +247,7 @@
     "{\"name\":\"nuget.org\",\"url\":\"https://api.nuget.org/v3/index.json\"}"
   ],
   "omnisharp.enableDecompilationSupport": true,
+  "prettier.printWidth": 120,
   "redhat.telemetry.enabled": false,
   "svg.preview.autoShow": true,
   "tailwind-fold.autoFold": false,
@@ -431,9 +292,7 @@
   "terminal.integrated.cursorStyle": "line",
   "terminal.integrated.defaultProfile.linux": "zsh",
   "terminal.integrated.fontFamily": "'CaskaydiaCove NFM', Consolas",
-  "vscode-neovim.ctrlKeysForInsertMode": [
-    "t"
-  ],
+  "vscode-neovim.ctrlKeysForInsertMode": ["t"],
   "vscode-neovim.ctrlKeysForNormalMode": [
     "a",
     "b",
@@ -497,121 +356,122 @@
     "tab.unfocusedInactiveForeground": "#f4d03e",
     "titleBar.border": "#181818"
   },
-  "workbench.colorTheme": "Dark Plus - Darker",
   "workbench.editor.wrapTabs": true,
-  "workbench.iconTheme": "bearded-icons",
+  "workbench.iconTheme": "material-icon-theme",
   "workbench.layoutControl.enabled": false,
   "workbench.productIconTheme": "icons-carbon",
   "workbench.settings.applyToAllProfiles": [
-    "workbench.editor.wrapTabs",
-    "editor.fontFamily",
-    "editor.showFoldingControls",
-    "editor.minimap.showSlider",
-    "editor.scrollbar.horizontal",
-    "editor.fontLigatures",
-    "editor.inlineSuggest.enabled",
-    "workbench.tree.renderIndentGuides",
-    "workbench.colorTheme",
-    "workbench.colorCustomizations",
-    "explorer.fileNesting.enabled",
-    "terminal.integrated.cursorStyle",
-    "terminal.integrated.fontFamily",
-    "git.autofetch",
-    "editor.guides.indentation",
-    "indentRainbow.indicatorStyle",
-    "indentRainbow.colors",
+    "[dart]",
+    "[html]",
+    "[javascript]",
+    "[json]",
+    "[jsonc]",
+    "[typescript]",
+    "[typescriptreact]",
+    "[xml]",
     "better-comments.multilineComments",
     "better-comments.tags",
-    "github.copilot.enable",
+    "chat.agent.enabled",
+    "chat.agent.maxRequests",
+    "chat.commandCenter.enabled",
+    "chat.mcp.discovery.enabled",
+    "chat.tools.autoApprove",
+    "csharp.format.enable",
+    "csharpier.diagnosticsLevel",
+    "cSpell.diagnosticLevel",
+    "cSpell.ignorePaths",
+    "cSpell.userWords",
+    "dart.lineLength",
+    "diffEditor.ignoreTrimWhitespace",
+    "diffEditor.renderSideBySide",
+    "dotnet.autoInsert.enableAutoInsert",
+    "dotnet.formatting.organizeImportsOnFormat",
+    "dotnet.projects.enableFileBasedPrograms",
+    "editor.codeActionsOnSave",
+    "editor.cursorSmoothCaretAnimation",
+    "editor.defaultFormatter",
+    "editor.experimental.treeSitterTelemetry",
+    "editor.fontFamily",
+    "editor.fontLigatures",
+    "editor.formatOnType",
+    "editor.guides.indentation",
+    "editor.inlineSuggest.enabled",
+    "editor.lineNumbers",
+    "editor.minimap.showSlider",
+    "editor.scrollbar.horizontal",
+    "editor.showFoldingControls",
     "errorLens.enabledDiagnosticLevels",
+    "errorLens.messageBackgroundMode",
+    "explorer.compactFolders",
+    "explorer.fileNesting.enabled",
+    "extensions.experimental.affinity",
+    "extensionSync",
+    "files.eol",
+    "files.exclude",
+    "files.watcherExclude",
+    "git.autofetch",
+    "git.openRepositoryInParentFolders",
+    "github.copilot.chat.agent.thinkingTool",
+    "github.copilot.chat.codeGeneration.instructions",
+    "github.copilot.chat.codesearch.enabled",
+    "github.copilot.chat.commitMessageGeneration.instructions",
+    "github.copilot.chat.pullRequestDescriptionGeneration.instructions",
+    "github.copilot.chat.reviewSelection.instructions",
+    "github.copilot.chat.testGeneration.instructions",
+    "github.copilot.editor.enableAutoCompletions",
+    "github.copilot.enable",
+    "github.copilot.nextEditSuggestions.enabled",
+    "gitlens.outputLevel",
+    "gitlens.telemetry.enabled",
+    "indentRainbow.colors",
+    "indentRainbow.indicatorStyle",
     "inline-parameters.borderRadius",
     "inline-parameters.fontSize",
     "inline-parameters.fontStyle",
     "inline-parameters.fontWeight",
-    "extensions.experimental.affinity",
-    "[json]",
-    "[jsonc]",
-    "editor.defaultFormatter",
-    "vscode-neovim.completionDelay",
-    "vscode-neovim.ctrlKeysForInsertMode",
-    "vscode-neovim.ctrlKeysForNormalMode",
-    "explorer.compactFolders",
-    "workbench.startupEditor",
-    "files.eol",
-    "prettier.endOfLine",
-    "turboConsoleLog.logMessagePrefix",
-    "turboConsoleLog.logType",
-    "turboConsoleLog.quote",
-    "turboConsoleLog.delimiterInsideMessage",
-    "workbench.statusBar.visible",
-    "redhat.telemetry.enabled",
-    "[xml]",
-    "errorLens.messageBackgroundMode",
-    "terminal.integrated.defaultProfile.linux",
-    "editor.cursorSmoothCaretAnimation",
-    "scm.experimental.showHistoryGraph",
-    "workbench.productIconTheme",
-    "workbench.iconTheme",
-    "editor.formatOnType",
-    "workbench.activityBar.location",
-    "editor.lineNumbers",
-    "window.commandCenter",
-    "workbench.layoutControl.enabled",
-    "github.copilot.editor.enableAutoCompletions",
-    "gitlens.outputLevel",
-    "cSpell.ignorePaths",
-    "github.copilot.chat.pullRequestDescriptionGeneration.instructions",
-    "github.copilot.chat.testGeneration.instructions",
-    "gitlens.telemetry.enabled",
-    "editor.experimental.treeSitterTelemetry",
-    "github.copilot.nextEditSuggestions.enabled",
-    "github.copilot.chat.codeGeneration.instructions",
-    "github.copilot.chat.commitMessageGeneration.instructions",
-    "github.copilot.chat.codesearch.enabled",
-    "github.copilot.chat.agent.thinkingTool",
-    "chat.agent.enabled",
-    "github.copilot.chat.reviewSelection.instructions",
-    "editor.codeActionsOnSave",
-    "vscode_custom_css.imports",
-    "chat.mcp.discovery.enabled",
-    "chat.agent.maxRequests",
     "inlineChat.enableV2",
-    "diffEditor.renderSideBySide",
-    "diffEditor.ignoreTrimWhitespace",
-    "dart.lineLength",
     "kotlin.languageServer.enabled",
-    "window.customTitleBarVisibility",
-    "window.titleBarStyle",
+    "NugetGallery.credentialProviderFolder",
+    "NugetGallery.skipRestore",
+    "NugetGallery.sources",
+    "omnisharp.enableDecompilationSupport",
+    "prettier.endOfLine",
+    "prettier.printWidth",
+    "redhat.telemetry.enabled",
+    "scm.experimental.showHistoryGraph",
+    "search.exclude",
     "svg.preview.autoShow",
+    "tailwind-fold.autoFold",
     "tailwind-fold.unfoldedTextOpacity",
     "tailwindCSS.classAttributes",
     "tailwindCSS.emmetCompletions",
     "tailwindCSS.experimental.classRegex",
     "tailwindCSS.includeLanguages",
-    "git.openRepositoryInParentFolders",
-    "chat.commandCenter.enabled",
-    "search.exclude",
-    "files.exclude",
-    "cSpell.userWords",
+    "terminal.integrated.cursorStyle",
+    "terminal.integrated.defaultProfile.linux",
+    "terminal.integrated.fontFamily",
+    "turboConsoleLog.delimiterInsideMessage",
     "turboConsoleLog.includeFileNameAndLineNum",
-    "[dart]",
-    "[html]",
-    "[javascript]",
-    "[typescript]",
-    "[typescriptreact]",
-    "NugetGallery.credentialProviderFolder",
-    "NugetGallery.sources",
-    "NugetGallery.skipRestore",
-    "csharpier.diagnosticsLevel",
-    "chat.tools.autoApprove",
-    "extensionSync",
-    "files.watcherExclude",
-    "dotnet.autoInsert.enableAutoInsert",
-    "dotnet.projects.enableFileBasedPrograms",
-    "csharp.format.enable",
-    "omnisharp.enableDecompilationSupport",
-    "dotnet.formatting.organizeImportsOnFormat",
-    "tailwind-fold.autoFold"
+    "turboConsoleLog.logMessagePrefix",
+    "turboConsoleLog.logType",
+    "turboConsoleLog.quote",
+    "vscode_custom_css.imports",
+    "vscode-neovim.completionDelay",
+    "vscode-neovim.ctrlKeysForInsertMode",
+    "vscode-neovim.ctrlKeysForNormalMode",
+    "window.commandCenter",
+    "window.customTitleBarVisibility",
+    "window.titleBarStyle",
+    "workbench.activityBar.location",
+    "workbench.colorCustomizations",
+    "workbench.colorTheme",
+    "workbench.editor.wrapTabs",
+    "workbench.iconTheme",
+    "workbench.layoutControl.enabled",
+    "workbench.productIconTheme",
+    "workbench.startupEditor",
+    "workbench.statusBar.visible",
+    "workbench.tree.renderIndentGuides"
   ],
   "workbench.startupEditor": "none",
   "workbench.statusBar.visible": false,
