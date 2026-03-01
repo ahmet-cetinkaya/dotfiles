@@ -7,76 +7,116 @@
 // custom settings, run `zed: open default settings` from the
 // command palette
 {
-  //# AI
-  "git_panel": {
-    "sort_by_path": true
-  },
-  "features": {
-    "edit_prediction_provider": "copilot"
-  },
-
   "agent": {
-    "always_allow_tool_actions": true,
-    "play_sound_when_agent_done": true,
-    "default_profile": "write"
+    "tool_permissions": {
+      "tools": {
+        "terminal": {
+          "always_allow": [
+            {
+              "pattern": "^cat\\b"
+            },
+            {
+              "pattern": "^ls\\b"
+            },
+            {
+              "pattern": "^pwd\\b"
+            },
+            {
+              "pattern": "^rg\\b"
+            },
+            {
+              "pattern": "^find\\b"
+            },
+            {
+              "pattern": "^head\\b"
+            },
+            {
+              "pattern": "^tail\\b"
+            },
+            {
+              "pattern": "^wc\\b"
+            },
+            {
+              "pattern": "^stat\\b"
+            },
+            {
+              "pattern": "^file\\b"
+            },
+            {
+              "pattern": "^sed\\s+-n\\b"
+            },
+            {
+              "pattern": "^awk\\b"
+            },
+            {
+              "pattern": "^git\\s+(status|diff|show|log|fetch|ls-files|branch|remote\\s+-v|grep|rev-parse|describe)\\b"
+            },
+            {
+              "pattern": "^gh\\s+(version|auth\\s+status|repo\\s+view|pr\\s+(status|view|list)|issue\\s+(list|view)|alias\\s+list)\\b"
+            }
+          ]
+        }
+      }
+    }
   },
-
-  //# General
-  "ui_font_size": 16,
+  "autosave": "off",
+  "base_keymap": "VSCode",
+  "buffer_font_fallbacks": ["Nerd Font"],
+  "buffer_font_family": "CaskaydiaCove Nerd Font",
   "buffer_font_size": 14,
-  "theme": {
-    "mode": "system",
-    "light": "VSCode Dark Polished",
-    "dark": "VSCode Dark Modern"
+  "colorize_brackets": true,
+  "context_servers": {
+    "mcp-server-context7": {
+      "enabled": true,
+      "remote": false,
+      "settings": {}
+    }
+  },
+  "cursor_blink": false,
+  "git_panel": {
+    "sort_by_path": true,
+    "tree_view": true
   },
   "icon_theme": "Material Icon Theme",
-
-  //# Keybindings
-  "base_keymap": "VSCode",
-
-  //# Vim
-  "vim_mode": true,
-  "cursor_blink": false,
-  "relative_line_numbers": true,
-  "scrollbar": { "show": "never" },
-  "scroll_beyond_last_line": "off", // Prevent the buffer from scrolling beyond the last line
-  "vertical_scroll_margin": 0, // Allow the cursor to reach the edges of the screen
-
-  //# Editor
-  "autosave": "off",
-  "buffer_font_family": "CaskaydiaCove Nerd Font",
-  "buffer_font_fallbacks": ["Nerd Font"],
-
-  //# Terminal
-  "terminal": {
-    "font_size": 14,
-    "font_family": "CaskaydiaCove Nerd Font Mono",
-    "font_fallbacks": ["Nerd Font Mono"],
-    "shell": "system",
-    "button": false, // Control to show or hide the terminal button in the status bar
-    "working_directory": "current_project_directory",
-    "line_height": "standard"
-  },
-
-  //# Language Server Protocol
   "lsp": {
-    //# Rust
     "rust-analyzer": {
       "initialization_options": {
-        "rust": {
-          "analyzerTargetDir": true
-        },
         "inlayHints": {
-          "maxLength": null,
+          "closureReturnTypeHints": {
+            "enable": "always"
+          },
           "lifetimeElisionHints": {
             "enable": "skip_trivial",
             "useParameterNames": true
           },
-          "closureReturnTypeHints": {
-            "enable": "always"
-          }
+          "maxLength": null
+        },
+        "rust": {
+          "analyzerTargetDir": true
         }
       }
     }
-  }
+  },
+  "relative_line_numbers": "enabled",
+  "scroll_beyond_last_line": "off",
+  "scrollbar": {
+    "show": "never"
+  },
+  "telemetry": {
+    "diagnostics": false,
+    "metrics": false
+  },
+  "terminal": {
+    "button": false,
+    "font_fallbacks": ["Nerd Font Mono"],
+    "font_family": "CaskaydiaCove Nerd Font Mono",
+    "font_size": 14,
+    "line_height": "standard",
+    "shell": "system",
+    "working_directory": "current_project_directory"
+  },
+  "theme": "VSCode Dark Modern",
+  "ui_font_size": 16,
+  "vertical_scroll_margin": 0,
+  "vim_mode": true
 }
