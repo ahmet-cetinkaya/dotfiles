@@ -1,6 +1,7 @@
 {...}: {
   imports = [
     ./../../modules/configs/fastfetch.nix
+    ./../../modules/configs/kde.nix
     ./../../modules/configs/kitty.nix
     ./../../modules/configs/konsave.nix
     ./../../modules/configs/neovim.nix
