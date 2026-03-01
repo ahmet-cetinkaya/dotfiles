@@ -1,4 +1,4 @@
-{pkgs, ...}: {
+{lib, pkgs, ...}: {
   services.flatpak.packages = [
     "io.dbeaver.DBeaverCommunity"
     "io.podman_desktop.PodmanDesktop"
@@ -27,6 +27,7 @@
     ## Rust
     rustc
     cargo
+    rustfmt
     ## Python
     python3
     uv
@@ -59,4 +60,16 @@
     statix
     deadnix
   ];
+
+  # Languages & Runtimes ## Dotnet
+  home-manager.users.ac.home.activation.dnvmInstall = lib.mkAfter ''
+    if [ -x "$HOME/.local/share/dnvm/dn/dnvm" ] || [ -x "$HOME/.dnvm/bin/dnvm" ] || command -v dnvm >/dev/null 2>&1; then
+      echo "dnvm is already installed."
+    else
+      echo "Installing dnvm..."
+      if ! curl --proto '=https' -sSf https://dnvm.net/install.sh | sh -s -- -y; then
+        echo "dnvm installation failed. Run manually: curl --proto '=https' -sSf https://dnvm.net/install.sh | sh" >&2
+      fi
+    fi
+  '';
 }
