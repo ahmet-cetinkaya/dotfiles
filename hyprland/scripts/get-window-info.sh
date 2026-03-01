@@ -7,7 +7,7 @@ WINDOW_INFO=$(hyprctl -j activewindow)
 TITLE=$(echo "$WINDOW_INFO" | jq -r '.title')
 CLASS=$(echo "$WINDOW_INFO" | jq -r '.class')
 PID=$(echo "$WINDOW_INFO" | jq -r '.pid')
-BIN_PATH=$(readlink -f /proc/$PID/exe)
+BIN_PATH=$(readlink -f "/proc/$PID/exe")
 ADDRESS=$(echo "$WINDOW_INFO" | jq -r '.address')
 WORKSPACE=$(echo "$WINDOW_INFO" | jq -r '.workspace.name')
 XY=$(echo "$WINDOW_INFO" | jq -r '.at | "\(. | tostring)"')
@@ -15,7 +15,8 @@ SIZE=$(echo "$WINDOW_INFO" | jq -r '.size | "\(. | tostring)"')
 FLOATING=$(echo "$WINDOW_INFO" | jq -r '.floating')
 
 # Format the output
-OUTPUT=$(cat <<EOF
+OUTPUT=$(
+  cat << EOF
 {
   "title": "$TITLE",
   "class": "$CLASS",

@@ -22,4 +22,3 @@ sleep 1
 # Set the monitor configuration
 hyprctl keyword monitor $MONITOR_1
 hyprctl keyword monitor $MONITOR_2
-
