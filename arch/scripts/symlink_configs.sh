@@ -2,53 +2,52 @@
 
 # Function to remove existing target
 remove_existing_target() {
-    local target="$1"
-    if [ -e "$target" ]; then
-        echo "⚠️ Target exists: $target"
-        read -p "Do you want to remove this target? (y/n): " confirmation
+  local target="$1"
+  if [ -e "$target" ]; then
+    echo "⚠️ Target exists: $target"
+    read -r -p "Do you want to remove this target? (y/n): " confirmation
 
-        if [ "$confirmation" = "y" ]; then
-            echo "🗑️ Removing target: $target"
-            rm -rf "$target"
-        else
-            echo "❌ Operation cancelled for target: $target"
-            exit 1
-        fi
+    if [ "$confirmation" = "y" ]; then
+      echo "🗑️ Removing target: $target"
+      rm -rf "$target"
+    else
+      echo "❌ Operation cancelled for target: $target"
+      exit 1
     fi
+  fi
 }
 
 # Function to create directories if they do not exist
 create_directories() {
-    local dir="$1"
-    if [ ! -d "$dir" ]; then
-        echo "🔧 Creating directory: $dir"
-        mkdir -p "$dir"
-    fi
+  local dir="$1"
+  if [ ! -d "$dir" ]; then
+    echo "🔧 Creating directory: $dir"
+    mkdir -p "$dir"
+  fi
 }
-
 
 # Basic symlink creation
 declare -A links
 links=(
-    ["$HOME/Configs/fastfetch"]="$HOME/.config/fastfetch"
-    ["$HOME/Configs/zsh/.zshrc"]="$HOME/.zshrc"
-    ["$HOME/vs-codium/settings.json"]="$HOME/.config/VSCodium/User/settings.json"
-    ["$HOME/Configs/vs-codium/product.json"]="$HOME/.config/VSCodium/product.json"
+  ["$HOME/Configs/fastfetch"]="$HOME/.config/fastfetch"
+  ["$HOME/Configs/zsh/.zshrc"]="$HOME/.zshrc"
+  ["$HOME/vs-codium/settings.json"]="$HOME/.config/VSCodium/User/settings.json"
+  ["$HOME/Configs/vs-codium/product.json"]="$HOME/.config/VSCodium/product.json"
 )
 
 for source in "${!links[@]}"; do
-    target="${links[$source]}"
+  target="${links[$source]}"
 
-    remove_existing_target "$target"
+  remove_existing_target "$target"
 
-    echo "🔗 Creating symlink for file: $target"
-    ln -s "$source" "$target"
+  echo "🔗 Creating symlink for file: $target"
+  ln -s "$source" "$target"
 done
 
 echo "✅ Basic symlink operations completed."
 
 # Floorp profile symlink creation
-read -p "Enter the Floorp profile ID (e.g., rw8fe1of.default-release): " PROFILE_ID
+read -r -p "Enter the Floorp profile ID (e.g., rw8fe1of.default-release): " PROFILE_ID
 
 SOURCE_USER_JS="$HOME/Configs/firefox/user.js"
 TARGET_USER_JS="$HOME/.var/app/one.ablaze.floorp/cache/floorp/$PROFILE_ID/user.js"

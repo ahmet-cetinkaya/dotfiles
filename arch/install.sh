@@ -5,19 +5,19 @@ echo "Updating the system..."
 sudo pacman -Syu --noconfirm
 
 # Array of script filenames
-cd $(dirname $0)
+cd "$(dirname "$0")" || exit
 
 scripts=(
- scripts/yay.sh
- scripts/snapper.sh
- scripts/sddm.sh
- scripts/kde.sh
- scripts/enable_multilib.sh
- scripts/nvidia.sh
+  scripts/yay.sh
+  scripts/snapper.sh
+  scripts/sddm.sh
+  scripts/kde.sh
+  scripts/enable_multilib.sh
+  scripts/nvidia.sh
 )
 
 helpers=(
- scripts/helpers/check_package_installed.sh
+  scripts/helpers/check_package_installed.sh
 )
 
 # Set executable permissions for the scripts
@@ -42,8 +42,7 @@ fi
 # Run each script in the array
 for script in "${scripts[@]}"; do
   echo "Running $script..."
-  ./"$script"
-  if [ $? -ne 0 ]; then
+  if ! ./"$script"; then
     echo "$script failed. Exiting."
     exit 1
   fi

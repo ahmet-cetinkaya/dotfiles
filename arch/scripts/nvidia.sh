@@ -12,5 +12,5 @@ echo "Run nvidia-all package..."
 makepkg -si
 
 echo "Cleaning up..."
-cd ~
+cd ~ || exit
 rm -rf ~/Downloads/nvidia-all

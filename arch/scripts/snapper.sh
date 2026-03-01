@@ -16,7 +16,7 @@ else
 fi
 
 # Check if snapper-rollback is already installed
-if pacman -Qi snapper-rollback &>/dev/null; then
+if pacman -Qi snapper-rollback &> /dev/null; then
   echo "snapper-rollback is already installed."
 else
   echo "Installing snapper-rollback..."

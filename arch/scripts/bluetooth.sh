@@ -16,7 +16,7 @@ systemctl status bluetooth.service | grep Active
 # Add the user to the bluetooth group (optional)
 # This step grants the user permission to manage Bluetooth devices
 echo "Adding the user to the bluetooth group..."
-sudo usermod -aG lp $USER
+sudo usermod -aG lp "$USER"
 
 # Bluetooth setup
 echo "Scanning for Bluetooth devices..."

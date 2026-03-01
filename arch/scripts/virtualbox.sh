@@ -11,10 +11,10 @@ sudo pacman -S --needed linux-headers linux-lts-headers --noconfirm
 
 # Sign modules (if using a custom kernel)
 if [ -d "/lib/modules/$(uname -r)/kernel/misc" ]; then
-    echo "🔑 Signing VirtualBox kernel modules..."
-    sudo sh -c 'for module in /lib/modules/$(uname -r)/kernel/misc/{vboxdrv.ko,vboxnetadp.ko,vboxnetflt.ko}; do ./scripts/sign-file sha1 certs/signing_key.pem certs/signing_key.x509 $module; done'
+  echo "🔑 Signing VirtualBox kernel modules..."
+  sudo sh -c 'for module in /lib/modules/$(uname -r)/kernel/misc/{vboxdrv.ko,vboxnetadp.ko,vboxnetflt.ko}; do ./scripts/sign-file sha1 certs/signing_key.pem certs/signing_key.x509 $module; done'
 else
-    echo "🔒 No custom kernel detected. Skipping module signing."
+  echo "🔒 No custom kernel detected. Skipping module signing."
 fi
 
 # Load VirtualBox kernel modules
@@ -28,7 +28,7 @@ sudo systemctl start systemd-modules-load.service
 
 # USB access configuration
 echo "🔌 Adding user to vboxusers group..."
-sudo usermod -aG vboxusers $USER
+sudo usermod -aG vboxusers "$USER"
 
 # Install Guest Additions ISO (if needed)
 echo "💻 Installing VirtualBox Guest Additions ISO..."

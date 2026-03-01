@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Check if sddm is already installed
-if pacman -Qi sddm &>/dev/null; then
+if pacman -Qi sddm &> /dev/null; then
   echo "SDDM is already installed."
 else
   echo "Installing sddm and sddm-kcm..."

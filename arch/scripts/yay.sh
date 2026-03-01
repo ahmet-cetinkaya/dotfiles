@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Check if yay is already installed
-if pacman -Qi yay &>/dev/null; then
+if pacman -Qi yay &> /dev/null; then
   echo "yay is already installed."
 else
   echo "Installing yay..."
@@ -15,7 +15,6 @@ else
 
   # Clean up the yay directory if desired
   echo "Cleaning up yay build directory..."
-  cd ~
+  cd ~ || exit
   sudo rm -rf ~/Downloads/yay
 fi
-

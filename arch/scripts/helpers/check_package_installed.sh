@@ -9,19 +9,19 @@ if [ -z "$package_or_group" ]; then
 fi
 
 # Check if the given name is an installed package
-if pacman -Q "$package_or_group" &>/dev/null; then
+if pacman -Q "$package_or_group" &> /dev/null; then
   echo "Yes, $package_or_group package is installed on the system."
   exit 0
 fi
 
 # Check if the given name could be a group
-group_packages=$(pacman -Qg "$package_or_group" 2>/dev/null | awk '{print $2}')
+group_packages=$(pacman -Qg "$package_or_group" 2> /dev/null | awk '{print $2}')
 
-if [ $? -eq 0 ] && [ ! -z "$group_packages" ]; then
+if [ -n "$group_packages" ]; then
   # Check if all packages in the group are installed
   group_installed=true
   for package in $group_packages; do
-    if ! pacman -Q "$package" &>/dev/null; then
+    if ! pacman -Q "$package" &> /dev/null; then
       group_installed=false
       break
     fi

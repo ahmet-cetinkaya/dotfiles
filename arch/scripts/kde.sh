@@ -14,13 +14,11 @@ packages=(
 # Initialize variable
 installed=false
 
-cd $(dirname $0)
+cd "$(dirname "$0")" || exit
 # Check and install missing packages
 for pkg in "${packages[@]}"; do
   # Check if the package is installed
-  ./helpers/check_package_installed.sh "$pkg"
-
-  if [ $? -ne 0 ]; then
+  if ! ./helpers/check_package_installed.sh "$pkg"; then
     # Install the package if it's not already installed
     sudo pacman -S --noconfirm "$pkg"
     installed=true
