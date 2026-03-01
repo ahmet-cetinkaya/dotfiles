@@ -1,5 +1,26 @@
 return {
-  "Mofiqul/vscode.nvim", -- vscode theme
+  {
+    "Mofiqul/vscode.nvim",
+    lazy = false,
+    priority = 1000,
+    config = function()
+      local c = require("vscode.colors").get_colors()
+      require("vscode").setup({
+        style = "dark",
+        transparent = true,
+        italic_comments = true,
+        underline_links = true,
+        disable_nvimtree_bg = true,
+        color_overrides = {
+          vscLineNumber = "#F4D03F",
+        },
+        group_overrides = {
+          Cursor = { fg = c.vscDarkBlue, bg = c.vscLightGreen, bold = true },
+        },
+      })
+      vim.cmd.colorscheme("vscode")
+    end,
+  },
 
   {
     "nvimdev/dashboard-nvim",
