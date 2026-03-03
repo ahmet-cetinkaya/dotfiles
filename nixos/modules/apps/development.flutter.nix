@@ -100,11 +100,12 @@
 in {
   environment = {
     systemPackages = with pkgs; [
+      # Flutter & Android
       fvm
       androidSdk.androidsdk
       fixFlutterAndroid
 
-      # Linux development
+      # Linux Development
       gtk3
       gtk3.dev
       glib
@@ -146,6 +147,7 @@ in {
     };
   };
 
+  # Activation Scripts
   # Keep Flutter SDK layout and Android licenses synced after each system switch.
   # Runs as user "ac" so files in $HOME/Android/Sdk keep correct ownership.
   system.activationScripts.fixFlutterAndroid = {

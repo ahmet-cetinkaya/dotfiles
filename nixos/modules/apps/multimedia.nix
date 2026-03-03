@@ -1,14 +1,18 @@
 _: {
+  # Services
   home-manager.users.ac = {
     services.easyeffects.enable = true;
   };
 
+  # Flatpak
   services.flatpak.packages = [
-    "org.kde.kdenlive"
+    # Video Players
     "io.mpv.Mpv"
+    # Video Editing
+    "org.kde.kdenlive"
+    # Streaming
     "com.stremio.Stremio"
-    "org.blender.Blender"
-    "org.inkscape.Inkscape"
+    # Cloud Storage
     "com.nextcloud.desktopclient.nextcloud"
   ];
 }

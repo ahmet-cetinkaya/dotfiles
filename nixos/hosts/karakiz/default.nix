@@ -1,4 +1,4 @@
-{...}: {
+{pkgs, ...}: {
   imports = [
     ./hardware-configuration.nix
     # Core
@@ -9,25 +9,30 @@
     ../../modules/core/fonts.nix
     ../../modules/core/locale.nix
     ../../modules/core/network.nix
+    ../../modules/core/nvidia.nix
+    ../../modules/core/plasma.nix
     ../../modules/core/printing.nix
     ../../modules/core/sound.nix
     ../../modules/core/swap.nix
     ../../modules/core/system.nix
     ../../modules/core/users.nix
     ../../modules/core/virtualisation.nix
-    # Desktop
-    ../../modules/desktop/nvidia.nix
-    ../../modules/desktop/plasma.nix
     # Apps
-    ../../modules/apps/browsers.nix
+    # Development
     ../../modules/apps/development.flutter.nix
     ../../modules/apps/development.nix
+    # Games
     ../../modules/apps/games.nix
-    ../../modules/apps/media.nix
+    # Graphics
+    ../../modules/apps/graphics.nix
+    # Internet
+    ../../modules/apps/internet.nix
+    # Multimedia
+    ../../modules/apps/multimedia.nix
+    # Productivity
     ../../modules/apps/productivity.nix
-    ../../modules/apps/social.nix
-    ../../modules/apps/terminal.nix
-    ../../modules/apps/tools.nix
+    # Utilities
+    ../../modules/apps/utilities.nix
   ];
 
   networking.hostName = "karakiz";

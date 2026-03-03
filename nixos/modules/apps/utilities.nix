@@ -1,10 +1,61 @@
 {pkgs, ...}: {
   users.users.ac.shell = pkgs.zsh;
 
+  # Flatpak
+  services.flatpak.packages = [
+    # System Tools
+    "org.bleachbit.BleachBit"
+    "org.kde.filelight"
+    pkgs."orca-slicer-flatpak"
+  ];
+
   environment.systemPackages = with pkgs; [
+    # Terminal
     kitty
+
+    # CLI Utilities
     fastfetch
     eza
+    zoxide
+    btop
+    jq
+
+    # Download Tools
+    curl
+    wget
+
+    # Version Control
+    git
+    gh
+
+    # Search Tools
+    ripgrep
+    fd
+
+    # Archive Tools
+    unzip
+    zip
+    tree
+
+    # Editors
+    neovim
+    nano
+
+    # Build Tools
+    pkg-config
+    gcc
+    clang
+    cmake
+    ninja
+
+    # Containers
+    docker
+    docker-compose
+    podman
+
+    # System Tools
+    konsave
+    gparted
   ];
 
   environment.sessionVariables = {
@@ -12,6 +63,9 @@
   };
 
   programs = {
+    kdeconnect.enable = true;
+
+    # Shell
     zsh = {
       enable = true;
       enableCompletion = true;
@@ -37,12 +91,4 @@
       enable = true;
     };
   };
-
-  system.activationScripts.terminalConfig.text = ''
-    mkdir -p /home/ac/.config
-    ln -sfn /home/ac/Configs/kitty /home/ac/.config/kitty
-    ln -sfn /home/ac/Configs/zsh/.zshrc /home/ac/.zshrc
-    ln -sfn /home/ac/Configs/starship/starship.toml /home/ac/.config/starship.toml
-    chown -R ac:users /home/ac/.config/kitty /home/ac/.config/starship.toml /home/ac/.zshrc
-  '';
 }
