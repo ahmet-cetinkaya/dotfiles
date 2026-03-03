@@ -1,4 +1,4 @@
-{config, ...}: {
+{config, pkgs, ...}: {
   # Enable OpenGL
   hardware.graphics = {
     enable = true;
@@ -7,6 +7,30 @@
 
   # Load nvidia driver for Xorg and Wayland
   services.xserver.videoDrivers = ["nvidia"];
+
+  # Kernel parameters for NVIDIA/Wayland stability
+  boot.kernelParams = [
+    # Enable NVIDIA's DRM KMS (Direct Rendering Manager Kernel Mode Setting)
+    # Required for proper Wayland support on NVIDIA
+    "nvidia-drm.modeset=1"
+    "nvidia-drm.fbdev=1"
+    # Disable implicit sync for better stability
+    "nvidia.NVreg_EnableGpuFirmware=0"
+  ];
+
+  # NVIDIA/Wayland stability environment variables for KDE Plasma 6
+  environment.sessionVariables = {
+    # Use GBM backend instead of EGL (more stable on NVIDIA)
+    __GLX_VENDOR_LIBRARY_NAME = "nvidia";
+    # Enable NVIDIA's proprietary driver extensions
+    GBM_BACKEND = "nvidia-drm";
+    # Use NVIDIA as the default renderer
+    LIBVA_DRIVER_NAME = "nvidia";
+    # Disable implicit sync for better stability (Plasma 6 + NVIDIA)
+    __GL_SYNC_TO_VBLANK = "0";
+    # Required for Firefox/NVIDIA hardware acceleration
+    MOZ_DISABLE_RDD_SANDBOX = "1";
+  };
 
   hardware.nvidia = {
     # Modesetting is required.
