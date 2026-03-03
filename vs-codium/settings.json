@@ -9,7 +9,6 @@
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
   "[dart]": {
-    "dart.lineLength": 120,
     "editor.formatOnSave": true,
     "editor.formatOnType": true,
     "editor.rulers": [80],
@@ -111,7 +110,10 @@
     "source.fixAll": "always",
     "source.removeUnusedImports": "explicit"
   },
-  "editor.fontFamily": "'SauceCodePro NFM'",
+  "editor.fontFamily": "'ZedMono NFM', 'CaskaydiaCove NFM', monospace",
+  "editor.fontLigatures": true,
+  "editor.fontSize": 16,
+  "editor.fontWeight": "bold",
   "editor.lineNumbers": "relative",
   "errorLens.enabledDiagnosticLevels": ["error", "warning"],
   "extensions.experimental.affinity": {
@@ -234,30 +236,36 @@
     "**/node_modules/*/**": true
   },
   "git.autofetch": true,
+  "git.confirmSync": false,
   "git.openRepositoryInParentFolders": "always",
   "github.copilot.nextEditSuggestions.enabled": true,
-  "gitlens.outputLevel": "debug",
+  "gitlens.outputLevel": "error",
   "gitlens.telemetry.enabled": false,
   "indentRainbow.indicatorStyle": "light",
   "inlineChat.enableV2": true,
+  "kilo-code.allowedCommands": [
+    "git log",
+    "git diff",
+    "git show",
+    "gh issue view",
+    "sed",
+    "shellcheck",
+    "head",
+    "grep"
+  ],
+  "kilo-code.debug": false,
+  "kilo-code.deniedCommands": [],
   "kotlin.languageServer.enabled": false,
   "NugetGallery.credentialProviderFolder": "{user-profile}/.nuget/plugins/netcore/CredentialProvider.Microsoft",
   "NugetGallery.skipRestore": false,
-  "NugetGallery.sources": [
-    "{\"name\":\"nuget.org\",\"url\":\"https://api.nuget.org/v3/index.json\"}"
-  ],
+  "NugetGallery.sources": ["{\"name\":\"nuget.org\",\"url\":\"https://api.nuget.org/v3/index.json\"}"],
   "omnisharp.enableDecompilationSupport": true,
   "prettier.printWidth": 120,
   "redhat.telemetry.enabled": false,
   "svg.preview.autoShow": true,
   "tailwind-fold.autoFold": false,
   "tailwind-fold.unfoldedTextOpacity": 0.6,
-  "tailwindCSS.classAttributes": [
-    "class",
-    "className",
-    "ngClass",
-    "styleClass"
-  ],
+  "tailwindCSS.classAttributes": ["class", "className", "ngClass", "styleClass"],
   "tailwindCSS.emmetCompletions": true,
   "tailwindCSS.experimental.classRegex": [
     "tw`([^`]+)`",
@@ -291,7 +299,10 @@
   },
   "terminal.integrated.cursorStyle": "line",
   "terminal.integrated.defaultProfile.linux": "zsh",
-  "terminal.integrated.fontFamily": "'CaskaydiaCove NFM', Consolas",
+  "terminal.integrated.fontFamily": "'ZedMono NF', monospace",
+  "terminal.integrated.fontLigatures.enabled": true,
+  "terminal.integrated.fontSize": 15,
+  "terminal.integrated.fontWeight": "bold",
   "vscode-neovim.ctrlKeysForInsertMode": ["t"],
   "vscode-neovim.ctrlKeysForNormalMode": [
     "a",
@@ -471,7 +482,10 @@
     "workbench.productIconTheme",
     "workbench.startupEditor",
     "workbench.statusBar.visible",
-    "workbench.tree.renderIndentGuides"
+    "workbench.tree.renderIndentGuides",
+    "terminal.integrated.fontWeight",
+    "editor.fontSize",
+    "terminal.integrated.fontSize"
   ],
   "workbench.startupEditor": "none",
   "workbench.statusBar.visible": false,
