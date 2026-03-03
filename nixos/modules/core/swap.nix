@@ -1,4 +1,4 @@
-{pkgs, ...}: {
+_: {
   # Enable zram - compressed RAM-based swap
   # More efficient than traditional swap: reduces disk I/O, improves performance
   zramSwap = {

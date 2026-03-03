@@ -18,7 +18,7 @@
     '';
 
     sessionVariables = {
-      CHROME_EXECUTABLE = "google-chrome-stable";
+      CHROME_EXECUTABLE = "chromium";
     };
     pathsToLink = ["/lib/pkgconfig" "/include"];
   };
@@ -54,4 +54,8 @@
   };
 
   system.stateVersion = "26.05";
+
+  # OpenRGB with all plugins for RGB hardware control
+  services.hardware.openrgb.enable = true;
+  environment.systemPackages = with pkgs; [openrgb-with-all-plugins];
 }

@@ -3,12 +3,14 @@
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
+    nixpkgs-stable.url = "github:nixos/nixpkgs/nixos-25.11";
+    nur.url = "github:nix-community/NUR";
+    nix-flatpak.url = "github:gmodena/nix-flatpak/?ref=latest";
     home-manager = {
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    nur.url = "github:nix-community/NUR";
-    nix-flatpak.url = "github:gmodena/nix-flatpak/?ref=latest";
+    # pkgs
     zen-browser.url = "github:youwen5/zen-browser-flake";
     whph.url = "github:ahmet-cetinkaya/whph?dir=packaging/nix";
   };
