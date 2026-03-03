@@ -16,4 +16,11 @@
     chromium
     inputs.zen-browser.packages.${pkgs.stdenv.hostPlatform.system}.default
   ];
+
+  # Chrome Config
+  environment = {
+    sessionVariables = {
+      CHROME_EXECUTABLE = "chromium";
+    };
+  };
 }

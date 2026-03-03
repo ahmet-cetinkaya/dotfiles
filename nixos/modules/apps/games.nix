@@ -1,8 +1,9 @@
 {pkgs, ...}: {
   # Flatpak
   services.flatpak.packages = [
-    # Steam
+    # Platforms
     "com.valvesoftware.Steam"
+    # Games
     pkgs."hytale-launcher-flatpak"
   ];
 }

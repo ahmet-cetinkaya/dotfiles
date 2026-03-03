@@ -9,6 +9,9 @@
     pkgs."orca-slicer-flatpak"
   ];
 
+  # OpenRGB with all plugins for RGB hardware control
+  services.hardware.openrgb.enable = true;
+
   environment.systemPackages = with pkgs; [
     # Terminal
     kitty
@@ -19,6 +22,7 @@
     zoxide
     btop
     jq
+    nano
 
     # Download Tools
     curl
@@ -37,10 +41,6 @@
     zip
     tree
 
-    # Editors
-    neovim
-    nano
-
     # Build Tools
     pkg-config
     gcc
@@ -56,6 +56,7 @@
     # System Tools
     konsave
     gparted
+    openrgb-with-all-plugins
   ];
 
   environment.sessionVariables = {
