@@ -5,6 +5,7 @@
     ./../../modules/configs/kitty.nix
     ./../../modules/configs/konsave.nix
     ./../../modules/configs/neovim.nix
+    ./../../modules/configs/orca-slicer.nvidia.nix
     ./../../modules/configs/starship.nix
     ./../../modules/configs/vesktop.nix
     ./../../modules/configs/vscodium.nix
