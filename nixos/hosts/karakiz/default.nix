@@ -11,6 +11,7 @@
     ../../modules/core/network.nix
     ../../modules/core/printing.nix
     ../../modules/core/sound.nix
+    ../../modules/core/swap.nix
     ../../modules/core/system.nix
     ../../modules/core/users.nix
     ../../modules/core/virtualisation.nix
