@@ -16,7 +16,6 @@
     ../../modules/core/swap.nix
     ../../modules/core/system.nix
     ../../modules/core/users.nix
-    ../../modules/core/virtualisation.nix
     # Apps
     # Development
     ../../modules/apps/development.flutter.nix

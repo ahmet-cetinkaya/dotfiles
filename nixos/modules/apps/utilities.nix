@@ -1,6 +1,4 @@
 {pkgs, ...}: {
-  users.users.ac.shell = pkgs.zsh;
-
   # Flatpak
   services.flatpak.packages = [
     # System Tools
@@ -8,9 +6,6 @@
     "org.kde.filelight"
     pkgs."orca-slicer-flatpak"
   ];
-
-  # OpenRGB with all plugins for RGB hardware control
-  services.hardware.openrgb.enable = true;
 
   environment.systemPackages = with pkgs; [
     # Terminal
@@ -59,14 +54,23 @@
     openrgb-with-all-plugins
   ];
 
+  # OpenRGB with all plugins for RGB hardware control
+  services.hardware.openrgb.enable = true;
+
+  # Containers
+  virtualisation.docker.enable = true;
+  virtualisation.podman.enable = true;
+
+  programs.kdeconnect.enable = true;
+
+  # Shell
+  users.users.ac.shell = pkgs.zsh;
+
   environment.sessionVariables = {
     TERMINAL = "kitty";
   };
 
   programs = {
-    kdeconnect.enable = true;
-
-    # Shell
     zsh = {
       enable = true;
       enableCompletion = true;
@@ -82,7 +86,6 @@
       shellAliases = {
         ll = "ls -l";
         ls = "eza --icons=auto";
-        update = "sudo nixos-rebuild switch";
       };
     };
     starship = {
