@@ -18,7 +18,6 @@
     ../../modules/core/users.nix
     # Apps
     # Development
-    ../../modules/apps/development.flutter.nix
     ../../modules/apps/development.nix
     # Games
     ../../modules/apps/games.nix
