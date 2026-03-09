@@ -35,6 +35,19 @@
 
   networking.hostName = "karakiz";
 
-  # Development
-  nixpkgs.config.android_sdk.accept_license = true;
+  boot.loader.systemd-boot = {
+    extraEntries."windows11-atlas.conf" = ''
+      title Windows 11 Atlas OS
+      efi /EFI/Microsoft/Boot/bootmgfw.efi
+      sort-key o_windows_11_atlas
+    '';
+    extraInstallCommands = ''
+      if grep -q '^auto-entries ' /boot/loader/loader.conf; then
+        sed -i 's/^auto-entries .*/auto-entries no/' /boot/loader/loader.conf
+      else
+        printf '\nauto-entries no\n' >> /boot/loader/loader.conf
+      fi
+    '';
+  };
+
 }
