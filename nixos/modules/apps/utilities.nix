@@ -4,7 +4,7 @@
     # System Tools
     "org.bleachbit.BleachBit"
     "org.kde.filelight"
-    pkgs."orca-slicer-flatpak"
+    "org.kde.isoimagewriter"
   ];
 
   environment.systemPackages = with pkgs; [
@@ -38,6 +38,7 @@
 
     # Build Tools
     pkg-config
+    gnumake
     gcc
     clang
     cmake

@@ -8,10 +8,9 @@ _: {
   services.flatpak.packages = [
     # Video Players
     "io.mpv.Mpv"
-    # Video Editing
-    "org.kde.kdenlive"
     # Streaming
     "com.stremio.Stremio"
+    "org.qbittorrent.qBittorrent"
     # Cloud Storage
     "com.nextcloud.desktopclient.nextcloud"
   ];

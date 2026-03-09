@@ -4,6 +4,7 @@
     ./development.tools-dotnet.nix
     ./development.tools-uv.nix
     ./development.tools-bun.nix
+    ./development.fonts.nix
   ];
 
   # Flatpak
@@ -21,30 +22,39 @@
     cmake
     ninja
     pkg-config
+
     ## JS
     nodejs
     bun
     prettier
+
     ## Go
     go
+
     ## .NET
     dotnet-sdk
+
     ## Java
     jdk17
     gradle
     ktfmt
+
     ## Rust
     rustc
     cargo
     rustfmt
+
     ## Python
     python3
     uv
+
     ## Shell
     shellcheck
     shfmt
+
     ## Lua
     stylua
+
     ## TOML
     taplo
 

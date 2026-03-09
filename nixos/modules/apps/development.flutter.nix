@@ -147,6 +147,8 @@ in {
     };
   };
 
+  nixpkgs.config.android_sdk.accept_license = true;
+
   # Activation Scripts
   # Keep Flutter SDK layout and Android licenses synced after each system switch.
   # Runs as user "ac" so files in $HOME/Android/Sdk keep correct ownership.

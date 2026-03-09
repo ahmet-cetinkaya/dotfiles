@@ -1,6 +1,7 @@
-{pkgs, ...}: {
-  fonts.packages = with pkgs; [
-    nerd-fonts.caskaydia-cove # Cascadia Code Nerd Font Version
-    nerd-fonts.zed-mono # Iosevka Nerd Font Version
-  ];
+{ pkgs, inputs, ... }:
+{
+  fonts.fontconfig.enable = true;
+  fonts.packages = (with inputs.nixpkgs-stable.legacyPackages.${pkgs.system}; [
+    manrope
+  ]);
 }

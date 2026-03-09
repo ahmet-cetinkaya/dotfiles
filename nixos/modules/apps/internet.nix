@@ -7,14 +7,18 @@
   services.flatpak.packages = [
     # Social
     "dev.vencord.Vesktop"
+
+    # Network
+    "com.protonvpn.www"
   ];
 
   # System packages
   environment.systemPackages = with pkgs; [
     # Browsers
+    inputs.zen-browser.packages.${pkgs.stdenv.hostPlatform.system}.default
+    brave
     firefox
     chromium
-    inputs.zen-browser.packages.${pkgs.stdenv.hostPlatform.system}.default
   ];
 
   # Chrome Config
