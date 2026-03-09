@@ -92,5 +92,6 @@ in
       sourceProvenance = with sourceTypes; [binaryNativeCode];
       platforms = ["x86_64-linux" "aarch64-linux"];
       mainProgram = "zed";
+      maintainers = ["Ahmet Çetinkaya <contact@ahmetcetinkaya.me>"];
     };
   }
