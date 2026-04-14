@@ -2,6 +2,10 @@
   nixpkgs.config.allowUnfree = true;
 
   environment = {
+    systemPackages = with pkgs; [
+      icu
+    ];
+
     # Forces propagation of PKG_CONFIG_PATH
     extraInit = ''
       export PKG_CONFIG_PATH="${pkgs.lib.makeSearchPath "lib/pkgconfig" [
@@ -47,6 +51,7 @@
       sqlite
       stdenv.cc.cc
       zlib
+      icu
     ];
   };
 

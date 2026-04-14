@@ -7,6 +7,9 @@ _: {
       "--dpi-desync-ttl=2"
       # Apply desync only to first 9 packets out, 3 packets in
       "--dpi-desync-cutoff=n9"
+      # Exclude local network traffic from DPI bypass
+      # This fixes MIME type issues with local web services (e.g., Klipper at 192.168.1.5)
+      "--ipset-exclude-ip=10.0.0.0/8,172.16.0.0/12,192.168.0.0/16,127.0.0.0/8,169.254.0.0/16"
     ];
   };
 

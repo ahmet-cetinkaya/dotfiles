@@ -1,5 +1,6 @@
 {...}: {
   imports = [
+    ./../../modules/configs/agent-ctrl.nix
     ./../../modules/configs/fastfetch.nix
     ./../../modules/configs/kde.nix
     ./../../modules/configs/kitty.nix

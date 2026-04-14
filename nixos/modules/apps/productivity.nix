@@ -27,6 +27,7 @@ in {
   environment.systemPackages = with pkgs; [
     whph
     obsidian
+    affine
   ];
 
   # Firewall

@@ -1,4 +1,9 @@
-{pkgs, ...}: let
+{
+  pkgs,
+  lib,
+  ...
+}:
+let
   flutterLinuxPkgConfigPath = pkgs.lib.makeSearchPath "lib/pkgconfig" [
     pkgs.gtk3.dev
     pkgs.glib.dev
@@ -12,9 +17,18 @@
   ];
 
   androidSdk = pkgs.androidenv.composeAndroidPackages {
-    platformVersions = ["34" "35"];
-    abiVersions = ["armeabi-v7a" "arm64-v8a"];
-    buildToolsVersions = ["34.0.0" "35.0.0"];
+    platformVersions = [
+      "34"
+      "35"
+    ];
+    abiVersions = [
+      "armeabi-v7a"
+      "arm64-v8a"
+    ];
+    buildToolsVersions = [
+      "34.0.0"
+      "35.0.0"
+    ];
     includeEmulator = true;
     includeSources = false;
     includeSystemImages = true;
@@ -97,10 +111,17 @@
 
         echo "Android SDK structure fixed in $SDK_ROOT"
   '';
-in {
+
+  dartTools = [
+    "rps"
+    "dart_unused_files"
+  ];
+in
+{
   environment = {
     systemPackages = with pkgs; [
       # Flutter & Android
+      dart
       fvm
       androidSdk.androidsdk
       fixFlutterAndroid
@@ -153,7 +174,7 @@ in {
   # Keep Flutter SDK layout and Android licenses synced after each system switch.
   # Runs as user "ac" so files in $HOME/Android/Sdk keep correct ownership.
   system.activationScripts.fixFlutterAndroid = {
-    deps = ["users"];
+    deps = [ "users" ];
     text = ''
       if [ -d /home/ac ]; then
         echo "Running fix-flutter-android for user ac..."
@@ -163,4 +184,36 @@ in {
       fi
     '';
   };
+
+  home-manager.users.ac.home.activation.dartGlobalTools = lib.mkAfter ''
+        export PATH="/run/current-system/sw/bin:$PATH"
+
+        if ! command -v dart >/dev/null 2>&1; then
+          echo "dart not found, skipping dart global tools installation."
+          exit 0
+        fi
+
+        ensure_dart_tool_latest() {
+          local tool_name="$1"
+
+          if dart pub global list | awk '{print $1}' | grep -qx "$tool_name"; then
+            echo "Updating dart global tool: $tool_name..."
+            if ! dart pub global upgrade "$tool_name"; then
+              echo "dart global tool upgrade failed: $tool_name" >&2
+            fi
+            return
+          fi
+
+          echo "Installing dart global tool: $tool_name..."
+          if ! dart pub global activate "$tool_name"; then
+            echo "dart global tool activation failed: $tool_name" >&2
+          fi
+        }
+
+        export PATH="$HOME/.pub-cache/bin:$PATH"
+
+    ${lib.concatMapStringsSep "\n" (
+      tool_name: "    ensure_dart_tool_latest \"${tool_name}\""
+    ) dartTools}
+  '';
 }

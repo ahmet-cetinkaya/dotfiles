@@ -1,10 +1,13 @@
-{pkgs, ...}: {
+{ pkgs, ... }:
+{
   # Flatpak
   services.flatpak.packages = [
     # System Tools
     "org.bleachbit.BleachBit"
     "org.kde.filelight"
     "org.kde.isoimagewriter"
+    "com.anydesk.Anydesk"
+    "org.filezillaproject.Filezilla"
   ];
 
   environment.systemPackages = with pkgs; [
@@ -12,12 +15,15 @@
     kitty
 
     # CLI Utilities
-    fastfetch
-    eza
-    zoxide
     btop
+    direnv
+    eza
+    fastfetch
     jq
+    killall
     nano
+    tree
+    zoxide
 
     # Download Tools
     curl
@@ -28,13 +34,14 @@
     gh
 
     # Search Tools
-    ripgrep
     fd
+    ripgrep
 
     # Archive Tools
+    p7zip
+    unar
     unzip
     zip
-    tree
 
     # Build Tools
     pkg-config
@@ -48,15 +55,30 @@
     docker
     docker-compose
     podman
+    act
 
     # System Tools
     konsave
     gparted
     openrgb-with-all-plugins
+
+    # Media Tools
+    ffmpeg
+    imagemagick
+    tesseract
+
+    # Sandbox & Networking
+    bubblewrap
+    socat
   ];
 
   # OpenRGB with all plugins for RGB hardware control
-  services.hardware.openrgb.enable = true;
+  services.hardware.openrgb = {
+    enable = true;
+    motherboard = "amd";
+  };
+
+  systemd.services.openrgb.serviceConfig.RestartSec = 5;
 
   # Containers
   virtualisation.docker.enable = true;
@@ -80,7 +102,12 @@
 
       ohMyZsh = {
         enable = true;
-        plugins = ["git" "sudo" "docker" "kubectl"];
+        plugins = [
+          "git"
+          "sudo"
+          "docker"
+          "kubectl"
+        ];
         theme = "robbyrussell";
       };
 

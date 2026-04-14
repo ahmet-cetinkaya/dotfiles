@@ -13,40 +13,49 @@
     # pkgs
     zen-browser.url = "github:youwen5/zen-browser-flake";
     whph.url = "github:ahmet-cetinkaya/whph?dir=packaging/nix";
-  };
-
-  outputs = {
-    nixpkgs,
-    home-manager,
-    nix-flatpak,
-    ...
-  } @ inputs: let
-    system = "x86_64-linux";
-  in {
-    nixosConfigurations.karakiz = nixpkgs.lib.nixosSystem {
-      specialArgs = {inherit inputs;};
-      modules = [
-        {
-          nixpkgs.hostPlatform = system;
-          nixpkgs.overlays = [
-            (import ./pkgs)
-          ];
-        }
-        nix-flatpak.nixosModules.nix-flatpak
-        ./hosts/karakiz/default.nix
-
-        # Home Manager
-        home-manager.nixosModules.home-manager
-        {
-          home-manager = {
-            useGlobalPkgs = true;
-            useUserPackages = true;
-            users.ac = import ./home/ac/default.nix;
-            extraSpecialArgs = {inherit inputs;};
-            backupFileExtension = "hm-backup";
-          };
-        }
-      ];
+    # antigravity - agentic development platform
+    antigravity-nix = {
+      url = "github:jacopone/antigravity-nix";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
   };
+
+  outputs =
+    {
+      nixpkgs,
+      home-manager,
+      nix-flatpak,
+      ...
+    }@inputs:
+    let
+      system = "x86_64-linux";
+    in
+    {
+      nixosConfigurations.karakiz = nixpkgs.lib.nixosSystem {
+        specialArgs = { inherit inputs; };
+        modules = [
+          {
+            nixpkgs.hostPlatform = system;
+            nixpkgs.overlays = [
+              (import ./pkgs)
+              inputs.antigravity-nix.overlays.default
+            ];
+          }
+          nix-flatpak.nixosModules.nix-flatpak
+          ./hosts/karakiz/default.nix
+
+          # Home Manager
+          home-manager.nixosModules.home-manager
+          {
+            home-manager = {
+              useGlobalPkgs = true;
+              useUserPackages = true;
+              users.ac = import ./home/ac/default.nix;
+              extraSpecialArgs = { inherit inputs; };
+              backupFileExtension = "hm-backup";
+            };
+          }
+        ];
+      };
+    };
 }
