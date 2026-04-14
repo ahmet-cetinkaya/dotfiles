@@ -271,9 +271,6 @@
     "MessageLogger": {
       "enabled": false
     },
-    "MessageTags": {
-      "enabled": false
-    },
     "MoreCommands": {
       "enabled": false
     },
@@ -603,6 +600,9 @@
     },
     "ExpressionCloner": {
       "enabled": false
+    },
+    "CustomCommands": {
+      "enabled": false
     }
   },
   "notifications": {
@@ -615,7 +615,11 @@
     "authenticated": false,
     "url": "https://api.vencord.dev/",
     "settingsSync": false,
-    "settingsSyncVersion": 1751047540638
+    "settingsSyncVersion": 1773488748626
   },
-  "eagerPatches": false
+  "eagerPatches": false,
+  "uiElements": {
+    "chatBarButtons": {},
+    "messagePopoverButtons": {}
+  }
 }
