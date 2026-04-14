@@ -129,13 +129,14 @@ hs_err_pid*
 .ai/
 .claude/
 .gemini/
+.opencode/
 .qwen/
-*QWEN.md
+.serena/
+.specify/
+*AGENTS.md
 *CLAUDE.md
 *GEMINI.md
-.specify/
-.opencode/
-*AGENTS.md
+*QWEN.md
 
 # Archives
 *.7z
@@ -146,7 +147,3 @@ hs_err_pid*
 *.rar
 *.tar
 *.zip
-
-# System files
-core
-core.*
