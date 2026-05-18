@@ -55,6 +55,7 @@
     docker
     docker-compose
     podman
+    distrobox
     act
 
     # System Tools
@@ -70,6 +71,10 @@
     # Sandbox & Networking
     bubblewrap
     socat
+
+    # Wine
+    wineWow64Packages.stable
+    winetricks
   ];
 
   # OpenRGB with all plugins for RGB hardware control

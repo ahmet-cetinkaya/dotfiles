@@ -13,9 +13,9 @@
     # pkgs
     zen-browser.url = "github:youwen5/zen-browser-flake";
     whph.url = "github:ahmet-cetinkaya/whph?dir=packaging/nix";
-    # antigravity - agentic development platform
     antigravity-nix = {
-      url = "github:jacopone/antigravity-nix";
+      url = "github:jacopone/antigravity-nix/v1.20.6-5891862175809536";
+      # url = "github:jacopone/antigravity-nix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
   };

@@ -1,5 +1,4 @@
-{ pkgs, ... }:
-{
+{pkgs, ...}: {
   imports = [
     # Languages
     ./c-cpp.nix
@@ -12,6 +11,9 @@
 
     # Frameworks
     ./flutter.nix
+
+    # Game Development
+    ./godot.nix
   ];
 
   fonts.packages = with pkgs; [
@@ -24,15 +26,19 @@
   environment.systemPackages = with pkgs; [
     # Editors
     neovim
-    vscodium
+    vscodium-fhs
+
     pkgs."zed-preview-bin"
     antigravity-tools-bin
-    google-antigravity
+    google-antigravity-no-fhs
 
     # Tools
     git
     git-open
     gitui
+
+    # Agents
+    forgecode
 
     # Formatters & Linters
     shellcheck

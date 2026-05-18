@@ -3,4 +3,5 @@ final: _prev: {
   zed-preview-bin = final.callPackage ./zed-preview-bin { };
   hytale-launcher-flatpak = import ./hytale-launcher-flatpak;
   antigravity-tools-bin = final.callPackage ./antigravity-tools-bin { };
+  forgecode = final.callPackage ./forgecode { };
 }

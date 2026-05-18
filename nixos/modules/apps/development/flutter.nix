@@ -125,6 +125,7 @@ in
       fvm
       androidSdk.androidsdk
       fixFlutterAndroid
+      ktlint
 
       # Linux Development
       gtk3
