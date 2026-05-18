@@ -7,7 +7,22 @@
 // custom settings, run `zed: open default settings` from the
 // command palette
 {
+  "collaboration_panel": {
+    "button": false
+  },
+  "outline_panel": {
+    "dock": "left"
+  },
+  "project_panel": {
+    "dock": "left"
+  },
   "agent": {
+    "default_model": {
+      "provider": "ollama",
+      "model": "qwen2.5-coder:14b",
+      "enable_thinking": false
+    },
+    "dock": "right",
     "tool_permissions": {
       "tools": {
         "terminal": {
@@ -74,6 +89,7 @@
   },
   "cursor_blink": false,
   "git_panel": {
+    "dock": "left",
     "sort_by_path": true,
     "tree_view": true
   },
