@@ -27,7 +27,7 @@
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
   "[json]": {
-    "editor.defaultFormatter": "vscode.json-language-features"
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
   "[jsonc]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
@@ -39,6 +39,9 @@
     "editor.defaultFormatter": "esbenp.prettier-vscode",
     "editor.wordWrap": "on",
     "files.autoSave": "afterDelay"
+  },
+  "[nix]": {
+    "editor.defaultFormatter": "kamadorueda.alejandra"
   },
   "[scss]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
@@ -88,7 +91,6 @@
     "package-lock.json",
     "vscode-extension"
   ],
-  "cSpell.userWords": ["prefs", "roslynator"],
   "diffEditor.ignoreTrimWhitespace": false,
   "diffEditor.renderSideBySide": false,
   "editor.codeActionsOnSave": {
@@ -98,8 +100,31 @@
   "editor.fontFamily": "'FiraCode Nerd Font Mono', monospace",
   "editor.fontLigatures": true,
   "editor.fontSize": 16,
+  "editor.formatOnSave": true,
+  "editor.formatOnSaveMode": "modifications",
   "editor.lineNumbers": "relative",
   "errorLens.enabledDiagnosticLevels": ["error", "warning"],
+  "explorer.fileNesting.enabled": true,
+  "explorer.fileNesting.expand": false,
+  "explorer.fileNesting.patterns": {
+    "*": "${capture}.import, ${capture}.uid",
+    "*.js": "$(capture).js.map, $(capture).test.js, $(capture).spec.js",
+    "*.rs": "$(capture).tests.rs, $(capture).test.rs, $(capture).spec.rs",
+    "*.ts": "$(capture).js, $(capture).d.ts.map, $(capture).helper.ts, $(capture).test.ts, $(capture).spec.ts",
+    "*.tsx": "$(capture).css, $(capture).scss, $(capture).test.tsx, $(capture).stories.tsx, $(capture).module.css",
+    ".env": ".env.*, .env.local, .env.development, .env.production, .env.example",
+    ".eslintrc*": ".eslintignore, .eslintrc-model.json",
+    ".gitignore": ".gitattributes, .gitmodules, .git-blame-ignore-revs",
+    ".prettierrc": ".prettierignore, prettier.config.js",
+    "Cargo.toml": "Cargo.lock, cross.toml, .cargo-ok",
+    "Dockerfile": ".dockerignore, docker-compose.yml, docker-compose.*.yml",
+    "next.config.*": "next-env.d.ts, next.config.mjs",
+    "package.json": "package-lock.json, bun.lock, bun.lockb, yarn.lock, pnpm-lock.yaml, .npmrc, .yarnrc",
+    "README.md": "LICENSE, CONTRIBUTING.md, CHANGELOG.md, SECURITY.md",
+    "tailwind.config.*": "tailwind.config.js, postcss.config.js",
+    "tsconfig.json": "tsconfig.*.json",
+    "vite.config.*": "vitest.config.*, playwright.config.*"
+  },
   "extensions.experimental.affinity": {
     "asvetliakov.vscode-neovim": 1
   },
@@ -238,6 +263,7 @@
   "NugetGallery.sources": ["{\"name\":\"nuget.org\",\"url\":\"https://api.nuget.org/v3/index.json\"}"],
   "prettier.printWidth": 120,
   "redhat.telemetry.enabled": false,
+  "scm.repositories.selectionMode": "single",
   "svg.preview.autoShow": true,
   "tailwind-fold.autoFold": false,
   "tailwind-fold.unfoldedTextOpacity": 0.6,
@@ -282,6 +308,7 @@
   "terminal.integrated.fontFamily": "'FiraCode Nerd Font Mono', monospace",
   "terminal.integrated.fontSize": 14,
   "terminal.integrated.initialHint": false,
+  "terminal.integrated.stickyScroll.enabled": false,
   "vscode-neovim.ctrlKeysForInsertMode": ["t"],
   "vscode-neovim.ctrlKeysForNormalMode": [
     "a",
@@ -420,7 +447,9 @@
     "workbench.productIconTheme",
     "workbench.startupEditor",
     "workbench.statusBar.visible",
-    "workbench.tree.renderIndentGuides"
+    "workbench.tree.renderIndentGuides",
+    "editor.formatOnSave",
+    "editor.formatOnSaveMode"
   ],
   "workbench.startupEditor": "none",
   "workbench.statusBar.visible": false,
