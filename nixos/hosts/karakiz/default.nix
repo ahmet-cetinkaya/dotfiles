@@ -33,7 +33,8 @@
     # Productivity
     ../../modules/apps/productivity.nix
     # Utilities
-    ../../modules/apps/utilities.nix
+    ../../modules/apps/utilities/default.nix
+    ../../modules/apps/utilities/virtualbox.nix
   ];
 
   networking.hostName = "karakiz";

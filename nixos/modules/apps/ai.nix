@@ -1,7 +1,12 @@
 { lib, pkgs, ... }:
 
 {
-  services.ollama.enable = true;
+services.ollama = {
+  enable = true;
+  package = pkgs.ollama-cuda;
+};
+
+
   environment.sessionVariables = {
     OLLAMA_HOST = "127.0.0.1:11434";
   };

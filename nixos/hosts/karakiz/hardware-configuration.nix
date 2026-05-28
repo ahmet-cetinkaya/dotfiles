@@ -1,6 +1,7 @@
 {
   config,
   lib,
+  pkgs,
   modulesPath,
   ...
 }:
@@ -19,8 +20,9 @@
       "sd_mod"
     ];
     initrd.kernelModules = [ ];
-    kernelModules = [ "kvm-amd" ];
-    extraModulePackages = [ ];
+    kernelModules = [
+      "kvm-amd"
+    ];
   };
 
   fileSystems = {
