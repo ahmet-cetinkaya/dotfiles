@@ -1,26 +1,9 @@
-// Zed settings
-//
-// For information on how to configure Zed, see the Zed
-// documentation: https://zed.dev/docs/configuring-zed
-//
-// To see all of Zed's default settings without changing your
-// custom settings, run `zed: open default settings` from the
-// command palette
 {
-  "collaboration_panel": {
-    "button": false
-  },
-  "outline_panel": {
-    "dock": "left"
-  },
-  "project_panel": {
-    "dock": "left"
-  },
   "agent": {
     "default_model": {
-      "provider": "ollama",
+      "enable_thinking": false,
       "model": "qwen2.5-coder:14b",
-      "enable_thinking": false
+      "provider": "ollama"
     },
     "dock": "right",
     "tool_permissions": {
@@ -76,9 +59,27 @@
   },
   "autosave": "off",
   "base_keymap": "VSCode",
-  "buffer_font_fallbacks": ["Nerd Font"],
-  "buffer_font_family": "CaskaydiaCove Nerd Font",
-  "buffer_font_size": 14,
+  "buffer_font_fallbacks": [
+    "JetBrains Mono Nerd Font",
+    "Cascadia Code Nerd Font",
+    "Victor Mono Nerd Font",
+    "Noto Sans Mono CJK JP",
+    "Noto Sans Mono CJK SC",
+    "Noto Sans Mono CJK KR",
+    "Noto Naskh Arabic",
+    "Noto Sans Thai",
+    "Noto Sans Devanagari",
+    "Noto Color Emoji",
+    "Noto Sans Symbols 2",
+    "Noto Sans Symbols",
+    "DejaVu Sans Mono",
+    "Nerd Font"
+  ],
+  "buffer_font_family": "FiraCode Nerd Font Mono",
+  "buffer_font_size": 16,
+  "collaboration_panel": {
+    "button": false
+  },
   "colorize_brackets": true,
   "context_servers": {
     "mcp-server-context7": {
@@ -88,6 +89,9 @@
     }
   },
   "cursor_blink": false,
+  "git": {
+    "git_gutter": "tracked_files"
+  },
   "git_panel": {
     "dock": "left",
     "sort_by_path": true,
@@ -113,6 +117,12 @@
       }
     }
   },
+  "outline_panel": {
+    "dock": "left"
+  },
+  "project_panel": {
+    "dock": "left"
+  },
   "relative_line_numbers": "enabled",
   "scroll_beyond_last_line": "off",
   "scrollbar": {
@@ -124,8 +134,24 @@
   },
   "terminal": {
     "button": false,
-    "font_fallbacks": ["Nerd Font Mono"],
-    "font_family": "CaskaydiaCove Nerd Font Mono",
+    "dock": "right",
+    "font_fallbacks": [
+      "JetBrains Mono Nerd Font Mono",
+      "Cascadia Code Nerd Font Mono",
+      "Victor Mono Nerd Font Mono",
+      "Noto Sans Mono CJK JP",
+      "Noto Sans Mono CJK SC",
+      "Noto Sans Mono CJK KR",
+      "Noto Naskh Arabic",
+      "Noto Sans Thai",
+      "Noto Sans Devanagari",
+      "Noto Color Emoji",
+      "Noto Sans Symbols 2",
+      "Noto Sans Symbols",
+      "DejaVu Sans Mono",
+      "Nerd Font Mono"
+    ],
+    "font_family": "FiraCode Nerd Font Mono",
     "font_size": 14,
     "line_height": "standard",
     "shell": "system",
