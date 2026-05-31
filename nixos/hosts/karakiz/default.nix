@@ -1,10 +1,10 @@
-{ ... }:
-{
+{...}: {
   imports = [
     ./hardware-configuration.nix
     # Core
     ../../modules/core/bluetooth.nix
     ../../modules/core/boot.nix
+    ../../modules/core/cachyos.nix
     ../../modules/core/dpi.nix
     ../../modules/core/flatpak.nix
     ../../modules/core/fonts.nix
@@ -34,10 +34,20 @@
     ../../modules/apps/productivity.nix
     # Utilities
     ../../modules/apps/utilities/default.nix
-    ../../modules/apps/utilities/virtualbox.nix
   ];
 
   networking.hostName = "karakiz";
+
+  # Allow unfree packages (VirtualBox Extension Pack, NVIDIA drivers, etc.)
+  nixpkgs.config.allowUnfree = true;
+
+  # CachyOS kernel (custom module) + upstream system optimizations.
+  cachyos = {
+    enable = true;
+    kernel.variant = "latest";
+    kernel.lto = true;
+  };
+  cachyos.settings.enable = true;
 
   boot.loader.systemd-boot = {
     extraEntries."windows11-atlas.conf" = ''
@@ -49,5 +59,4 @@
       printf '\nauto-entries no\n' >> /boot/loader/loader.conf
     '';
   };
-
 }

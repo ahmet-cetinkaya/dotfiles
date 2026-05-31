@@ -17,10 +17,9 @@
   vulkan-loader,
   wayland,
   zlib,
-}:
-let
+}: let
   pname = "zed-preview-bin";
-  version = "1.4.1-pre";
+  version = "1.5.3-pre";
   runtimeLibs = [
     alsa-lib
     fontconfig
@@ -37,70 +36,71 @@ let
     stdenv.cc.cc.lib
   ];
   src =
-    if stdenvNoCC.hostPlatform.system == "x86_64-linux" then
+    if stdenvNoCC.hostPlatform.system == "x86_64-linux"
+    then
       fetchurl {
         url = "https://github.com/zed-industries/zed/releases/download/v${version}/zed-linux-x86_64.tar.gz";
-        sha256 = "153f3c8596de004a8774f491ea5c2bb282ef7d3390cf308444b5650a550cb9b4";
+        sha256 = "6eea6fcc5735fb94d838937881e738b05da6f59f8ae7577245daf2eda3d45c1d";
       }
-    else if stdenvNoCC.hostPlatform.system == "aarch64-linux" then
+    else if stdenvNoCC.hostPlatform.system == "aarch64-linux"
+    then
       fetchurl {
         url = "https://github.com/zed-industries/zed/releases/download/v${version}/zed-linux-aarch64.tar.gz";
-        sha256 = "c4728430f52d5c49559438e8805027c02c8b23d9d429da9f6d62ae3fcc95b71a";
+        sha256 = "143063ca1b14207d10f741ab54ec32f7f938edffbef6762631baf5a172d12f5a";
       }
-    else
-      throw "Unsupported system for ${pname}: ${stdenvNoCC.hostPlatform.system}";
+    else throw "Unsupported system for ${pname}: ${stdenvNoCC.hostPlatform.system}";
 in
-stdenvNoCC.mkDerivation {
-  inherit pname version src;
+  stdenvNoCC.mkDerivation {
+    inherit pname version src;
 
-  nativeBuildInputs = [
-    autoPatchelfHook
-    makeWrapper
-  ];
-
-  buildInputs = runtimeLibs;
-
-  sourceRoot = "zed-preview.app";
-
-  installPhase = ''
-    runHook preInstall
-
-    install -d "$out/bin" "$out/lib/zed" "$out/share/applications" "$out/share/licenses/zed-preview" "$out/share/icons/hicolor/512x512/apps"
-
-    cp -r "libexec" "$out/lib/zed/"
-    cp -r "share" "$out/lib/zed/"
-    install -Dm755 "bin/zed" "$out/lib/zed/bin/zed"
-
-    install -Dm644 "licenses.md" "$out/share/licenses/zed-preview/licenses.md"
-    install -Dm644 "share/icons/hicolor/512x512/apps/zed.png" "$out/share/icons/hicolor/512x512/apps/zed-preview.png"
-
-    cp "share/applications/dev.zed.Zed-Preview.desktop" "$out/share/applications/dev.zed.Zed-Preview.desktop"
-    substituteInPlace "$out/share/applications/dev.zed.Zed-Preview.desktop" \
-      --replace-fail "Exec=zed" "Exec=zeditor" \
-      --replace-fail "Icon=zed" "Icon=zed-preview"
-
-    makeWrapper "$out/lib/zed/libexec/zed-editor" "$out/bin/zed" \
-      --prefix LD_LIBRARY_PATH : "${lib.makeLibraryPath runtimeLibs}"
-    makeWrapper "$out/lib/zed/libexec/zed-editor" "$out/bin/zeditor" \
-      --prefix LD_LIBRARY_PATH : "${lib.makeLibraryPath runtimeLibs}"
-
-    runHook postInstall
-  '';
-
-  meta = with lib; {
-    description = "A high-performance, multiplayer code editor (preview binary)";
-    homepage = "https://zed.dev";
-    license = with licenses; [
-      gpl3Plus
-      agpl3Plus
-      asl20
+    nativeBuildInputs = [
+      autoPatchelfHook
+      makeWrapper
     ];
-    sourceProvenance = with sourceTypes; [ binaryNativeCode ];
-    platforms = [
-      "x86_64-linux"
-      "aarch64-linux"
-    ];
-    mainProgram = "zed";
-    maintainers = [ "Ahmet Çetinkaya <contact@ahmetcetinkaya.me>" ];
-  };
-}
+
+    buildInputs = runtimeLibs;
+
+    sourceRoot = "zed-preview.app";
+
+    installPhase = ''
+      runHook preInstall
+
+      install -d "$out/bin" "$out/lib/zed" "$out/share/applications" "$out/share/licenses/zed-preview" "$out/share/icons/hicolor/512x512/apps"
+
+      cp -r "libexec" "$out/lib/zed/"
+      cp -r "share" "$out/lib/zed/"
+      install -Dm755 "bin/zed" "$out/lib/zed/bin/zed"
+
+      install -Dm644 "licenses.md" "$out/share/licenses/zed-preview/licenses.md"
+      install -Dm644 "share/icons/hicolor/512x512/apps/zed.png" "$out/share/icons/hicolor/512x512/apps/zed-preview.png"
+
+      cp "share/applications/dev.zed.Zed-Preview.desktop" "$out/share/applications/dev.zed.Zed-Preview.desktop"
+      substituteInPlace "$out/share/applications/dev.zed.Zed-Preview.desktop" \
+        --replace-fail "Exec=zed" "Exec=zeditor" \
+        --replace-fail "Icon=zed" "Icon=zed-preview"
+
+      makeWrapper "$out/lib/zed/libexec/zed-editor" "$out/bin/zed" \
+        --prefix LD_LIBRARY_PATH : "${lib.makeLibraryPath runtimeLibs}"
+      makeWrapper "$out/lib/zed/libexec/zed-editor" "$out/bin/zeditor" \
+        --prefix LD_LIBRARY_PATH : "${lib.makeLibraryPath runtimeLibs}"
+
+      runHook postInstall
+    '';
+
+    meta = with lib; {
+      description = "A high-performance, multiplayer code editor (preview binary)";
+      homepage = "https://zed.dev";
+      license = with licenses; [
+        gpl3Plus
+        agpl3Plus
+        asl20
+      ];
+      sourceProvenance = with sourceTypes; [binaryNativeCode];
+      platforms = [
+        "x86_64-linux"
+        "aarch64-linux"
+      ];
+      mainProgram = "zed";
+      maintainers = ["Ahmet Çetinkaya <contact@ahmetcetinkaya.me>"];
+    };
+  }

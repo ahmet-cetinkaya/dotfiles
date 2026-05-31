@@ -21,7 +21,8 @@ usage() {
 
 update_pkg() {
 	local pkg_dir="$1"
-	local pkg_name="$(basename "$pkg_dir")"
+	local pkg_name
+	pkg_name="$(basename "$pkg_dir")"
 	echo "⬆️  Updating ${pkg_name}..."
 	if [ -f "${pkg_dir}/update.sh" ]; then
 		(cd "$pkg_dir" && ./update.sh)

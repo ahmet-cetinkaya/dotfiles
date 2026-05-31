@@ -1,7 +1,6 @@
 {
   lib,
   stdenvNoCC,
-  stdenv,
   fetchurl,
   dpkg,
   autoPatchelfHook,
@@ -13,9 +12,7 @@
   glib,
   libgcc,
   libX11,
-}:
-
-let
+}: let
   pname = "antigravity-tools-bin";
   version = "4.2.1";
   runtimeLibs = [
@@ -32,65 +29,65 @@ let
     sha256 = "0db8d161e0fa277bd10f9488365d40fd54a98c603a059249e675b622146908a7";
   };
 in
-stdenvNoCC.mkDerivation {
-  inherit pname version src;
+  stdenvNoCC.mkDerivation {
+    inherit pname version src;
 
-  nativeBuildInputs = [
-    dpkg
-    autoPatchelfHook
-    makeWrapper
-  ];
+    nativeBuildInputs = [
+      dpkg
+      autoPatchelfHook
+      makeWrapper
+    ];
 
-  buildInputs = [
-    gtk3
-    webkitgtk_4_1
-    libappindicator
-    openssl
-    glib
-    libgcc
-    libX11
-  ];
+    buildInputs = [
+      gtk3
+      webkitgtk_4_1
+      libappindicator
+      openssl
+      glib
+      libgcc
+      libX11
+    ];
 
-  unpackPhase = ''
-    runHook preUnpack
-    mkdir -p extracted
-    dpkg-deb -x $src extracted
-    runHook postUnpack
-  '';
+    unpackPhase = ''
+      runHook preUnpack
+      mkdir -p extracted
+      dpkg-deb -x $src extracted
+      runHook postUnpack
+    '';
 
-  sourceRoot = "extracted";
+    sourceRoot = "extracted";
 
-  installPhase = ''
-    runHook preInstall
+    installPhase = ''
+      runHook preInstall
 
-    install -d "$out/bin" "$out/lib" "$out/share/applications" "$out/share/licenses/antigravity-tools-bin"
+      install -d "$out/bin" "$out/lib" "$out/share/applications" "$out/share/licenses/antigravity-tools-bin"
 
-    if [ -d "usr/local" ]; then
-      cp -a usr/local/. "$out/"
-    elif [ -d "usr" ]; then
-      cp -a usr/. "$out/"
-    fi
+      if [ -d "usr/local" ]; then
+        cp -a usr/local/. "$out/"
+      elif [ -d "usr" ]; then
+        cp -a usr/. "$out/"
+      fi
 
-    if [ -f "$out/share/licenses/antigravity-tools-bin/LICENSE" ]; then
-      install -Dm644 "$out/share/licenses/antigravity-tools-bin/LICENSE" "$out/share/licenses/antigravity-tools-bin/LICENSE"
-    fi
+      if [ -f "$out/share/licenses/antigravity-tools-bin/LICENSE" ]; then
+        install -Dm644 "$out/share/licenses/antigravity-tools-bin/LICENSE" "$out/share/licenses/antigravity-tools-bin/LICENSE"
+      fi
 
-    for exe in $(find "$out/bin" -maxdepth 1 -type f -executable); do
-      cp "$exe" "$exe.real"
-      chmod -x "$exe"
-      makeWrapper "$exe.real" "$exe" \
-        --prefix LD_LIBRARY_PATH : "${lib.makeLibraryPath runtimeLibs}"
-    done
+      for exe in $(find "$out/bin" -maxdepth 1 -type f -executable); do
+        cp "$exe" "$exe.real"
+        chmod -x "$exe"
+        makeWrapper "$exe.real" "$exe" \
+          --prefix LD_LIBRARY_PATH : "${lib.makeLibraryPath runtimeLibs}"
+      done
 
-    runHook postInstall
-  '';
+      runHook postInstall
+    '';
 
-  meta = with lib; {
-    description = "Professional Antigravity Account Manager & Switcher";
-    homepage = "https://github.com/lbjlaq/Antigravity-Manager";
-    license = "custom";
-    sourceProvenance = with sourceTypes; [ binaryNativeCode ];
-    platforms = [ "x86_64-linux" ];
-    maintainers = [ ];
-  };
-}
+    meta = with lib; {
+      description = "Professional Antigravity Account Manager & Switcher";
+      homepage = "https://github.com/lbjlaq/Antigravity-Manager";
+      license = "custom";
+      sourceProvenance = with sourceTypes; [binaryNativeCode];
+      platforms = ["x86_64-linux"];
+      maintainers = [];
+    };
+  }

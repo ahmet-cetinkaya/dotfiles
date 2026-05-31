@@ -1,5 +1,4 @@
-{ config, pkgs, ... }:
-{
+{pkgs, ...}: {
   # Flatpak
   services.flatpak.packages = [
     # System Tools

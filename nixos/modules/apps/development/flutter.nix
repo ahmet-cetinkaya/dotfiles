@@ -2,8 +2,7 @@
   pkgs,
   lib,
   ...
-}:
-let
+}: let
   flutterLinuxPkgConfigPath = pkgs.lib.makeSearchPath "lib/pkgconfig" [
     pkgs.gtk3.dev
     pkgs.glib.dev
@@ -116,8 +115,7 @@ let
     "rps"
     "dart_unused_files"
   ];
-in
-{
+in {
   environment = {
     systemPackages = with pkgs; [
       # Flutter & Android
@@ -175,7 +173,7 @@ in
   # Keep Flutter SDK layout and Android licenses synced after each system switch.
   # Runs as user "ac" so files in $HOME/Android/Sdk keep correct ownership.
   system.activationScripts.fixFlutterAndroid = {
-    deps = [ "users" ];
+    deps = ["users"];
     text = ''
       if [ -d /home/ac ]; then
         echo "Running fix-flutter-android for user ac..."
@@ -214,7 +212,8 @@ in
         export PATH="$HOME/.pub-cache/bin:$PATH"
 
     ${lib.concatMapStringsSep "\n" (
-      tool_name: "    ensure_dart_tool_latest \"${tool_name}\""
-    ) dartTools}
+        tool_name: "    ensure_dart_tool_latest \"${tool_name}\""
+      )
+      dartTools}
   '';
 }

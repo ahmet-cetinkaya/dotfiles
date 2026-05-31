@@ -2,16 +2,14 @@
   pkgs,
   lib,
   ...
-}:
-let
+}: let
   uvTools = [
     {
       name = "specify-cli";
       source = "git+https://github.com/github/spec-kit.git";
     }
   ];
-in
-{
+in {
   environment.systemPackages = with pkgs; [
     python3
     uv
@@ -47,7 +45,8 @@ in
         }
 
     ${lib.concatMapStringsSep "\n" (
-      tool: "    ensure_uv_tool_latest \"${tool.name}\" \"${tool.source}\""
-    ) uvTools}
+        tool: "    ensure_uv_tool_latest \"${tool.name}\" \"${tool.source}\""
+      )
+      uvTools}
   '';
 }

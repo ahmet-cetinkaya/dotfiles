@@ -1,4 +1,4 @@
-_: {
+{lib, ...}: {
   services.zapret = {
     enable = true;
     params = [
@@ -30,6 +30,6 @@ _: {
     resolvconf.extraConfig = ''
       name_servers="1.1.1.1 8.8.8.8"
     '';
-    networkmanager.dns = "none";
+    networkmanager.dns = lib.mkForce "none";
   };
 }

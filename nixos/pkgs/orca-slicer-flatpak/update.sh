@@ -3,7 +3,7 @@ set -euo pipefail
 
 cd "$(dirname "$0")"
 
-TEMPLATE_URL="https://github.com/OrcaSlicer/OrcaSlicer/releases/download/v2.3.1/OrcaSlicer-Linux-flatpak_V2.3.1_x86_64.flatpak"
+VERSIONS_JSON=$(curl -sSL "https://api.github.com/repos/OrcaSlicer/OrcaSlicer/releases/latest")
 
 VERSIONS_JSON=$(curl -sSL "https://api.github.com/repos/OrcaSlicer/OrcaSlicer/releases/latest")
 VERSION=$(echo "$VERSIONS_JSON" | jq -r '.tag_name' | sed 's/^v//')

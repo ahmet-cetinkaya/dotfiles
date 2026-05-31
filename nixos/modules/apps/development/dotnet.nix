@@ -2,13 +2,11 @@
   pkgs,
   lib,
   ...
-}:
-let
+}: let
   dotnetTools = [
     "csharpier"
   ];
-in
-{
+in {
   environment.systemPackages = with pkgs; [
     (dotnetCorePackages.combinePackages [
       dotnetCorePackages.sdk_8_0-bin
@@ -44,7 +42,8 @@ in
         }
 
     ${lib.concatMapStringsSep "\n" (
-      tool_name: "    ensure_dotnet_tool_latest \"${tool_name}\""
-    ) dotnetTools}
+        tool_name: "    ensure_dotnet_tool_latest \"${tool_name}\""
+      )
+      dotnetTools}
   '';
 }

@@ -1,8 +1,6 @@
 _: {
-  # Services
-  home-manager.users.ac = {
-    services.easyeffects.enable = true;
-  };
+  # EasyEffects service
+  home-manager.users.ac.services.easyeffects.enable = true;
 
   # Flatpak
   services.flatpak.packages = [

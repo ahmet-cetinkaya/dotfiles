@@ -32,6 +32,9 @@
     antigravity-tools-bin
     google-antigravity-no-fhs
 
+    # Browsers
+    firefox-devedition
+
     # Tools
     git
     git-open

@@ -2,8 +2,7 @@
   pkgs,
   lib,
   ...
-}:
-let
+}: let
   bunPackages = {
     "@anthropic-ai/claude-code" = "claude";
     "@anthropic-ai/sandbox-runtime" = "sandbox-runtime";
@@ -14,15 +13,14 @@ let
     "add-gitignore" = "add-gitignore";
     "opencode-ai" = "opencode";
   };
-in
-{
+in {
   environment.systemPackages = with pkgs; [
     nodejs
     bun
     prettier
   ];
 
-  home-manager.users.ac.home.sessionPath = [ "$HOME/.bun/bin" ];
+  home-manager.users.ac.home.sessionPath = ["$HOME/.bun/bin"];
   home-manager.users.ac.home.activation.bunGlobalPackages = lib.mkAfter ''
         export PATH="/run/current-system/sw/bin:$PATH"
 
@@ -52,7 +50,8 @@ in
     ${lib.concatStringsSep "\n" (
       lib.mapAttrsToList (
         package: binary: "    ensure_bun_package_latest \"${package}\" \"${binary}\""
-      ) bunPackages
+      )
+      bunPackages
     )}
   '';
 }

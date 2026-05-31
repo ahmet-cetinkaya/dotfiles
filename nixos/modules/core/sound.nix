@@ -8,4 +8,7 @@ _: {
     alsa.support32Bit = true;
     pulse.enable = true;
   };
+
+  # Dconf needed for easyeffects service
+  programs.dconf.enable = true;
 }
