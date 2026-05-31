@@ -80,6 +80,7 @@
   ],
   "csharpier.enableDiagnostics": false,
   "cSpell.diagnosticLevel": "Hint",
+  "cSpell.enableDictionaries": ["en", "tr"],
   "cSpell.ignorePaths": [
     ".git/{index,*refs,*HEAD}",
     ".git/{info,lfs,logs,refs,objects}/**",
@@ -91,13 +92,15 @@
     "package-lock.json",
     "vscode-extension"
   ],
+  "cSpell.language": "en,tr",
   "diffEditor.ignoreTrimWhitespace": false,
   "diffEditor.renderSideBySide": false,
   "editor.codeActionsOnSave": {
     "source.fixAll": "always",
     "source.removeUnusedImports": "explicit"
   },
-  "editor.fontFamily": "'FiraCode Nerd Font Mono', monospace",
+  "editor.cursorBlinking": "off",
+  "editor.fontFamily": "'FiraCode Nerd Font Mono', 'JetBrains Mono Nerd Font', 'Cascadia Code Nerd Font', 'Victor Mono Nerd Font', 'Noto Sans Mono CJK JP', 'Noto Sans Mono CJK SC', 'Noto Sans Mono CJK KR', 'Noto Naskh Arabic', 'Noto Sans Thai', 'Noto Sans Devanagari', 'Noto Color Emoji', 'Noto Sans Symbols 2', 'Noto Sans Symbols', 'DejaVu Sans Mono', monospace",
   "editor.fontLigatures": true,
   "editor.fontSize": 16,
   "editor.formatOnSave": true,
@@ -248,6 +251,8 @@
   },
   "git.autofetch": true,
   "git.confirmSync": false,
+  "git.enableSmartCommit": true,
+  "git.ignoredRepositories": [],
   "git.openRepositoryInParentFolders": "always",
   "gitlens.telemetry.enabled": false,
   "indentRainbow.indicatorStyle": "light",
@@ -305,7 +310,7 @@
   ],
   "terminal.integrated.cursorStyle": "line",
   "terminal.integrated.defaultProfile.linux": "zsh",
-  "terminal.integrated.fontFamily": "'FiraCode Nerd Font Mono', monospace",
+  "terminal.integrated.fontFamily": "'FiraCode Nerd Font Mono', 'JetBrains Mono Nerd Font Mono', 'Cascadia Code Nerd Font Mono', 'Victor Mono Nerd Font Mono', 'Noto Sans Mono CJK JP', 'Noto Sans Mono CJK SC', 'Noto Sans Mono CJK KR', 'Noto Naskh Arabic', 'Noto Sans Thai', 'Noto Sans Devanagari', 'Noto Color Emoji', 'Noto Sans Symbols 2', 'Noto Sans Symbols', 'DejaVu Sans Mono', monospace",
   "terminal.integrated.fontSize": 14,
   "terminal.integrated.initialHint": false,
   "terminal.integrated.stickyScroll.enabled": false,
@@ -374,6 +379,7 @@
     "tab.unfocusedInactiveForeground": "#f4d03e",
     "titleBar.border": "#181818"
   },
+  "workbench.colorTheme": "Dark Modern",
   "workbench.editor.wrapTabs": true,
   "workbench.iconTheme": "material-icon-theme",
   "workbench.layoutControl.enabled": false,
