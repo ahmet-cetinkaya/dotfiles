@@ -1,10 +1,14 @@
 {pkgs, ...}: {
+  environment.systemPackages = [
+    pkgs.nur.repos.forkprince.orca-slicer
+  ];
+
   # Flatpak
   services.flatpak.packages = [
     # 3D Modeling
     "org.blender.Blender"
     "org.freecad.FreeCAD"
-    pkgs."orca-slicer-flatpak"
+    "org.openscad.OpenSCAD"
 
     # Video Editing
     "org.kde.kdenlive"

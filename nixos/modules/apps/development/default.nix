@@ -27,8 +27,8 @@
     # Editors
     neovim
     vscodium-fhs
+    nur.repos.mattrobenolt.zed-preview
 
-    pkgs."zed-preview-bin"
     antigravity-tools-bin
     google-antigravity-no-fhs
 
@@ -39,9 +39,9 @@
     git
     git-open
     gitui
+    tea
 
     # Agents
-    forgecode
 
     # Formatters & Linters
     shellcheck

@@ -11,6 +11,7 @@
     "@openai/codex" = "codex";
     "@qwen-code/qwen-code" = "qwen";
     "add-gitignore" = "add-gitignore";
+    "fallow" = "fallow";
     "opencode-ai" = "opencode";
   };
 in {

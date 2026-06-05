@@ -45,6 +45,7 @@
           nixpkgs.hostPlatform = system;
           nixpkgs.overlays = [
             (import ./pkgs)
+            inputs.nur.overlays.default
             inputs.antigravity-nix.overlays.default
             inputs.nix-cachyos-kernel.overlays.default
           ];
