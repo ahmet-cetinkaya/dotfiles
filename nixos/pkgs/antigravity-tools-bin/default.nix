@@ -85,7 +85,7 @@ in
     meta = with lib; {
       description = "Professional Antigravity Account Manager & Switcher";
       homepage = "https://github.com/lbjlaq/Antigravity-Manager";
-      license = licenses.unfree;
+      license = licenses.cc-by-nc-sa-40;
       sourceProvenance = with sourceTypes; [binaryNativeCode];
       platforms = ["x86_64-linux"];
       maintainers = [];
