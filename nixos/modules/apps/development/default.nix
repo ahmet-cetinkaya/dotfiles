@@ -27,7 +27,7 @@
     # Editors
     neovim
     vscodium-fhs
-    nur.repos.mattrobenolt.zed-preview
+    zed-preview-bin
 
     antigravity-tools-bin
     google-antigravity-no-fhs

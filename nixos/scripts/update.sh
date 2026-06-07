@@ -32,10 +32,9 @@ update_pkg() {
 }
 
 echo -e "\n📦 Updating custom pkgs..."
-update_pkg "${PKGS_DIR}/hytale-launcher-flatpak"
-update_pkg "${PKGS_DIR}/orca-slicer-flatpak"
-update_pkg "${PKGS_DIR}/zed-preview-bin"
-update_pkg "${PKGS_DIR}/antigravity-tools-bin"
+for pkg_dir in "${PKGS_DIR}"/*/; do
+    [ -f "${pkg_dir}/update.sh" ] && update_pkg "$pkg_dir"
+done
 
 echo -e "\n🔄 Running nix flake update..."
 (cd "$NIXOS_DIR" && nix flake update)
