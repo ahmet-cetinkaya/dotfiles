@@ -53,7 +53,7 @@
                 (import ./pkgs)
                 inputs.nur.overlays.default
                 inputs.antigravity-nix.overlays.default
-                inputs.nix-cachyos-kernel.overlays.default
+                inputs.nix-cachyos-kernel.overlays.pinned
               ];
             }
             nix-flatpak.nixosModules.nix-flatpak
