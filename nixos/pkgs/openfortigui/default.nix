@@ -16,8 +16,8 @@ stdenv.mkDerivation rec {
   src = fetchFromGitHub {
     owner = "theinvisible";
     repo = "openfortigui";
-    rev = "v${version}-1";
-    hash = "sha256-AxXvO0PqiBgr/irlnnXwdl1XV9/4PiPylzlSbzlbGy0=";
+    rev = "v${version}";
+    hash = "sha256-+59qIE2mEm+npHUQg8xKFlPyDXD5yeOkrU/VWtSLNdc=";
     fetchSubmodules = true;
   };
 
@@ -43,6 +43,12 @@ stdenv.mkDerivation rec {
     # sandboxed build can't write there anyway. Drop the install() stanza.
     sed -i '/install(FILES sudo\/openfortigui/,/PERMISSIONS OWNER_READ GROUP_READ)/d' \
       openfortigui/CMakeLists.txt
+
+    # Upstream .desktop file hardcodes FHS /usr paths, which don't exist on
+    # NixOS. Use bare names so they're resolved via PATH / icon theme search.
+    substituteInPlace openfortigui/app-entry/openfortigui.desktop \
+      --replace-fail '/usr/bin/openfortigui' 'openfortigui' \
+      --replace-fail '/usr/share/pixmaps/openfortigui.png' 'openfortigui'
   '';
 
   meta = with lib; {
