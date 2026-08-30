@@ -13,6 +13,7 @@
     }
   },
   "minimap": {
+    "display_in": "active_editor",
     "show": "always"
   },
   "edit_predictions": {
