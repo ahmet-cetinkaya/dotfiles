@@ -23,7 +23,7 @@ in
     src = fetchFromGitHub {
       owner = "theinvisible";
       repo = "openfortigui";
-      rev = "v${version}";
+      rev = "v${version}-1";
       hash = "sha256-ZghNurrk5VPyp3DHhOEssU5+18uuKmXgJkEp3TCJp/I=";
       fetchSubmodules = true;
     };
