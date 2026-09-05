@@ -1,4 +1,7 @@
 {
+  "debugger": {
+    "dock": "left"
+  },
   "auto_update": false,
   "markdown_preview_code_font_family": "FiraCode Nerd Font Mono",
   "markdown_preview_font_family": ".SystemUIFont",
@@ -25,7 +28,7 @@
   "language_models": {
     "openai_compatible": {
       "OmniRoute": {
-        "api_url": "http://192.168.1.4:8208/v1",
+        "api_url": "http://192.168.1.2:3020/v1",
         "available_models": [
           {
             "name": "combo/high-models",
@@ -128,7 +131,7 @@
     "default_model": {
       "effort": "medium",
       "provider": "OmniRoute",
-      "model": "combo/mid-models",
+      "model": "combo/lite-models",
       "enable_thinking": true
     },
     "dock": "right",
