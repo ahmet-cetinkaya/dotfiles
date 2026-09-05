@@ -9,6 +9,13 @@ export LANGUAGE=en_US.UTF-8
 export LC_ALL=en_US.UTF-8
 export LC_TYPE=en_US.UTF-8
 
+## Local secrets (not tracked in git; see zsh/.env)
+if [[ -f "$HOME/Configs/zsh/.env" ]]; then
+  set -a
+  source "$HOME/Configs/zsh/.env"
+  set +a
+fi
+
 ## Global Tools
 export GPG_TTY=$(tty)
 export PATH="$PATH:$HOME/.bun/bin"
@@ -143,8 +150,8 @@ bindkey '\C-x\C-e' edit-command-line
 bindkey "^[m" copy-prev-shell-word
 
 ## Aliases
-alias ls='exa -lah --color=always --group-directories-first --icons --hyperlink'
-alias lls='exa -lah -T --color=always --group-directories-first --icons --hyperlink'
+alias ls='exa -lah --color=always --group-directories-first --icons --hyperlink=always'
+alias lls='exa -lah -T --color=always --group-directories-first --icons --hyperlink=always'
 alias vim='NVIM_APPNAME=nvim-ac nvim'
 
 ## Startup
