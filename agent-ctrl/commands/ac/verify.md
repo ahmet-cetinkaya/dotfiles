@@ -1,67 +1,92 @@
 ---
 name: ac:verify
-description: "Reflect on task completion first (sc:reflect), then run the six-phase verification gate (build, type, lint, test, security, diff) last, and emit a READY/NOT READY report. Defers to the active profile's verification skill for exact toolchain commands; does not launch code reviews."
-category: workflow
-complexity: standard
-mcp-servers: [serena]
-personas: [quality-engineer]
+description: Evidence-based readiness verification of the current state — build, tests, lint, types, and behavior checks with PASS/FAIL/BLOCKED verdicts per gate.
 ---
 
-# `/ac:verify` - Verification Gate
+# `/ac:verify` — Verify Readiness
 
-Applies the **`verification-loop`** skill. Run after **`/ac:implement`**, **`/ac:fix`**,
-**`/ac:spec-implement`**, before a PR, or after refactoring. If a phase fails, STOP and fix
-before continuing.
+Answers one question with evidence: is the current state actually done and safe to hand
+off? Runs the project's real gates and reports observable results — a summary is not
+proof.
 
 ## Usage
 
-```bash
-/ac:verify [target]   # defaults to current git changes
+```
+/ac:verify                 # verify the current working state
+/ac:verify <scope>         # verify a specific feature, path, or plan's outcome
 ```
 
 ## Order of Operations
 
-1. **Reflection first** (primary focus) — validate the *task* was actually accomplished.
+1. **Reflection first** — validate the *task* was actually accomplished. When a spec is linked (via the plan's `spec:` or the scope argument), reflection means a criterion ↔ evidence table: one row per `FR-###`, `SC-###`, and `PB-<n>` with the action or check that proves it. A criterion without evidence is an unmet requirement.
 2. **Mechanical gate last** — confirm the code is *correct* (build → type → lint → test → security → diff).
 
-Run reflection before the toolchain: there is no point burning build/test cycles on work that
-does not satisfy the requirements. Reflection scopes what "correct" even means for this task.
+Run reflection before the toolchain: there is no point burning build/test cycles on work that does not satisfy the requirements. Reflection also scopes what "correct" even means for this task.
 
-## Reflection (primary focus — runs first)
+If reflection flags unmet requirements or scope drift, the verdict is **NOT_READY** — stop and address those gaps before spending cycles on the mechanical gate. Even a fully green gate stays `NOT_READY` when reflection found unmet requirements.
 
-Reflection confirms the *task* was actually accomplished. Reflection is this command's main job
-beyond the toolchain — do not substitute code review for it.
+## Workflow
 
-Run **`/sc:reflect --type completion`** to validate task adherence and completion quality
-(Serena reflection tools), surfacing unmet requirements, scope drift, or remaining work the
-toolchain can't detect.
+Activate `readiness-verification` and route execution to `executor` with read-only
+inspection by `advisor` where independence is required.
 
-If reflection flags unmet requirements or scope drift, the verdict is **NOT READY** — stop and
-address those gaps before spending cycles on the mechanical gate.
+### 1. Discover the project's own gates
 
-## Mechanical Gate (runs last)
+Use the commands the repository defines (package scripts, Makefile, CI config) — do not
+substitute generic equivalents when project-specific ones exist.
 
-Once reflection confirms the task is on-target, run the six-phase gate:
+**Stack detection and profile delegation.** Detect the stack and defer to the active
+project's profile verification skill for the exact build/type/lint/test commands — this
+command stays stack-agnostic and never hard-codes per-language toolchains. If no profile
+matches, infer the toolchain from the project manifest (`package.json` scripts,
+`pyproject.toml`, `Makefile`, `go.mod`, `Cargo.toml` targets) and run the equivalent
+commands rather than skipping the phase. A gate you chose not to run is `BLOCKED`, not
+`NOT_APPLICABLE`.
 
-1. Build → 2. Type check → 3. Lint → 4. Test (meet the project's coverage target; default ≥80% when unset) → 5. Security (secrets, debug prints) → 6. Diff review.
+### 2. Run each applicable gate
 
-Emit the `VERIFICATION REPORT` with an overall **READY / NOT READY** verdict. Even a passing
-gate stays **NOT READY** if the earlier reflection step flagged unmet requirements.
+Typical gates, in order of cost: format/lint, type check, unit tests, build,
+integration/e2e where present, and a targeted behavioral check of the changed feature.
+Record each as:
 
-## Stack Detection & Profile Delegation
+- `PASS` — command, scope, and the observable that proves it
+- `FAIL` — exact failure output and the affected surface
+- `BLOCKED` — what prevents the check from running
+- `NOT_APPLICABLE` — why the gate does not apply
 
-Detect the stack and defer to the active project's **profile verification skill** for the
-exact build/type/lint/test commands — this command stays stack-agnostic and never hard-codes
-per-language toolchains.
+### 3. Behavior over green checkmarks
 
-If no profile skill matches, infer the toolchain from the project manifest (`package.json`
-scripts, `pyproject.toml`/`Makefile`/`go.mod`/`Cargo.toml` targets) and run the equivalent
-build/type/lint/test commands rather than skipping the phase.
+Type checks and tests verify code correctness, not feature correctness. When the
+change is user-facing, exercise the actual behavior path; if that is impossible, state
+so explicitly rather than implying coverage.
 
-## Delegation
+## Output
 
-- Common upstream callers: **`/ac:implement`**, **`/ac:fix`**, **`/ac:spec-implement`**, and refactor flows.
-- Before applying any auto-fix that touches production state or runs destructive commands, apply the **`safety-guard`** skill to gate the operation.
-- For hard-to-diagnose failures (build, test, or runtime), delegate to **`/sc:troubleshoot`** for root-cause analysis.
-- This command does **not** launch code reviews. Deeper code-quality work is a separate step under **`/ac:review`**, invoked by the caller after the gate passes.
-- For coverage gaps, use **`/sc:test`**.
+```text
+Verdict: READY | NOT_READY | INCONCLUSIVE
+Criteria (when a spec is linked):
+  <FR-###|SC-###|PB-n>: PASS|FAIL|BLOCKED — <action or check + observable>
+Drift: <behavior found in code that no requirement asks for, or spec text the code contradicts>
+Gates:
+  <gate>: PASS|FAIL|BLOCKED|NOT_APPLICABLE — <command + observable>
+Failures: <exact output for each FAIL>
+Gaps: <checks that could not run and why>
+```
+
+## Next Step
+
+Close the turn by mapping the verdict to one command:
+
+- `READY` and the branch is for delivery → `/ac:pr [base]`
+- `READY` and the work needs an independent pass first → `/ac:review`
+- `NOT_READY` → `/ac:fix <failing gate>`
+- `NOT_READY` because the spec itself is wrong or drifted → `/ac:spec <spec-path>` to record the change, then re-plan
+- `INCONCLUSIVE` → name the blocked gate and what would unblock it, then stop
+
+Name exactly one recommendation. Never fix failures inside this command.
+
+## Boundaries
+
+- Verification only — do not fix failures here; route them to `/ac:fix`.
+- Never report `READY` with a failing or skipped required gate, or with a spec criterion lacking evidence.
+- Do not weaken, skip, or mark tests as expected-failure to force a green result.

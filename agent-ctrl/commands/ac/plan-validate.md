@@ -1,59 +1,87 @@
 ---
 name: ac:plan-validate
-description: "Red-team a strategic plan: bust assumptions, find loopholes, propose fixes, and iterate to a high-confidence hardened strategy."
-category: review
-complexity: standard
-mcp-servers: []
-personas: [red-team-strategist, devils-advocate]
+description: Red-team a plan for decision completeness, feasibility, dependencies, safety, rollback, and verifiable execution. Read-only; returns a structured verdict and concrete amendments.
 ---
 
-# `/ac:plan-validate` - Red-Team a Plan
+# `/ac:plan-validate` — Adversarial Plan Review
 
-Adversarially validate a strategic plan. Surface every hidden assumption and loophole,
-propose concrete fixes, and iterate until confidence is high — pairs with `/ac:plan-estimate`.
-
-For plans with multiple valid paths or a go/no-go fork, apply the **`council`** skill to
-stage structured disagreement between distinct voices before settling on the hardened plan.
+Challenge a plan before implementation. Surface hidden assumptions, dependency conflicts, missing owner-decisions, unsafe operations, and unverifiable tasks. Validation does not silently rewrite or approve the plan.
 
 ## Usage
 
-```bash
-/ac:plan-validate [plan reference]   # a plan file, prior plan output, or pasted plan
+```
+/ac:plan-validate <plan-path | pasted plan>
 ```
 
 ## Workflow
 
-Run this "Red Team" loop over the plan:
+Activate `risk-review` and route independent synthesis to `advisor`. Use `explorer` to verify repository claims and `researcher` for external API, dependency, platform, or operational assumptions. Apply `secure-engineering` when risk triggers are present.
 
-1. **Assumption Busting** — identify every hidden assumption; ask *what breaks if this is
-   false?* Flag reliance on external factors, APIs, or systems that could fail or change.
-2. **Loophole & Edge-Case ID** — logical flaws (circular deps, race conditions), resource
-   constraints (memory, compute, time, scale), and security/scope (abuse, vulnerabilities).
-3. **Confidence Assessment** — assign a strict **Confidence Score (0-100%)**. Be brutally
-   honest; anything below the bar means the plan is not ready.
-4. **Propose Fixes** — for every loophole, give a concrete, actionable fix (the architectural
-   or logical solution), not just the problem.
-5. **Iterate** — apply the fixes, then re-evaluate the *new* plan from Step 1. Repeat until
-   confidence is ≥95% **or** 3 iterations are reached. If still below 95% after 3 rounds,
-   stop and report the residual risks explicitly rather than looping further.
+### 1. Validate structure and status
+
+Check that the plan names its Goal, Context, Decisions, Scope in/out, numbered tasks, dependencies, per-task acceptance criteria, QA/evidence, and final verification. A draft may contain explicit owner blockers; an approved plan may not.
+
+When the plan carries `spec:`, also run a coverage pass against that spec: the spec must be `approved` with no open `[NEEDS CLARIFICATION]` marker; every `FR-###`, `SC-###`, and `PB-<n>` must appear in the Traceability table with a task and an evidence source; every task must trace to a criterion or state why it exists; and no task may contradict a requirement or a preserved behavior. Report uncovered criteria and unrequested tasks as blocking findings.
+
+### 2. Bust assumptions
+
+For every material assumption ask:
+
+- What evidence supports it?
+- What breaks if it is false?
+- Is it a reversible implementation default or an owner-decision?
+- Does current repository state or authoritative documentation contradict it?
+
+### 3. Trace dependencies and write ownership
+
+Check for circular/missing dependencies, tasks whose outputs are consumed before they exist, unsafe parallel write sets, and shared files such as manifests, lockfiles, generated outputs, settings, migrations, or plans that need exclusive ownership.
+
+### 4. Attack feasibility and failure paths
+
+Evaluate resource and compatibility constraints, partial failure, retries/idempotency, concurrency, data integrity, migration/rollback, security and abuse paths, shared/public API impact, observability, and operational recovery. Verify important claims against code or authoritative sources rather than grading prose alone.
+
+### 5. Challenge verification
+
+Every task needs a binary observable and a realistic evidence source. Reject tautological tests, vague “works/secure/robust” criteria, dry runs standing in for required real execution, and final verification that cannot detect the failure it claims to cover.
+
+### 6. Produce amendments and verdict
+
+Return concrete amendments at the owning task/decision, preserving intentional scope. Do not inflate confidence into a pseudo-precise percentage.
 
 ## Output
 
 ```markdown
 # Plan Validation Report
 
-## Confidence Score
-- Final score (e.g. 96%) and iteration count.
+## Verdict
+VALID | VALID_WITH_CHANGES | INVALID | INCONCLUSIVE
+Confidence: HIGH | MEDIUM | LOW
 
-## Identified Loopholes
-- The original flaws and assumptions that were broken.
-
-## Proposed Fixes
-- The specific changes made to counter each loophole.
-
-## Hardened Strategy
-- The final version of the plan.
-
+## Blocking Findings
+## Spec Coverage (when a spec is linked)
+## Non-Blocking Improvements
+## Assumptions and Evidence
+## Dependency / Write-Set Analysis
+## Risk, Rollback, and Observability Gaps
+## Verification Gaps
+## Required Amendments
 ## Residual Risks
-- Anything still unresolved (empty if confidence ≥95%).
 ```
+
+## Next Step
+
+Close the turn by mapping the verdict to one command:
+
+- `VALID` → approve the plan, then `/ac:run <plan-path>`
+- `VALID_WITH_CHANGES` → apply the amendments via `/ac:plan <request>`, then re-validate if the changes were material
+- `INVALID` → `/ac:plan <request>` to redesign from the blocking findings
+- The gap is in the spec, not the plan → `/ac:spec <spec-path>` to refine it first
+- `INCONCLUSIVE` → name the missing evidence and stop
+
+Name exactly one recommendation. Never approve or execute the plan yourself.
+
+## Boundaries
+
+- Read-only: do not implement, edit the plan, approve it, or change its status.
+- Do not invent blockers or require ceremony unrelated to actual risk.
+- If the user wants amendments applied, create a separate revised draft or hand back to `/ac:plan`.

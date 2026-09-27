@@ -1,0 +1,74 @@
+---
+name: ac:plan
+description: Create one decision-complete plan under .agents/plans without implementing it. Interviews only for what the repository cannot answer.
+---
+
+# `/ac:plan` — Plan Work
+
+Turns an underspecified request into one decision-complete plan file that an executor
+can carry out without follow-up questions. No product code is written.
+
+## Usage
+
+```
+/ac:plan <request>
+/ac:plan <spec-path>       # derive the plan from an approved spec
+```
+
+## Workflow
+
+Activate `work-planning` and route the request to `planner`.
+
+### 1. Repository before questions
+
+Inspect project instructions, existing patterns, configs, and conventions first. An
+existing convention beats a question every time. Delegate internal discovery to
+`explorer` and external contracts to `researcher`; route genuine architecture tradeoffs
+to `advisor`.
+
+### 2. Interview only for what evidence cannot settle
+
+Ask about scope boundaries, intended behavior the code cannot reveal, constraints, and
+the definition of done. Batch questions — three sharp questions in one message beat
+nine rounds of one. State inferable assumptions instead of asking about them.
+
+### 3. Write exactly one plan
+
+Write `.agents/plans/<slug>.md` with `status: draft`, containing: Goal, Context (paths
+and constraints found), Decisions (each resolved ambiguity), Scope in/out, numbered
+tasks with dependencies and per-task acceptance criteria, QA/evidence expectations, and
+final verification. Every task must be independently verifiable — if its acceptance
+criteria cannot be stated, it is not specified well enough yet.
+
+Keep unresolved user-owned decisions as explicit blockers inside the plan.
+
+### 4. Plan from a spec
+
+When given a spec path, start only from a spec with `status: approved` and no open
+`[NEEDS CLARIFICATION]` marker — refuse a draft and point back to `/ac:spec`. Record
+the path as `spec:` in the plan frontmatter, run the Constitution Check against the
+project's instruction files under Decisions, and add a **Traceability** table mapping
+every `FR-###`, `SC-###`, and `PB-<n>` to the tasks and evidence that prove it. A
+criterion with no task is a planning gap; a task with no criterion needs a stated reason.
+
+## Output
+
+The plan path, the key decisions made, and any user-owned blockers awaiting an answer.
+
+## Next Step
+
+Close the turn with the plan path and the recommended next command:
+
+- Plan is decision-complete and you want an adversarial pass first → `/ac:plan-validate <plan-path>`
+- Plan is ready to execute → approve it, then `/ac:run <plan-path>`
+- Owner-decisions remain → list them and stop; the plan stays `status: draft`
+- The request is really about intended behavior, not design → `/ac:spec <intent>` first
+
+Say plainly that `/ac:run` requires explicit approval — writing the plan is not approval.
+
+## Boundaries
+
+- Do not edit product code, execute the plan, commit, or push.
+- Only explicit user approval changes the plan to `status: approved`.
+- Approval authorizes later execution of the plan, not the risky operations listed
+  inside it — those still need their own authorization at execution time.
