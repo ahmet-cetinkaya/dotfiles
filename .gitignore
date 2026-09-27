@@ -128,6 +128,12 @@ hs_err_pid*
 # AI Agent files
 **/**/.codegraph/
 **/**/.omo/
+!agent-ctrl/settings/opencode/.omo/
+!agent-ctrl/settings/opencode/.omo/**
+agent-ctrl/settings/opencode/.omo/codegraph/
+agent-ctrl/settings/opencode/.omo/lsp-daemon/
+agent-ctrl/settings/opencode/.omo/run-continuation/
+agent-ctrl/settings/opencode/.omo/*.bak*
 *AGENTS.md
 *CLAUDE.md
 *GEMINI.md
@@ -151,3 +157,4 @@ opencode.json
 *.rar
 *.tar
 *.zip
+agent-ctrl/.local/
