@@ -1,48 +1,87 @@
 ---
 name: ac:spec
-description: "Spec-driven flow entry point. Turns a feature description into a clarified specification by chaining speckit:specify + speckit:clarify, then hands off to /ac:spec-plan."
-category: workflow
-complexity: advanced
-mcp-servers: []
-personas: [requirements-analyst, system-architect]
+description: Write or refine one behavior spec (what and why, never how) under specs/changes before any plan. Re-running on an existing spec asks targeted clarifying questions. Only explicit approval makes a spec plannable.
 ---
 
-# `/ac:spec` - Specify & Clarify
+# `/ac:spec` — Specify Behavior
 
-Minimal hub for the **specification** stage of the spec-driven flow. It creates the feature
-spec from a natural-language description, then interrogates it for gaps — chaining
-**`speckit:specify`** → **`speckit:clarify`**.
+Captures the intended behavior of one change as a testable spec that the user approves
+before design begins. The spec is the contract for `/ac:plan`; no product code, no plan,
+and no technology decisions are written here.
 
 ## Usage
 
-```bash
-/ac:spec [feature description]
 ```
-
-## Prerequisite
-
-The target project must be Spec Kit-initialized (`.specify/` present). If it is not, run
-**`/ac:index`** first (it runs `specify init . --ai claude`), or seed `.specify/` from the
-`speckit-scripts` skill.
+/ac:spec <intent>                 # new change: write specs/changes/<NNNN>-<slug>/SPEC.md
+/ac:spec <spec-path>              # existing draft: clarify and refine it in place
+/ac:spec <intent> --capability <name>   # target an existing living spec as a delta
+```
 
 ## Workflow
 
-0. **Constitution** *(optional, project-level)* — if the project has no
-   `.specify/memory/constitution.md`, or you want to (re)establish guiding principles first,
-   run **`speckit:constitution`**. It defines the principles all specs/plans must honor and
-   keeps dependent templates in sync. Run once per project, not per feature.
-1. **Specify** — run **`speckit:specify`** with the feature description to create/update
-   `spec.md` (creates the feature branch + `specs/<n>/` dir via
-   `scripts/bash/create-new-feature.sh`).
-2. **Clarify** — run **`speckit:clarify`** to surface underspecified areas: up to 5 targeted
-   questions, encoding each answer back into `spec.md`.
+Activate `work-planning` in **Spec First** mode and route the request to `planner`.
 
-## Delegation
+### 1. Repository before questions
 
-- Optionally runs **`speckit:constitution`** (step 0), then **`speckit:specify`** →
-  **`speckit:clarify`** (all from `commands/speckit/`).
-- **Next step:** **`/ac:spec-plan`** to turn the clarified spec into design artifacts.
+Read the project's instruction files and any living spec under `specs/` for the
+affected capability. Delegate discovery of current behavior, vocabulary, and constraints
+to `explorer`; use `researcher` only when an external product or API fact materially
+shapes the requirements. An existing convention beats a question every time.
+
+### 2. Write the change spec
+
+Create `specs/changes/<NNNN>-<slug>/SPEC.md` following the spec contract: intent,
+prioritized user stories with Given/When/Then scenarios, `FR-###` requirements in EARS
+form, measurable `SC-###` success criteria, edge cases, assumptions, and out-of-scope
+boundaries. `<NNNN>` is the next unused number across `specs/changes/` and its
+archive; `<slug>` is two to four kebab-case words.
+
+When the change alters an existing capability, write the requirements as `ADDED`,
+`MODIFIED`, and `REMOVED` deltas against the living spec and add at least two
+`PRESERVED` statements naming behavior that must keep working.
+
+Adopt defensible defaults and record them under Assumptions. Mark only what a default
+cannot settle with `[NEEDS CLARIFICATION: …]`, at most three.
+
+### 3. Self-check
+
+Run the requirements checklist and the hostile-reader pass from the spec quality
+reference, fixing findings in place for at most three rounds. Then ask the surviving
+questions — all in one message, each with a recommended option — and fold the answers
+into the spec.
+
+### 4. Refine an existing spec
+
+When given a spec path, rate the coverage taxonomy, ask at most five questions one at a
+time for `Partial` or `Missing` areas, each with a recommended answer. Write each answer
+into the affected section immediately, log it under `## Clarifications` as
+`- Q: … → A: …` for the session date, and remove any marker it resolves.
+
+### 5. Leave it as a draft
+
+The spec keeps `status: draft`. Say plainly that only explicit user approval changes it
+to `approved`, and that approval covers the intent, not the risky operations a later
+plan may propose.
 
 ## Output
 
-A clarified `spec.md` on a dedicated feature branch, ready for planning.
+The spec path, the user stories with their priorities, the count of requirements and
+success criteria, adopted assumptions, and any open `[NEEDS CLARIFICATION]` markers.
+
+## Next Step
+
+Close the turn with the spec path and the recommended next command:
+
+- Markers or `Partial` areas remain → answer them, or `/ac:spec <spec-path>` to refine
+- Spec is complete and you agree with it → approve it, then `/ac:plan <spec-path>`
+- The idea itself is still unshaped → `/ac:brainstorm <idea>` first
+
+Name exactly one recommendation. Never chain commands automatically.
+
+## Boundaries
+
+- Do not write product code, a plan, or technology choices; the plan owns the how.
+- Do not edit a spec under `specs/changes/archive/` or a living spec under
+  `specs/`; new behavior is a new change.
+- Do not approve the spec or move it past `draft`; only the user does.
+- Do not commit or push.

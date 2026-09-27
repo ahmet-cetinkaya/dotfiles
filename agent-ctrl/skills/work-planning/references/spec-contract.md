@@ -1,0 +1,80 @@
+# Spec Contract
+
+A spec records **what** the system must do and **why**, never how. It is the upstream artifact of a plan: `/ac:spec` writes it, the user approves it, and `/ac:plan` derives tasks from it. Technology, file layout, and implementation choices belong in the plan.
+
+## Layout
+
+```
+specs/<capability>/SPEC.md              # living spec: current truth for one capability
+specs/changes/<NNNN>-<slug>/SPEC.md     # change spec: one new feature or one delta
+specs/changes/archive/<NNNN>-<slug>/    # shipped changes, immutable
+```
+
+All spec artifacts live under `specs/` at the project root; only plans live under `.agents/plans/`.
+
+- `<capability>` is a short kebab-case domain name (`auth`, `billing`, `export`). `changes` is reserved and cannot be a capability name. A brand-new capability is created by the first change that ships to it.
+- `<NNNN>` is a four-digit sequence: the highest number found under `specs/changes/` (including `archive/`) plus one. Never reuse a number.
+- Spec directories stay outside `.agents/plans/`; the executor selects plans by globbing that directory.
+
+## Frontmatter
+
+```yaml
+---
+status: draft
+capability: <capability>
+plan:                      # .agents/plans/<slug>.md once one exists
+supersedes:                # optional: <NNNN>/FR-### entries this change replaces
+---
+```
+
+Lifecycle values are `draft`, `approved`, `in_progress`, and `shipped`.
+
+- `/ac:spec` writes and revises `draft`.
+- Only explicit user approval changes `draft → approved`. Approval covers the intent, not the risky operations a later plan may propose.
+- The executor changes `approved → in_progress` when the linked plan starts, and `in_progress → shipped` only after the plan's final verification passes.
+- A `shipped` change is merged into its living spec and moved under `archive/`; archived specs are never edited. New behavior is a new change.
+
+## Change spec body
+
+1. **Intent** — the outcome and the reason, in the user's language, three to five sentences.
+2. **User stories** — `### US<n> — <title> (Priority: P<n>)`. Each story names its independent test (how it could be demonstrated alone) and its Given/When/Then scenarios. P1 is the smallest slice that delivers value on its own.
+3. **Requirements** — `FR-###` in EARS form (see below). Every requirement must be testable, technology-agnostic, and traceable to a story.
+4. **Success criteria** — `SC-###`: measurable outcomes an observer can confirm without reading the code.
+5. **Edge cases** — empty, invalid, boundary, concurrent, unauthorized, and failure inputs, each with the required behavior.
+6. **Assumptions** — defaults adopted instead of asking, so the user can correct them.
+7. **Out of scope** — what this change deliberately does not do.
+8. **Clarifications** — `### Session <YYYY-MM-DD>` with `- Q: … → A: …` lines, appended by later `/ac:spec` runs.
+9. **Deviations** — appended by the executor when implementation cannot follow the spec as written: what deviated, why, and the user's decision. Empty until execution.
+
+When the change alters an existing capability, section 3 is split into delta blocks that reference the living spec:
+
+- `### ADDED` — new requirements.
+- `### MODIFIED` — the complete revised text of an existing requirement, keeping its ID.
+- `### REMOVED` — the ID and a one-line reason.
+- `### PRESERVED` — `PB-<n>` statements naming behavior that must keep working after the change. At least two; they become regression criteria.
+
+## Requirement format
+
+Use EARS patterns with `SHALL`:
+
+| Pattern | Form |
+|---|---|
+| Ubiquitous | `THE SYSTEM SHALL <behavior>` |
+| Event-driven | `WHEN <trigger> THE SYSTEM SHALL <behavior>` |
+| State-driven | `WHILE <state> THE SYSTEM SHALL <behavior>` |
+| Unwanted behavior | `IF <condition> THEN THE SYSTEM SHALL <behavior>` |
+| Optional feature | `WHERE <feature is present> THE SYSTEM SHALL <behavior>` |
+
+Scenarios under user stories use `Given <state>`, `When <action>`, `Then <observable>`. A requirement without an observable is not finished.
+
+## Uncertainty
+
+Make an informed default and record it under Assumptions rather than stalling. Mark only what a default cannot settle with `[NEEDS CLARIFICATION: <question>]`, at most three per spec, prioritized scope > security and privacy > user experience > technical. A spec with an open marker stays `draft`.
+
+## Living spec merge
+
+On ship, the executor applies the change to `specs/<capability>/SPEC.md`: ADDED requirements are appended, MODIFIED ones replace their prior text, REMOVED ones are deleted, and PRESERVED statements are dropped (they described the unchanged baseline). The living spec keeps the same body sections minus Clarifications and Deviations, plus a `## History` list of `<NNNN>-<slug> — <date>` entries.
+
+## Traceability
+
+The plan derived from a spec carries a **Traceability** table: every `FR-###`, `SC-###`, and `PB-<n>` maps to at least one task and one evidence source. Verification reports every criterion with its evidence; a criterion without evidence blocks `READY`.
