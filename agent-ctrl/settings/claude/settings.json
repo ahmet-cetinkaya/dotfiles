@@ -1,18 +1,11 @@
 {
   "env": {
-    "ANTHROPIC_AUTH_TOKEN": "${OMNIROUTE_AUTH_TOKEN}",
-    "ANTHROPIC_BASE_URL": "${OMNIROUTE_BASE_URL}",
-    "ANTHROPIC_DEFAULT_HAIKU_MODEL": "combo/lite-models",
-    "ANTHROPIC_SMALL_FAST_MODEL": "combo/lite-models",
-    "ANTHROPIC_DEFAULT_OPUS_MODEL": "combo/high-models",
-    "ANTHROPIC_DEFAULT_SONNET_MODEL": "combo/mid-models",
-    "ANTHROPIC_MODEL": "combo/the-model"
+    "DISABLE_AUTOUPDATER": "1"
   },
-  "model": "combo/the-model",
+  "agent": "lead",
 
-  "editorMode": "normal",
-  "autoCompactEnabled": true,
   "includeCoAuthoredBy": false,
+  "disableRemoteControl": true,
 
   "statusLine": {
     "type": "command",
@@ -30,48 +23,7 @@
     }
   },
   "enabledPlugins": {
-    "claude-notifications-go@claude-notifications-go": true
-  },
-
-  "allowedTools": [
-    "Bash(echo *)",
-    "Bash(pwd *)",
-    "Bash(cat *)",
-    "Bash(head *)",
-    "Bash(tail *)",
-    "Bash(wc *)",
-    "Bash(ls *)",
-    "Bash(find *)",
-    "Bash(grep *)",
-    "Bash(sed *)",
-    "Bash(awk *)",
-    "Bash(mkdir *)",
-    "Bash(touch *)",
-    "Bash(jq *)",
-    "Bash(git status *)",
-    "Bash(git diff *)",
-    "Bash(git log *)",
-    "Bash(git branch *)",
-    "Bash(git show *)",
-    "Bash(git rev-parse *)",
-    "Bash(git fetch *)",
-    "Bash(npm test *)",
-    "Bash(bun test *)",
-    "Bash(bunx tsc *)",
-    "Bash(bunx eslint *)",
-    "Bash(bunx prettier *)",
-    "Bash(bunx vitest *)",
-    "Bash(dotnet build *)",
-    "Bash(dotnet test *)",
-    "Bash(dotnet restore *)",
-    "Bash(dotnet clean *)",
-    "Bash(dotnet --version *)",
-    "Bash(cargo test *)",
-    "Bash(cargo build *)",
-    "Bash(cargo check *)",
-    "Bash(go test *)",
-    "Bash(go build *)",
-    "Bash(go vet *)",
-    "Bash(python3 -m *)"
-  ]
+    "claude-notifications-go@claude-notifications-go": true,
+    "keep-awake@claude-community": true
+  }
 }
