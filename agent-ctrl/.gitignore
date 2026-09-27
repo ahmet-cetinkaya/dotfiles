@@ -6,3 +6,7 @@ opencode.json
 
 # Cloned upstream repos used only as local reference (ECC, gd-agentic-skills, etc.)
 .local/
+
+# Local backup files created by editors or manual saves
+*.bak
+*.bak.*
