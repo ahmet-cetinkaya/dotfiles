@@ -1,29 +1,201 @@
 {
-  "env": {
-    "DISABLE_AUTOUPDATER": "1"
-  },
+  "plansDirectory": ".agents/plans",
+  "outputStyle": "Explanatory",
+  "showThinkingSummaries": true,
+  "askUserQuestionTimeout": "10m",
+  "preferredNotifChannel": "notifications_disabled",
   "agent": "lead",
-
-  "includeCoAuthoredBy": false,
+  "attribution": {
+    "commit": "",
+    "pr": "",
+    "sessionUrl": false
+  },
   "disableRemoteControl": true,
+
+  "env": {
+    "DISABLE_AUTOUPDATER": "1",
+    "PYTHONSAFEPATH": "1",
+    "CLAUDE_CODE_NEW_INIT": "1",
+
+    "ANTHROPIC_BASE_URL": "${OMNIROUTE_BASE_URL}",
+    "ANTHROPIC_AUTH_TOKEN": "${OMNIROUTE_AUTH_TOKEN}",
+
+    "ANTHROPIC_DEFAULT_FABLE_MODEL": "cc/claude-fable-5-1[1m]",
+    "ANTHROPIC_DEFAULT_OPUS_MODEL": "cc/claude-opus-5-5[1m]",
+    "ANTHROPIC_DEFAULT_SONNET_MODEL": "cc/claude-sonnet-5-5[1m]",
+    "ANTHROPIC_DEFAULT_HAIKU_MODEL": "cc/claude-haiku-5-5",
+
+    "CLAUDE_CODE_SUBAGENT_MODEL": "combo/mid-models"
+  },
+
+  "modelPicker": {
+    "replaceBuiltInOptions": true,
+    "options": [
+      {
+        "model": "cc/claude-fable-5-1[1m]",
+        "label": "Claude Fable 5.1",
+        "behavesAs": "claude-fable-5-1"
+      },
+      {
+        "model": "cc/claude-opus-5-5[1m]",
+        "label": "Claude Opus 5.5",
+        "behavesAs": "claude-opus-5-5"
+      },
+      {
+        "model": "cc/claude-sonnet-5-5[1m]",
+        "label": "Claude Sonnet 5.5",
+        "behavesAs": "claude-sonnet-5-5"
+      },
+      {
+        "model": "cc/claude-haiku-5-5",
+        "label": "Claude Haiku 5.5",
+        "behavesAs": "claude-haiku-5-5"
+      },
+      {
+        "model": "cx/gpt-6.1-sol",
+        "label": "GPT-6.1 Sol",
+        "behavesAs": "claude-fable-5-1"
+      },
+      {
+        "model": "cx/gpt-6-sol[1m]",
+        "label": "GPT-6 Sol",
+        "behavesAs": "claude-opus-5-5"
+      },
+      {
+        "model": "cx/gpt-5.6-sol[1m]",
+        "label": "GPT-5.6 Sol",
+        "behavesAs": "claude-opus-5-5"
+      },
+      {
+        "model": "cx/gpt-6-luna[1m]",
+        "label": "GPT-6 Luna",
+        "behavesAs": "claude-sonnet-5-5"
+      },
+      {
+        "model": "cx/gpt-5.5",
+        "label": "GPT-5.5",
+        "behavesAs": "claude-sonnet-5-5"
+      },
+      {
+        "model": "cx/gpt-5.6-terra[1m]",
+        "label": "GPT-5.6 Terra",
+        "behavesAs": "claude-sonnet-5-5"
+      },
+      {
+        "model": "cx/gpt-5.6-luna[1m]",
+        "label": "GPT-5.6 Luna",
+        "behavesAs": "claude-haiku-5-5"
+      },
+      {
+        "model": "glm/glm-5.3[1m]",
+        "label": "GLM 5.3",
+        "behavesAs": "claude-opus-5-5"
+      },
+      {
+        "model": "glm/glm-5.3-flash[1m]",
+        "label": "GLM 5.3 Flash",
+        "behavesAs": "claude-sonnet-5-5"
+      },
+      {
+        "model": "combo/max-models",
+        "label": "Max Models",
+        "behavesAs": "claude-fable-5-1"
+      },
+      {
+        "model": "combo/high-models",
+        "label": "High Models",
+        "behavesAs": "claude-opus-5-5"
+      },
+      {
+        "model": "combo/mid-models",
+        "label": "Mid Models",
+        "behavesAs": "claude-sonnet-5-5"
+      },
+      {
+        "model": "combo/lite-models",
+        "label": "Lite Models",
+        "behavesAs": "claude-haiku-5-5"
+      },
+      {
+        "model": "auto/coding:free",
+        "label": "Auto Coding Free",
+        "behavesAs": "claude-sonnet-5-5"
+      }
+    ]
+  },
+
+  "modelSettings": {
+    "combo/max-models": {
+      "autoCompactWindow": 800000
+    },
+    "combo/high-models": {
+      "autoCompactWindow": 800000
+    },
+    "combo/mid-models": {
+      "autoCompactWindow": 800000
+    },
+    "combo/lite-models": {
+      "autoCompactWindow": 800000
+    },
+
+    "cx/gpt-5.5": {
+      "autoCompactWindow": 250000
+    },
+    "cx/gpt-5.6-sol[1m]": {
+      "autoCompactWindow": 800000
+    },
+    "cx/gpt-5.6-terra[1m]": {
+      "autoCompactWindow": 800000
+    },
+    "cx/gpt-5.6-luna[1m]": {
+      "autoCompactWindow": 800000
+    },
+    "cx/gpt-6-sol[1m]": {
+      "autoCompactWindow": 800000
+    },
+    "cx/gpt-6-luna[1m]": {
+      "autoCompactWindow": 800000
+    },
+    "cx/gpt-6.1-sol": {
+      "autoCompactWindow": 800000
+    }
+  },
+
+  "permissions": {},
+
+  "hooks": {
+    "Notification": [
+      {
+        "matcher": "permission_prompt|idle_prompt|elicitation_dialog",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "sh \"$HOME/.agent-ctrl/settings/claude/notify.sh\" \"🔐 Girdi bekliyor\""
+          }
+        ]
+      }
+    ],
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "sh \"$HOME/.agent-ctrl/settings/claude/notify.sh\" \"✅ Tamamlandı\""
+          }
+        ]
+      }
+    ]
+  },
+
+  "enabledPlugins": {
+    "keep-awake@claude-community": true,
+    "cc-plugin-you-should-know@builtin": true
+  },
 
   "statusLine": {
     "type": "command",
-    "command": "bunx -y ccstatusline@latest",
+    "command": "bunx -y ccstatusline@2.2.30",
     "padding": 0,
     "refreshInterval": 10
-  },
-
-  "extraKnownMarketplaces": {
-    "claude-notifications-go": {
-      "source": {
-        "source": "github",
-        "repo": "777genius/claude-notifications-go"
-      }
-    }
-  },
-  "enabledPlugins": {
-    "claude-notifications-go@claude-notifications-go": true,
-    "keep-awake@claude-community": true
   }
 }

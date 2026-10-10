@@ -5,17 +5,17 @@ This is the source catalog applied by [agent-ctrl](https://github.com/ahmet-ceti
 ## Inventory
 
 - `agents/`: 7 coordinated `ac-*` agents.
-- `commands/ac/`: 13 explicit workflow commands: `brainstorm`, `spec`, `plan`, `plan-validate`, `run`, `fix`, `research`, `review`, `verify`, `doc`, `changelog`, `pr`, and `pr-address`.
-- `skills/`: 8 descriptive skills, each with a short routing contract and focused references.
-- `rules/safety.md`: 1 shared safety rule.
-- `profiles/`: intentionally empty in this first version; language and framework conventions are discovered from each project.
+- `commands/ac/`: 12 explicit workflow commands: `spec`, `plan`, `plan-validate`, `run`, `fix`, `research`, `review`, `verify`, `doc`, `changelog`, `pr`, and `pr-address`.
+- `skills/`: 9 descriptive skills, each with a short routing contract and focused references.
+- `rules/`: 2 shared rules, `safety.md` and `clean-code.md`.
+- `profiles/`: 38 optional language, framework, platform, and domain profiles, applied per project; see `docs/profiles/README.md`.
 - `mcps/`: existing MCP definitions.
-- `settings/claude/`, `settings/opencode/`, and `settings/pi/`: platform-specific settings copied by apply. `settings/omo/`: the standalone `oh-my-openagent` config, symlinked (not apply-copied) into `~/.config/opencode/.omo/`.
+- `settings/claude/` and `settings/opencode/`: platform-specific settings copied by apply. `settings/omo/`: the standalone `oh-my-openagent` config, symlinked (not apply-copied) into `~/.config/opencode/.omo/`.
 - `docs/`: composition indexes and one provenance record per executable artifact. Documentation is kept outside scanned artifact directories.
 
 ## Entry points
 
-Ordinary natural-language sessions start with `lead`. It handles small, known work directly and routes specialized work only when needed. Explicit checkpoints are available as `/ac:brainstorm`, `/ac:spec`, `/ac:plan`, `/ac:plan-validate`, `/ac:run`, `/ac:fix`, `/ac:research`, `/ac:review`, `/ac:verify`, `/ac:doc`, `/ac:changelog`, `/ac:pr`, and `/ac:pr-address`.
+Ordinary natural-language sessions start with `lead`. It handles small, known work directly and routes specialized work only when needed. Explicit checkpoints are available as `/ac:spec`, `/ac:plan`, `/ac:plan-validate`, `/ac:run`, `/ac:fix`, `/ac:research`, `/ac:review`, `/ac:verify`, `/ac:doc`, `/ac:changelog`, `/ac:pr`, and `/ac:pr-address`.
 
 Durable plans live at `.agents/plans/<slug>.md`, independent of either provider's private state directories. `/ac:plan` writes `status: draft` but never implements it; only explicit approval changes it to `status: approved`. `/ac:run` starts approved plans, resumes recorded in-progress or resolved-blocked plans, rejects draft/completed/ambiguous plans, and executes clear scoped requests without committing or pushing.
 
@@ -49,10 +49,14 @@ agent-ctrl apply claude --path /tmp/agent-ctrl-claude --override --no-prompt --d
 agent-ctrl apply opencode --path /tmp/agent-ctrl-opencode --override --no-prompt --dry-run
 ```
 
-Remove `--dry-run` only for an intended target. Use a temporary path for sandbox validation; applying to real home configuration is a separate user-authorized action.
+Remove `--dry-run` only for an intended target. `--path` selects the source catalog, not the destination: `apply claude` always writes to `~/.claude` (override with `AGENT_CTRL_CLAUDE_HOME`), so a non-dry-run apply against an empty `--path` deletes the live `skills/`, `agents/`, and `commands/`. Applying to real home configuration is a separate user-authorized action.
 
 ## Claude and OpenCode coexistence
 
-Claude and OpenCode both default to `lead`, and the shared catalog is rendered by agent-ctrl. OpenCode keeps `oh-my-openagent@latest` for its runtime, routing, and existing settings. Its Claude artifact import switches remain disabled, preventing duplicate commands, skills, hooks, plugins, agents, or MCP definitions. Delegating source agents use Claude's backward-compatible `Task` alias; agent-ctrl renders the OpenCode tool map in lowercase. Source prompts contain no provider model pins or provider-only invocation syntax.
+Claude and OpenCode both default to `lead`, and the shared catalog is rendered by agent-ctrl. OpenCode keeps `oh-my-openagent@latest` for its runtime, routing, and existing settings. Its Claude artifact import switches remain disabled, preventing duplicate commands, skills, hooks, plugins, agents, or MCP definitions. Delegating source agents use Claude's backward-compatible `Task` alias; agent-ctrl renders the OpenCode tool map in lowercase.
+
+## Model tiers
+
+Agent `models.claude` values are gateway combo IDs resolved by the LLM gateway at request time, with provider fallback owned by the gateway: `advisor` → `combo/max-models`, `planner` and `executor` → `combo/high-models`, `worker` and `researcher` → `combo/mid-models`, `explorer` → `combo/lite-models`, `lead` → `inherit` (the session's main model). Delegating agents omit per-invocation model overrides so these definitions stay authoritative. These IDs are meaningful only where the gateway serves them; a deployment without those combos must remap them.
 
 Composition and licensing details are indexed in `docs/agents/`, `docs/commands/`, `docs/skills/`, and `docs/rules/`.
