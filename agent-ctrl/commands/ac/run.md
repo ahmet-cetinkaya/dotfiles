@@ -1,28 +1,39 @@
 ---
 name: ac:run
-description: Execute an approved plan (or resume an in-progress one) end to end through the executor with per-task verification and final gates.
+description: Execute an approved plan (or resume an in-progress one), or an already-clear scoped request, end to end through the executor with per-task verification and final gates.
 ---
 
-# `/ac:run` — Execute a Plan
+# `/ac:run` — Execute a Plan or Scoped Request
 
 Carries an approved plan through to completion with per-task verification. The plan is
-the contract; execution does not redesign it.
+the contract; execution does not redesign it. A request that is already clear runs the
+same way without a plan file.
 
 ## Usage
 
 ```
 /ac:run [plan-slug]        # omit to auto-select when exactly one plan is eligible
+/ac:run <scoped request>   # implement an already-clear change without a plan file
 ```
 
 ## Workflow
 
-Activate `plan-execution` and route the plan to `executor`.
+Activate `plan-execution` and route the plan or request to `executor`.
 
-### 1. Select and gate the plan
+### 1. Select and gate the input
 
-Resolve the plan under `.agents/plans/`. If several are eligible and none was named,
-ask. Start only from `status: approved`; resume `in_progress`, or `blocked` after its
-blocker is resolved. Reject draft, completed, ambiguous, or still-blocked plans.
+An argument that names a plan under `.agents/plans/` is a plan; anything else is a
+direct request.
+
+**Plan.** If several are eligible and none was named, ask. Start only from
+`status: approved`; resume `in_progress`, or `blocked` after its blocker is resolved.
+Reject draft, completed, ambiguous, or still-blocked plans.
+
+**Direct request.** Accept it only when the target files or area, the expected
+behavior, and the acceptance conditions are already known or settled by the repository.
+State those three before the first edit; they are the contract in place of a plan. Send
+broken behavior to `/ac:fix`, and anything ambiguous, multi-step with open decisions, or
+crossing a risk boundary to `/ac:plan` instead of guessing.
 
 If the plan carries `spec:`, read that spec and move it `approved → in_progress` when
 execution starts. The spec's requirements and preserved behavior are part of the
@@ -79,6 +90,8 @@ without explicit authorization.
 ## Boundaries
 
 - Do not start from a draft plan or silently redesign an approved one.
+- Do not run a direct request whose scope or acceptance conditions are unclear; route it
+  to `/ac:plan`.
 - Do not rewrite a spec's requirements to match the code; record deviations and ask.
 - Do not commit, push, open a PR, merge, deploy, or alter shared state without explicit
   authorization.

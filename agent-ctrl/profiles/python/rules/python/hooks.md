@@ -5,7 +5,7 @@ paths:
 ---
 # Python Hooks
 
-> This file extends [common/hooks.md](../common/hooks.md) with Python specific content.
+> This file extends the common hooks rules with Python specific content.
 
 ## PostToolUse Hooks
 

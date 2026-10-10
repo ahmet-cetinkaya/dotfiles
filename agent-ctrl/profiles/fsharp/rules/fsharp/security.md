@@ -7,7 +7,7 @@ paths:
 ---
 # F# Security
 
-> This file extends [common/security.md](../common/security.md) with F#-specific content.
+> This file extends the common security rules with F#-specific content.
 
 ## Secret Management
 

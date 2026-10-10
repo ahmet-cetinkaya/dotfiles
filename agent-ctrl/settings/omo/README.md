@@ -9,7 +9,7 @@ The configuration has three relevant paths:
 `omo` is not an `agent-ctrl apply` platform (it lives outside `settings/opencode/` on purpose, since it configures the separate `oh-my-openagent` plugin, not OpenCode's own config), so its two tracked artifacts are symlinked directly into the live target instead of being copied by `agent-ctrl apply`:
 
 - `~/.config/opencode/.omo/omo.jsonc` -> `~/Configs/agent-ctrl/settings/omo/omo.jsonc`
-- `~/.config/opencode/.omo/agents` -> `~/Configs/agent-ctrl/settings/omo/agents`
+- `~/.config/opencode/.omo/custom_prompts` -> `~/Configs/agent-ctrl/settings/omo/custom_prompts`
 
 Edit the canonical source directly; changes take effect immediately through the symlinks, no apply step needed. Everything else under `~/.config/opencode/.omo/` (`agent/`, `codegraph/`, `lsp-daemon/`, `memory/`, `prompts/`, `sessions/`, `settings.json`, `omo.jsonc.bak*`, etc.) is live runtime state for the standalone OMO CLI, not tracked in this repo, and must never be replaced by a symlink or overwritten. Restart OpenCode after changing agent prompts because config-time files are loaded at startup.
 
@@ -18,8 +18,8 @@ Edit the canonical source directly; changes take effect immediately through the 
 The configuration is intentionally limited to `[opencode]` settings:
 
 - Agent and category orchestration, including OmniRoute model routes.
-- Complete local Sisyphus, Atlas, Explore, and Librarian prompts under `agents/`, pinned to the OMO version recorded in each file.
-- Their `agents.<name>.prompt` settings use portable `file://~/.config/opencode/.omo/agents/` URIs and replace the corresponding upstream prompts rather than appending potentially conflicting instructions.
+- Complete local Sisyphus, Atlas, Explore, and Librarian prompts under `custom_prompts/`, pinned to the OMO version recorded in each file.
+- Their `agents.<name>.prompt` settings use portable `file://~/.config/opencode/.omo/custom_prompts/` URIs and replace the corresponding upstream prompts rather than appending potentially conflicting instructions.
 - `claude_code` disables importing Claude Code MCPs, commands, skills, hooks, and plugins.
 - `git_master` prevents commit footers and `Co-authored-by` lines.
 - `notification.force_enable` keeps OMO session notifications enabled.
@@ -34,7 +34,7 @@ The local prompts are complete replacements based on Oh My OpenAgent `v4.19.4` (
 
 ### Sisyphus
 
-File: `agents/SISYPHUS.md`
+File: `custom_prompts/SISYPHUS.md`
 
 Upstream baseline: the Claude Opus 5 Sisyphus prompt from `packages/omo-opencode/src/agents/sisyphus/claude-opus-5.ts`.
 
@@ -60,7 +60,7 @@ Preserved guarantees:
 
 ### Atlas
 
-File: `agents/ATLAS.md`
+File: `custom_prompts/ATLAS.md`
 
 Upstream baseline: the Atlas `default` prompt from `packages/prompts-core/prompts/atlas/default.md`, selected by the configured Claude Sonnet 5 primary model.
 
@@ -87,7 +87,7 @@ Preserved guarantees:
 
 ### Explore
 
-File: `agents/EXPLORE.md`
+File: `custom_prompts/EXPLORE.md`
 
 Upstream baseline: `packages/omo-opencode/src/agents/explore.ts`.
 
@@ -111,7 +111,7 @@ Preserved guarantees:
 
 ### Librarian
 
-File: `agents/LIBRARIAN.md`
+File: `custom_prompts/LIBRARIAN.md`
 
 Upstream baseline: `packages/omo-opencode/src/agents/librarian.ts`.
 

@@ -6,7 +6,7 @@ paths:
 ---
 # Go Hooks
 
-> This file extends [common/hooks.md](../common/hooks.md) with Go specific content.
+> This file extends the common hooks rules with Go specific content.
 
 ## PostToolUse Hooks
 

@@ -5,7 +5,7 @@ paths:
 ---
 # Swift Patterns
 
-> This file extends [common/patterns.md](../common/patterns.md) with Swift specific content.
+> This file extends the common patterns rules with Swift specific content.
 
 ## Protocol-Oriented Design
 

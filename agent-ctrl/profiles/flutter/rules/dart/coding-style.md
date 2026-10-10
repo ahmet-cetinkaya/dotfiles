@@ -6,7 +6,7 @@ paths:
 ---
 # Dart/Flutter Coding Style
 
-> This file extends [common/coding-style.md](../common/coding-style.md) with Dart and Flutter-specific content.
+> This file extends the common coding-style rules with Dart and Flutter-specific content.
 
 ## Formatting
 

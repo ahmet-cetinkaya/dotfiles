@@ -4,7 +4,7 @@ paths:
 ---
 # Rust Testing
 
-> This file extends [common/testing.md](../common/testing.md) with Rust-specific content.
+> This file extends the common testing rules with Rust-specific content.
 
 ## Test Framework
 

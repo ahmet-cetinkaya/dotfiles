@@ -5,7 +5,7 @@ paths:
 ---
 # Dart/Flutter Patterns
 
-> This file extends [common/patterns.md](../common/patterns.md) with Dart, Flutter, and common ecosystem-specific content.
+> This file extends the common patterns rules with Dart, Flutter, and common ecosystem-specific content.
 
 ## Repository Pattern
 

@@ -5,7 +5,7 @@ paths:
 ---
 # Swift Testing
 
-> This file extends [common/testing.md](../common/testing.md) with Swift specific content.
+> This file extends the common testing rules with Swift specific content.
 
 ## Framework
 

@@ -9,7 +9,7 @@ paths:
 
 # Nuxt Testing
 
-> This file extends [common/testing.md](../common/testing.md) with Nuxt specific content.
+> This file extends the common testing rules with Nuxt specific content.
 
 Package: `@nuxt/test-utils`. Vitest-first for unit and component tests, with built-in Playwright browser E2E support. nuxt-vitest and vitest-environment-nuxt are superseded and folded into it.
 

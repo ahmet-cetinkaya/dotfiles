@@ -4,7 +4,7 @@ paths:
 ---
 # Java Testing
 
-> This file extends [common/testing.md](../common/testing.md) with Java-specific content.
+> This file extends the common testing rules with Java-specific content.
 
 ## Test Framework
 

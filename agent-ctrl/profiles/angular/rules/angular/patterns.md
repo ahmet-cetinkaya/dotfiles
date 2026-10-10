@@ -8,7 +8,7 @@ paths:
 ---
 # Angular Patterns
 
-> This file extends [common/patterns.md](../common/patterns.md) with Angular specific content.
+> This file extends the common patterns rules with Angular specific content.
 
 ## Smart / Dumb Component Split
 

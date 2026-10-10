@@ -29,7 +29,7 @@ Each area is a lens defined in [`risk-review`](../../skills/risk-review/SKILL.md
 | Area | Focus | Partitioned? |
 |---|---|---|
 | **correctness** | Logic errors, edge cases, broken invariants, concurrency, regressions | — (always active) |
-| **clean-code** | Readability, naming, structure, duplication | ✅ 8 aspects |
+| **clean-code** | Readability, naming, structure, duplication, dead code — the write-time `clean-code` rule, checked | — |
 | **security** | Trust boundaries, authn/authz, injection, secrets, sensitive data | — |
 | **performance** | Demonstrated hot paths, algorithmic growth, queries, allocations, contention | — |
 | **architecture** | Ownership, coupling, public contracts, layering, reversibility | — |
@@ -48,28 +48,21 @@ Collect the files in scope from the target (PR / git diff / path), per the rules
 
 - **If `--area` is passed:** use those areas directly — do **not** ask.
 - **If no area is passed:** ask with a **multi-select** question, listing the areas above with their one-line descriptions. The user picks any subset (selecting all = full review).
+- Inspect what the files do and what changed, and mark every area the content warrants as recommended in the same question, with a one-line reason each (`errors` for new failure paths, `tests` when test files changed, `security` for auth or input handling).
 
-**Ask through the runtime's own question tool, not through chat text.** Use the native interactive prompt the agent runtime provides (in Claude Code: `AskUserQuestion` with `multiSelect: true`), so the areas render as selectable options rather than a list the user has to retype. One option per review area, each carrying its one-line description as the option label/description. Only fall back to a plain numbered list in chat when the runtime exposes no interactive question tool.
+**Ask through the runtime's own question tool, not through chat text.** Use the native interactive prompt the agent runtime provides (in Claude Code: `AskUserQuestion` with `multiSelect: true`), so the areas render as selectable options rather than a list the user has to retype. One option per review area, each carrying its one-line description as the option label/description. If the tool is not in your tool list it may be deferred: load it first (Claude Code: `ToolSearch` with `select:AskUserQuestion`). Fall back to a plain numbered list in chat only after loading was attempted and the runtime still exposes no question tool, and say that you fell back.
 - **Correctness is always included**, whether or not it was selected.
 - When the diff crosses a risk boundary (auth, persistent or sensitive data, schema or migration, shared API, CI), add `security` and route an independent pass to `advisor` even if it was not selected. State that you did so.
 
-### 3. Resolve clean-code aspects (only if `clean-code` was selected)
+### 3. Apply the lenses
 
-`clean-code` is partitioned into eight aspects. Ask a **second** multi-select question through the same interactive question tool — one option per aspect, never a plain chat list:
-
-`comments (C1-C5)`, `environments (E1-E2)`, `functions (F1-F4)`, `naming (N1-N7)`, `architecture (G1-G10)`, `hygiene (G11-G20)`, `logic (G21-G36)`, `tests (T1-T9)`.
-
-Clean-code `tests (T1-T9)` means test-code cleanliness (naming, structure, duplication, readability). Top-level `tests` means suite effectiveness (whether tests catch real bugs). Selecting both is valid and non-redundant.
-
-If `--area clean-code` was passed without an explicit aspect list, default to all eight.
-
-### 4. Apply the lenses
+`clean-code` covers test code too (naming, structure, duplication); the top-level `tests` area covers whether tests catch real bugs. Selecting both is valid.
 
 For each selected area, apply its lens to the target files. Run independent areas in parallel where possible. Use `explorer` to establish surrounding context — callers, contracts, and tests — so findings rest on how the code is actually used rather than on the diff in isolation.
 
 Reviewers may use **`serena`** for symbol-level navigation and **`codegraph`** for call paths and blast-radius analysis on the changed symbols. For the top-level `tests` area, include production code plus its corresponding tests in context and review from a risk-based testing perspective.
 
-### 5. Consolidate
+### 4. Consolidate
 
 Compile every lens's findings into a single, structured **Code Review Report**, grouped by area with the highest-severity findings first.
 
@@ -115,5 +108,5 @@ Name exactly one primary recommendation. Never apply fixes from this command.
 
 - This command **only** orchestrates and reports. It does not modify files.
 - Never skip the area question when no `--area` is supplied — area selection is the point of the hub.
-- Do not apply a lens (or a clean-code aspect) that was not selected, except the always-on correctness lens and risk-triggered security escalation.
+- Do not apply a lens that was not selected, except the always-on correctness lens and risk-triggered security escalation.
 - Do not soften severity to avoid friction, or invent findings to appear thorough. Security, auth, and data-handling findings are never downgraded without evidence.

@@ -4,10 +4,7 @@
 {
   "$schema": "https://raw.githubusercontent.com/code-yeongyu/oh-my-openagent/dev/assets/omo.schema.json",
   // Shared base key, read by the Senpi (native) harness too — NOT nested under [opencode].
-  // Works around a known upstream bug (omo #7923): memory-reflection children spawn with
-  // --no-extensions, so they can never resolve the omni/auto/best-* alias family (the plugin
-  // that expands those aliases never loads in the child). Pinned to a literal, non-alias
-  // catalog id instead.
+  // Pins for regular task() delegation in the main session (extensions loaded there, fine).
   "categories": {
     "quick": {
       "model": "omni/glm/glm-5.3-flash"
@@ -16,6 +13,21 @@
     "unspecified-high": {
       "model": "omni/glm/glm-5.3-flash"
     }
+  },
+  // Built-in model_profiles (capable/simple-work/deep-work) reference generic provider ids
+  // (anthropic, openai-codex...) that never match our custom "omni" gateway, so activating
+  // them as-is silently no-ops. Define our own "capable" chain for the main session.
+  "model_profiles": {
+    "capable": {
+      "models": [
+        { "model": "omni/claude/claude-opus-5", "reasoning": "max" },
+        { "model": "omni/glm/glm-5.3", "reasoning": "max" }
+      ]
+    }
+  },
+  "model_profile": "capable",
+  "telemetry": {
+    "enabled": false
   },
   "[opencode]": {
     "git_master": {
@@ -52,7 +64,7 @@
     },
     "agents": {
       "sisyphus": {
-        "prompt": "file://~/.config/opencode/.omo/agents/SISYPHUS.md",
+        "prompt": "file://~/.config/opencode/.omo/custom_prompts/SISYPHUS.md",
         "model": "omniroute/claude/claude-opus-5",
         "variant": "high",
         "fallback_models": [
@@ -84,7 +96,7 @@
         ]
       },
       "librarian": {
-        "prompt": "file://~/.config/opencode/.omo/agents/LIBRARIAN.md",
+        "prompt": "file://~/.config/opencode/.omo/custom_prompts/LIBRARIAN.md",
         "model": "omniroute/claude/claude-haiku-4-5-20251001",
         "fallback_models": [
           {
@@ -93,7 +105,7 @@
         ]
       },
       "explore": {
-        "prompt": "file://~/.config/opencode/.omo/agents/EXPLORE.md",
+        "prompt": "file://~/.config/opencode/.omo/custom_prompts/EXPLORE.md",
         "model": "omniroute/claude/claude-haiku-4-5-20251001",
         "fallback_models": [
           {
@@ -131,7 +143,7 @@
         ]
       },
       "atlas": {
-        "prompt": "file://~/.config/opencode/.omo/agents/ATLAS.md",
+        "prompt": "file://~/.config/opencode/.omo/custom_prompts/ATLAS.md",
         "model": "omniroute/claude/claude-sonnet-5",
         "fallback_models": [
           {

@@ -9,7 +9,7 @@ paths:
 ---
 # Ruby Security
 
-> This file extends [common/security.md](../common/security.md) with Ruby and Rails specific content.
+> This file extends the common security rules with Ruby and Rails specific content.
 
 ## Rails Defaults
 

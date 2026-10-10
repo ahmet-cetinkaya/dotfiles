@@ -6,7 +6,7 @@ paths:
 ---
 # Dart/Flutter Testing
 
-> This file extends [common/testing.md](../common/testing.md) with Dart and Flutter-specific content.
+> This file extends the common testing rules with Dart and Flutter-specific content.
 
 ## Test Framework
 

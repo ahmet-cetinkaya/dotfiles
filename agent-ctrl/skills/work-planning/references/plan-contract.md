@@ -28,4 +28,24 @@ A plan derived from a spec starts only from a spec with `status: approved` and n
 
 Task status is exactly `pending`, `in_progress`, `blocked`, or `completed`. Keep only genuinely executing work `in_progress`; mark completion only after its acceptance evidence passes. An unresolved user-owned decision keeps the plan `draft` and must appear under Decisions as a blocker.
 
+## Phased delivery (when chosen)
+
+Optional; use it only when the user chose it after the dual condition held: the total PR is not meaningfully reviewable given scope, coupling, risk, or context, and coherent phases exist that can each be scoped, tested, and reviewed as a PR. No fixed file or line thresholds apply. The plan stays one durable draft; phases group the existing numbered task IDs and add no separate plans, lifecycle states, or frontmatter.
+
+Topology:
+
+- The umbrella branch originates at the intended final target. The final umbrella PR has the umbrella branch as head and the final target as base.
+- Each phase branch originates at its declared umbrella baseline; the phase head is the head of a PR whose base is the umbrella branch.
+- Branch names follow repository conventions; do not invent PR identifiers.
+
+Each phase records: outcome, scope, exclusions, task IDs, dependencies, order, acceptance criteria, test and QA evidence, branch origin and prerequisite baseline, and PR base and head. Details may reference tasks instead of repeating them.
+
+Rules:
+
+- Sequential phases branch only after their predecessors are integrated into the umbrella and verified. Independent phases may share a baseline only with no output dependency and no conflicting write surface.
+- When the umbrella changes, affected phase branches are updated by the repository's approved process and their checks rerun.
+- A phase must pass its checks on its baseline without any unfinished future phase. Independently reviewable does not mean independently deployable or mergeable to the main target.
+- Preserve each phase's review evidence. Final umbrella verification covers every plan and spec criterion, cross-phase regressions, integration, and real-surface QA; phase checks do not replace it. The final umbrella review covers integration and remaining changes, yet the aggregate diff stays large. If the repository requires a fresh full-diff review of the final PR, state that the umbrella may not solve reviewability.
+- Branch creation, PRs, commits, pushes, and merges are proposals; neither planning nor plan approval authorizes them.
+
 Commands written in a plan are proposals, not authorization. The executor must validate every command against project instructions, the current environment, and safety boundaries before running it.

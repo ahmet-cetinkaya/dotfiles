@@ -1,7 +1,7 @@
 # `/ac:fix` composition
 
 - **Target and responsibility:** Diagnose, minimally repair, and verify a bug or regression.
-- **Sources:** `agent-ctrl.old/commands/ac/fix.md`, triage, causal chain, reproduction, minimal fix, and report; `agent-ctrl.old/agents/root-cause-analyst.md`, competing hypotheses; current `agent-ctrl/.local/oh-my-openagent/packages/shared-skills/skills/debugging/SKILL.md`, observed-state debugging and repeated-failure escalation.
+- **Sources:** `agent-ctrl.old/commands/ac/fix.md`, triage, causal chain, reproduction, minimal fix, and report; `agent-ctrl.old/agents/root-cause-analyst.md`, competing hypotheses; current [oh-my-openagent](https://github.com/code-yeongyu/oh-my-openagent) `packages/shared-skills/skills/debugging/SKILL.md`, observed-state debugging and repeated-failure escalation.
 - **Behavior taken:** Reproduce, first invalid state, hypothesis prediction/test, owning-layer fix, red/green proof, scoped readiness, and bounded escalation.
 - **Merge:** Old troubleshoot and fix stages become one command routed through `executor`, which activates `systematic-debugging`, assigns scoped explorer/researcher/worker tasks, and finishes with `readiness-verification`.
 - **Provider adaptation:** Advisor routing is described by portable role name, with no provider call syntax or runtime-specific debugger mandate.

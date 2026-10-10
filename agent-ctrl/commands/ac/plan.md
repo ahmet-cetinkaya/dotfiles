@@ -42,6 +42,15 @@ criteria cannot be stated, it is not specified well enough yet.
 
 Keep unresolved user-owned decisions as explicit blockers inside the plan.
 
+**Delivery shape.** After discovery, recommend phased delivery only when both hold: the
+review scope, coupling, risk, or context needed make the total PR not meaningfully
+reviewable, and coherent phases exist that can each be scoped, tested, and reviewed as
+their own PR into an umbrella branch. Use no fixed file or line thresholds. Ask the user
+to choose, and record the choice (or a blocker while undecided) in the same plan; if the
+user declines, record the concern and keep a single PR. Small or unsplittable work stays
+a single PR, and a clear small request gets no extra question. Phases group the existing
+numbered tasks inside the one plan; see the plan contract's "Phased delivery".
+
 ### 4. Plan from a spec
 
 When given a spec path, start only from a spec with `status: approved` and no open
@@ -68,7 +77,8 @@ Say plainly that `/ac:run` requires explicit approval — writing the plan is no
 
 ## Boundaries
 
-- Do not edit product code, execute the plan, commit, or push.
+- Do not edit product code, execute the plan, commit, or push. Do not create branches or
+  PRs while planning; phased-delivery branches and PRs are proposals only.
 - Only explicit user approval changes the plan to `status: approved`.
 - Approval authorizes later execution of the plan, not the risky operations listed
   inside it — those still need their own authorization at execution time.

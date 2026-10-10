@@ -7,7 +7,7 @@ paths:
 ---
 # Dart/Flutter Security
 
-> This file extends [common/security.md](../common/security.md) with Dart, Flutter, and mobile-specific content.
+> This file extends the common security rules with Dart, Flutter, and mobile-specific content.
 
 ## Secrets Management
 

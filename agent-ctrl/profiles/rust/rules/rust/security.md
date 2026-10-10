@@ -4,7 +4,7 @@ paths:
 ---
 # Rust Security
 
-> This file extends [common/security.md](../common/security.md) with Rust-specific content.
+> This file extends the common security rules with Rust-specific content.
 
 ## Secrets Management
 

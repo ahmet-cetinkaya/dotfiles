@@ -5,7 +5,7 @@ paths:
 ---
 # Python Security
 
-> This file extends [common/security.md](../common/security.md) with Python specific content.
+> This file extends the common security rules with Python specific content.
 
 ## Secret Management
 

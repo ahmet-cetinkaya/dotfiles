@@ -11,7 +11,7 @@ paths:
 ---
 # Angular Coding Style
 
-> This file extends [common/coding-style.md](../common/coding-style.md) with Angular specific content.
+> This file extends the common coding-style rules with Angular specific content.
 
 ## Version Awareness
 

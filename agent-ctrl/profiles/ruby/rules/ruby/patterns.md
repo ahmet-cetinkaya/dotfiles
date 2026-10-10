@@ -8,7 +8,7 @@ paths:
 ---
 # Ruby Patterns
 
-> This file extends [common/patterns.md](../common/patterns.md) with Ruby and Rails specific content.
+> This file extends the common patterns rules with Ruby and Rails specific content.
 
 ## Rails Way First
 

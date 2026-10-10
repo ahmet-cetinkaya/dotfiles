@@ -10,7 +10,7 @@ paths:
 
 # Nuxt Patterns
 
-> This file extends [common/patterns.md](../common/patterns.md) with Nuxt specific content.
+> This file extends the common patterns rules with Nuxt specific content.
 
 ## Data-fetch selection
 

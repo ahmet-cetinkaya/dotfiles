@@ -6,7 +6,7 @@ paths:
 ---
 # Go Testing
 
-> This file extends [common/testing.md](../common/testing.md) with Go specific content.
+> This file extends the common testing rules with Go specific content.
 
 ## Framework
 

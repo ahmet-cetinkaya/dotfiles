@@ -7,7 +7,7 @@ paths:
 
 # Nuxt Security
 
-> This file extends [common/security.md](../common/security.md) with Nuxt specific content.
+> This file extends the common security rules with Nuxt specific content.
 
 ## runtimeConfig public vs private
 

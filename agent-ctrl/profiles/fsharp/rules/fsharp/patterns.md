@@ -5,7 +5,7 @@ paths:
 ---
 # F# Patterns
 
-> This file extends [common/patterns.md](../common/patterns.md) with F#-specific content.
+> This file extends the common patterns rules with F#-specific content.
 
 ## Result Type for Error Handling
 

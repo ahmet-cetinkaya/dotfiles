@@ -5,7 +5,7 @@ paths:
 ---
 # Angular Testing
 
-> This file extends [common/testing.md](../common/testing.md) with Angular specific content.
+> This file extends the common testing rules with Angular specific content.
 
 ## Test Runner
 

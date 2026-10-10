@@ -19,9 +19,13 @@ when possible, applies the smallest fix, then runs the verification gate.
 
 ## Workflow
 
-Activate `systematic-debugging` and route the workflow through `executor`. Use
-`explorer` for code-path discovery, `researcher` only for external contracts, and one
-`worker` for each scoped diagnosis or implementation task.
+Activate `systematic-debugging` and route the workflow through `executor`. The skill
+owns the debugging loop: reproduce, trace to the first invalid state, test competing
+hypotheses, fix at the owning layer, prove red → green, and escalate to `advisor` or
+stop with a blocker after repeated failed attempts. This command adds the entry gate,
+the flags, and the report around that loop. Use `explorer` for code-path discovery,
+`researcher` only for external contracts, and one `worker` for each scoped diagnosis or
+implementation task.
 
 ### 1. Triage
 
@@ -34,60 +38,38 @@ Route out of scope early:
 - Broad refactor, cleanup, or quality pass → **`/ac:review`** for findings, then a scoped
   plan or fix per finding.
 
-### 2. Diagnose first
+### 2. Diagnose and fix
 
-Do not patch symptoms.
+Run the skill's loop. Do not change code before the causal chain from trigger to first
+invalid state to symptom is stated. On top of the loop:
 
-- Trace from trigger → symptom → first observed invalid state.
-- State the causal chain before changing code.
-- If the chain has an uncertain link, test a concrete prediction.
+- With `--diagnose-only`, stop after the diagnosis and the recommended fix plan.
+- Reproduce from existing evidence first: the failing test or the reported path. Add
+  the smallest regression test, in the project's own test conventions, only when
+  nothing captures the bug yet.
+- Apply one semantic fix and change only the files the bug needs. Sweep callers of the
+  changed function and fix the shared owner once; patching only the reported path
+  leaves sibling callers broken.
+- No drive-by refactors, formatting, cleanup, or speculative hardening.
 - Ask the user only when investigation is genuinely blocked by missing information.
 
-With `--diagnose-only`, stop after the diagnosis and recommended fix plan.
+### 3. Verify
 
-### 3. Reproduce
+Verify the specific reproduction or regression test first, then activate
+`readiness-verification` for the affected scope. A new hard-to-diagnose failure loops
+back to diagnosis instead of stacking patches. When the fix touches security, auth,
+sensitive data, migrations, shared APIs, CI, or another high-risk boundary, apply the
+`secure-engineering` gate and an independent `advisor` pass.
 
-Prefer existing evidence over new scaffolding:
-
-1. Run the existing failing test or reported reproduction path when available.
-2. If no test captures the bug, identify the smallest regression test that should fail
-   first.
-3. Follow the project's existing test conventions before adding or changing tests.
-
-### 4. Fix minimally
-
-Apply one semantic fix for the confirmed root cause.
-
-- Change only the files needed for the bug.
-- Avoid drive-by refactors, formatting, cleanup, or speculative hardening.
-- Sweep callers of the changed function and fix the shared owner once rather than
-  patching each caller; patching only the reported path leaves sibling callers broken.
-- Shortest diff wins only at the correct layer — a wrong-layer minimal patch is another
-  bug.
-- If a fix attempt fails, invalidate that hypothesis explicitly before trying another.
-
-### 5. Escalate instead of thrashing
-
-After two serious failed hypotheses, route the evidence and attempts to `advisor`.
-After three materially different failed approaches, stop with a blocker report. Use an
-independent advisor and the `secure-engineering` gate when the fix touches security,
-auth, sensitive data, migrations, shared APIs, CI, or another high-risk boundary.
-
-### 6. Verify
-
-First verify the specific reproduction or regression test (red → green when practical).
-Then activate `readiness-verification` for the affected scope. If verification reveals
-a new hard-to-diagnose failure, loop back to diagnosis instead of stacking patches.
-
-### 7. Optional targeted review
+### 4. Optional targeted review
 
 With `--with-review`, or when the fix touches risky logic, run `/ac:review` scoped to
 the relevant lens (errors, types, security).
 
-Use `clean-code` or `simplify` only as a separate follow-up when the fix exposes cleanup
-work — never bundled into the fix itself.
+Cleanup the fix exposes is a separate follow-up (`/ac:review --area clean-code` or
+`--area simplify`), never bundled into the fix itself.
 
-### 8. Commit strategy (only when separately authorized)
+### 5. Commit strategy (only when separately authorized)
 
 Committing is not part of the fix flow; it requires its own authorization. When the user
 does authorize it, apply the local-fixup policy from the `git-workflow` skill: if the

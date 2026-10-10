@@ -32,6 +32,7 @@ SAVEHIST=10000
 ## Preferences
 export DOTNET_CLI_TELEMETRY_OPTOUT=1
 export DOTNET_SVCUTIL_TELEMETRY_OPTOUT=1
+export OMO_DISABLE_POSTHOG=1
 if command -v dotnet >/dev/null 2>&1; then
   export DOTNET_ROOT="$(dirname "$(readlink -f "$(command -v dotnet)")")"
 fi
@@ -150,10 +151,17 @@ bindkey '\C-x\C-e' edit-command-line
 bindkey "^[m" copy-prev-shell-word
 
 ## Aliases
-alias ls='exa -lah --color=always --group-directories-first --icons --hyperlink=always'
-alias lls='exa -lah -T --color=always --group-directories-first --icons --hyperlink=always'
+alias ls='exa -lah --color=always --group-directories-first --icons=always --hyperlink=always'
+alias lls='exa -lah -T --color=always --group-directories-first --icons=always --hyperlink=always'
+
 alias vim='NVIM_APPNAME=nvim-ac nvim'
+
+alias oc='opencode'
+alias cc='claude'
+# Keep launch policy in agent-ctrl; the launcher validates local symlink grants before exec.
+claude() { bash "$HOME/.agent-ctrl/settings/claude/claude-launcher.sh" "$@"; }
 
 ## Startup
 #inshellisense
 clear
+export PATH="$HOME/.local/bin:$PATH"

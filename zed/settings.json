@@ -1,11 +1,14 @@
 {
+  "markdown_preview": {
+    "code_font_family": "FiraCode Nerd Font Mono",
+    "font_family": "FreeSans",
+    "max_width": 1200.0,
+    "limit_content_width": true
+  },
   "debugger": {
     "dock": "left"
   },
   "auto_update": false,
-  "markdown_preview_code_font_family": "FiraCode Nerd Font Mono",
-  "markdown_preview_font_family": ".SystemUIFont",
-  "markdown_preview_font_size": 20.0,
   "agent_servers": {
     "opencode": {
       "default_config_options": {
@@ -24,7 +27,7 @@
     "mode": "subtle",
     "provider": "codestral"
   },
-  "diff_view_style": "split",
+  "diff_view_style": "unified",
   "language_models": {
     "openai_compatible": {
       "OmniRoute": {
@@ -87,6 +90,9 @@
     }
   },
   "agent": {
+    "threads_sidebar": {
+      "position": "right"
+    },
     "default_profile": "auto",
     "profiles": {
       "auto": {
@@ -126,7 +132,6 @@
         }
       }
     },
-    "sidebar_side": "right",
     "play_sound_when_agent_done": "always",
     "default_model": {
       "effort": "medium",
@@ -178,7 +183,6 @@
     "status_style": "label_color",
     "group_by": "staging",
     "dock": "left",
-    "sort_by_path": true,
     "tree_view": true,
   },
   "icon_theme": {
@@ -186,7 +190,17 @@
     "light": "Material Icon Theme",
     "dark": "Material Icon Theme"
   },
+  "languages": {
+    "CSharp": {
+      "language_servers": ["roslyn", "!csharp-ls", "!omnisharp", "..."]
+    }
+  },
   "lsp": {
+    "roslyn": {
+      "binary": {
+        "arguments": ["--stdio"]
+      }
+    },
     "rust-analyzer": {
       "initialization_options": {
         "inlayHints": {

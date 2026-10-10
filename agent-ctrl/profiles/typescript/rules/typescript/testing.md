@@ -7,7 +7,7 @@ paths:
 ---
 # TypeScript/JavaScript Testing
 
-> This file extends [common/testing.md](../common/testing.md) with TypeScript/JavaScript specific content.
+> This file extends the common testing rules with TypeScript/JavaScript specific content.
 
 ## E2E Testing
 

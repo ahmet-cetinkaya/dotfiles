@@ -19,7 +19,7 @@ and no technology decisions are written here.
 
 ## Workflow
 
-Activate `work-planning` in **Spec First** mode and route the request to `planner`.
+Activate `work-planning` in **Spec First** mode and `technical-writing` for the spec prose, and route the request to `planner`.
 
 ### 1. Repository before questions
 
@@ -28,7 +28,17 @@ affected capability. Delegate discovery of current behavior, vocabulary, and con
 to `explorer`; use `researcher` only when an external product or API fact materially
 shapes the requirements. An existing convention beats a question every time.
 
-### 2. Write the change spec
+### 2. Settle the direction before writing
+
+Write no file until the direction is clear. When the intent arrives as a solution
+("add X"), ask what problem it solves and for whom, and restate it as the outcome that
+matters. When several product directions are plausible, present two to four distinct
+alternatives with benefits, costs, risks, and reversibility, recommend one, and let the
+user choose; use `advisor` for a genuine high-impact tradeoff. Ask one focused question
+at a time and stop as soon as the intent can be specified. If the idea does not survive
+this step, say so and create nothing.
+
+### 3. Write the change spec
 
 Create `specs/changes/<NNNN>-<slug>/SPEC.md` following the spec contract: intent,
 prioritized user stories with Given/When/Then scenarios, `FR-###` requirements in EARS
@@ -43,21 +53,21 @@ When the change alters an existing capability, write the requirements as `ADDED`
 Adopt defensible defaults and record them under Assumptions. Mark only what a default
 cannot settle with `[NEEDS CLARIFICATION: …]`, at most three.
 
-### 3. Self-check
+### 4. Self-check
 
 Run the requirements checklist and the hostile-reader pass from the spec quality
 reference, fixing findings in place for at most three rounds. Then ask the surviving
 questions — all in one message, each with a recommended option — and fold the answers
 into the spec.
 
-### 4. Refine an existing spec
+### 5. Refine an existing spec
 
 When given a spec path, rate the coverage taxonomy, ask at most five questions one at a
 time for `Partial` or `Missing` areas, each with a recommended answer. Write each answer
 into the affected section immediately, log it under `## Clarifications` as
 `- Q: … → A: …` for the session date, and remove any marker it resolves.
 
-### 5. Leave it as a draft
+### 6. Leave it as a draft
 
 The spec keeps `status: draft`. Say plainly that only explicit user approval changes it
 to `approved`, and that approval covers the intent, not the risky operations a later
@@ -74,7 +84,8 @@ Close the turn with the spec path and the recommended next command:
 
 - Markers or `Partial` areas remain → answer them, or `/ac:spec <spec-path>` to refine
 - Spec is complete and you agree with it → approve it, then `/ac:plan <spec-path>`
-- The idea itself is still unshaped → `/ac:brainstorm <idea>` first
+- A solution or library choice blocks the intent → `/ac:research <question>` first
+- The direction could not be settled → state the blocking owner-decision and stop
 
 Name exactly one recommendation. Never chain commands automatically.
 

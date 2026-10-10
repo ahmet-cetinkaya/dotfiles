@@ -32,7 +32,7 @@ Developer-facing changelogs (libraries, SDKs, CLIs) keep precise technical terms
 
 ## Workflow
 
-Activate `git-workflow` in `HISTORY`/`STATUS` mode.
+Activate `git-workflow` in `HISTORY`/`STATUS` mode and `technical-writing` for the notes themselves.
 
 ### 1. Resolve release evidence
 

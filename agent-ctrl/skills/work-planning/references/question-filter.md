@@ -12,4 +12,4 @@ An **owner-decision** always survives as a question even when a default exists:
 
 Default the reversible internals; surface the owner-decisions. If the user explicitly asks to be interviewed, the adopt-default filter turns off and every surviving fork is asked, with the reason the repository could not settle it.
 
-When the outcome itself is fuzzy, asking offloads the planner's job onto the user: research best practice, adopt and announce defaults, and raise the independent-review bar instead of expanding the interview. Ask one focused question at a time, never a checklist dump.
+When the outcome itself is fuzzy, asking offloads the planner's job onto the user: research best practice, adopt and announce defaults, and raise the independent-review bar instead of expanding the interview. Ask the few questions that survive together, each with a recommended default; never dump everything that could be asked.

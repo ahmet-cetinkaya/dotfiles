@@ -10,7 +10,7 @@ paths:
 
 # Nuxt Coding Style
 
-> This file extends [common/coding-style.md](../common/coding-style.md) with Nuxt specific content.
+> This file extends the common coding-style rules with Nuxt specific content.
 
 ## Directory layout
 

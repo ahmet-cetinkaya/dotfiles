@@ -7,15 +7,15 @@ description: "Pre-submission analysis + automated draft PR creation via GitHub C
 
 **Goal:** Run a comprehensive pre-submission analysis and create a **draft** Pull Request from the current branch to the target branch, using the GitHub CLI (`gh`).
 
-Applies the **`git-workflow`** skill for branch-naming, commit, and PR-description conventions, and the shared safety rule before any push or force-update.
+Applies the **`git-workflow`** skill for branch-naming, commit, and PR-description conventions, **`technical-writing`** for the PR body text, and the shared safety rule before any push or force-update.
 
 ## Usage
 
 ```bash
-/ac:pr [base-branch] [--draft]   # base defaults to main; PRs are draft by default
+/ac:pr [base-branch]   # base defaults to main; the PR is always a draft
 ```
 
-Parse arguments: treat any non-flag token as the **base branch** (default `main`); flags like `--draft` are recognized (draft is the default regardless — see Phase 4).
+Parse arguments: the first non-flag token is the **base branch** (default `main`).
 
 ---
 
@@ -145,7 +145,7 @@ Omit the whole section when there is nothing to link. Do not link this PR to its
 gh pr create --base <base> --title "<title>" --body "<body>" --draft
 ```
 
-- **Draft:** ALWAYS `--draft`. Never create a non-draft PR.
+- **Draft:** pass `--draft`; marking the PR ready is the user's own step (Phase 6).
 - **Labels:** map branch prefix → label (`feat/`→`enhancement`, `fix/`→`bug`, …); apply if the label exists in the repo.
 - **Assignee:** `--assignee @me`.
 - **Reviewers:** if a `CODEOWNERS` file exists, assign the relevant owners; otherwise skip (do not invent a reviewer).
@@ -158,6 +158,14 @@ gh pr create --base <base> --title "<title>" --body "<body>" --draft
 gh pr view --json number,url,title,state,baseRefName,headRefName,additions,deletions,changedFiles
 gh pr checks --json name,status,conclusion 2>/dev/null || true
 ```
+
+Once `gh pr view` confirms the draft PR, open it in the user's browser:
+
+```bash
+gh pr view <number> --web
+```
+
+Only after creation is confirmed, never for a PR that was not created. If it fails or the environment is headless, do not retry; print the URL in the report instead.
 
 ---
 
@@ -173,7 +181,7 @@ Artifacts referenced: <any plans/specs linked in the body>
 Non-compliant commits: <list, or "none">
 
 Next:
-  gh pr view <number> --web   → open in browser
+  gh pr view <number> --web   → reopen in browser (already opened once in Phase 5)
   /ac:review <number>         → review the PR
   /ac:pr-address              → address incoming review feedback
   gh pr ready <number>        → mark ready when checks pass

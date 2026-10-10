@@ -10,7 +10,7 @@ paths:
 ---
 # C++ Coding Style
 
-> This file extends [common/coding-style.md](../common/coding-style.md) with C++ specific content.
+> This file extends the common coding-style rules with C++ specific content.
 
 ## Modern C++ (C++17/20/23)
 

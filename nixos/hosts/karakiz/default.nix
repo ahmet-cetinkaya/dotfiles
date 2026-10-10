@@ -1,4 +1,4 @@
-{...}: {
+{lib, ...}: {
   imports = [
     ./hardware-configuration.nix
     # Core
@@ -86,12 +86,10 @@
   # CUDA team's Hydra jobset.
   nix.settings.extra-substituters = [
     "https://cache.nixos-cuda.org"
-    "https://cuda-maintainers.cachix.org"
     "https://nix-community.cachix.org"
   ];
   nix.settings.extra-trusted-public-keys = [
     "cache.nixos-cuda.org:74DUi4Ye579gUqzH4ziL9IyiJBlDpMRn9MBN8oNan9M="
-    "cuda-maintainers.cachix.org-1:0dq3bujKpuEPMCX6U4WylrUDZ9JyUG0VpVZa7CNfq5E="
     "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
   ];
 
@@ -106,6 +104,8 @@
   # cachyos.settings.enable activates system-level tuning (zram, I/O schedulers, audio, systemd)
   # via cachyos-settings-nix, independent of the kernel module above.
   cachyos.settings.enable = true;
+  # Override CachyOS default swappiness (150) — prefer RAM over zram
+  boot.kernel.sysctl."vm.swappiness" = lib.mkForce 10;
 
   boot.loader.systemd-boot = {
     extraEntries."windows11-atlas.conf" = ''

@@ -5,7 +5,7 @@ paths:
 
 # Vue Patterns
 
-> This file extends [common/patterns.md](../common/patterns.md) with Vue specific content.
+> This file extends the common patterns rules with Vue specific content.
 
 ## Composables
 

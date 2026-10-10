@@ -35,7 +35,10 @@ HOST="$1"
 
 echo "🔧 Applying NixOS flake for ${HOST}..."
 
+# --impure: modules/apps/work/insurup.nix loads a gitignored, machine-local
+# module by absolute path, which pure flake evaluation forbids.
 sudo nixos-rebuild switch \
+	--impure \
 	--option extra-substituters "https://cache.nixos-cuda.org" \
 	--option extra-trusted-public-keys "cache.nixos-cuda.org:74DUi4Ye579gUqzH4ziL9IyiJBlDpMRn9MBN8oNan9M=" \
 	--flake "$NIXOS_DIR#$HOST"

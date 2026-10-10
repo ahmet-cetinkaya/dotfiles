@@ -18,6 +18,7 @@
     jq
     killall
     nano
+    tmux
     tree
 
     # Download Tools

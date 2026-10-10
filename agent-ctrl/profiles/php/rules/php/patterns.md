@@ -5,7 +5,7 @@ paths:
 ---
 # PHP Patterns
 
-> This file extends [common/patterns.md](../common/patterns.md) with PHP specific content.
+> This file extends the common patterns rules with PHP specific content.
 
 ## Thin Controllers, Explicit Services
 

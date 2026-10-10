@@ -7,7 +7,7 @@ paths:
 
 # Vue Hooks
 
-> This file extends [common/hooks.md](../common/hooks.md) with Vue specific content.
+> This file extends the common hooks rules with Vue specific content.
 
 ## PostToolUse Targets
 

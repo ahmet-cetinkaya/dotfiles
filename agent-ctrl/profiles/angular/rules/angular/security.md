@@ -7,7 +7,7 @@ paths:
 ---
 # Angular Security
 
-> This file extends [common/security.md](../common/security.md) with Angular specific content.
+> This file extends the common security rules with Angular specific content.
 
 ## XSS Prevention
 

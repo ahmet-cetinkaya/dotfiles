@@ -11,7 +11,7 @@ paths:
 
 > This file covers **React hooks** (`useState`, `useEffect`, `useMemo`, `useCallback`, custom hooks) — NOT the Claude Code `hooks/` runtime system. Naming matches the per-language convention `rules/<lang>/hooks.md` used across this repo.
 >
-> Extends [typescript/patterns.md](../typescript/patterns.md) and [common/patterns.md](../common/patterns.md).
+> Extends `typescript/patterns.md` and the common patterns rules.
 
 ## Rules of Hooks
 

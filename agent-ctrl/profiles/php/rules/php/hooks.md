@@ -8,7 +8,7 @@ paths:
 ---
 # PHP Hooks
 
-> This file extends [common/hooks.md](../common/hooks.md) with PHP specific content.
+> This file extends the common hooks rules with PHP specific content.
 
 ## PostToolUse Hooks
 

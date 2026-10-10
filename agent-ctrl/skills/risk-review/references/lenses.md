@@ -8,5 +8,6 @@
 - **Types** — contract accuracy, unsafe assertions or suppression, nullability, serialization, and generated boundaries.
 - **Tests** — meaningful regression coverage, failure and edge paths, flakiness, and missing integration or real-surface proof.
 - **Simplify** — unnecessary abstraction, duplication, dependency, indirection, or code that can be removed without reducing required behavior.
+- **Clean code** — what the `clean-code` rule should have prevented: names that need decoding, functions doing more than one thing, nested or inverted control flow, duplication, magic values, swallowed errors, what-comments, dead or debug code, and test code with the same faults.
 
 Choose lenses from concrete risk, not language dogma or a mandatory panel.

@@ -4,7 +4,20 @@
   ...
 }: let
   dotnetSdk = pkgs.dotnetCorePackages.sdk_10_0-bin; # Insurup currently targets the .NET 10 SDK.
+
+  # Machine-local module (internal CA, VPN DNS) — gitignored, never committed.
+  # A git flake never sees ignored files, so it is imported by ABSOLUTE path,
+  # which pure evaluation forbids: it only loads under --impure (apply.sh).
+  secretModule = /home/ac/Configs/nixos/modules/apps/work/insurup-secret.nix;
+  loadSecret = !lib.inPureEvalMode && builtins.pathExists secretModule;
 in {
+  imports = lib.optional loadSecret secretModule;
+
+  warnings = lib.optional (!loadSecret) ''
+    insurup-secret.nix was not loaded (pure evaluation or file missing):
+    the InsurUp CA and VPN DNS are NOT configured. Rebuild with --impure.
+  '';
+
   environment.systemPackages = with pkgs; [
     # .NET
     dotnetSdk
@@ -22,6 +35,7 @@ in {
     gh
 
     # Database
+    mongosh
     # mongodb-compass  # TODO: re-enable once nixpkgs fixes wrap-gapps-hook
     # "bad array subscript" crash on bash 5.3 (buildCommand calls
     # wrapGAppsHook before $output is set; empty-string array subscript

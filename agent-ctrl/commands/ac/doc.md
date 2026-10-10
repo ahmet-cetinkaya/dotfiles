@@ -17,6 +17,8 @@ If the user asks to “explain” or “draft,” return documentation in chat. 
 
 ## Workflow
 
+Activate `technical-writing`.
+
 ### 1. Resolve target and audience
 
 Identify the exact function, module, API, feature, or flow; its intended reader; and the required form:
@@ -32,7 +34,7 @@ Use `explorer` to read the implementation, public interfaces, immediate callers,
 
 ### 3. Match local style and placement
 
-Find neighboring docs, heading conventions, terminology, link style, generated-doc markers, and ownership. Prefer updating the canonical existing document over creating a parallel one. Never hand-edit generated, vendored, or external documentation.
+Find neighboring docs, heading conventions, terminology, link style, generated-doc markers, and ownership. Prefer updating the canonical existing document over creating a parallel one. Never hand-edit generated, vendored, or external documentation. Write to the `technical-writing` skill: local style first, Simplified Technical English where the repository has none.
 
 ### 4. Write only when authorized
 

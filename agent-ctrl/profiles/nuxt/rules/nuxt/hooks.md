@@ -8,7 +8,7 @@ paths:
 
 # Nuxt Hooks
 
-> This file extends [common/hooks.md](../common/hooks.md) with Nuxt specific content.
+> This file extends the common hooks rules with Nuxt specific content.
 
 These are Claude Code harness hooks for Nuxt work. They run via the harness, not Claude.
 

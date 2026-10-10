@@ -4,7 +4,7 @@ paths:
 ---
 # Java Coding Style
 
-> This file extends [common/coding-style.md](../common/coding-style.md) with Java-specific content.
+> This file extends the common coding-style rules with Java-specific content.
 
 ## Formatting
 

@@ -8,7 +8,7 @@ paths:
 ---
 # Ruby Coding Style
 
-> This file extends [common/coding-style.md](../common/coding-style.md) with Ruby and Rails specific content.
+> This file extends the common coding-style rules with Ruby and Rails specific content.
 
 ## Standards
 

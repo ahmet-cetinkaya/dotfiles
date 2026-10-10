@@ -8,7 +8,7 @@ paths:
 ---
 # Ruby Hooks
 
-> This file extends [common/hooks.md](../common/hooks.md) with Ruby and Rails specific content.
+> This file extends the common hooks rules with Ruby and Rails specific content.
 
 ## PostToolUse Hooks
 

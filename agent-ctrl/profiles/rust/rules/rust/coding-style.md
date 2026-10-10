@@ -4,7 +4,7 @@ paths:
 ---
 # Rust Coding Style
 
-> This file extends [common/coding-style.md](../common/coding-style.md) with Rust-specific content.
+> This file extends the common coding-style rules with Rust-specific content.
 
 ## Formatting
 

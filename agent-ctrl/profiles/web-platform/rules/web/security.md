@@ -1,4 +1,4 @@
-> This file extends [common/security.md](../common/security.md) with web-specific security content.
+> This file extends the common security rules with web-specific security content.
 
 # Web Security Rules
 

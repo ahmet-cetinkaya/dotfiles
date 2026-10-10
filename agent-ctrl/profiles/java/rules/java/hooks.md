@@ -7,7 +7,7 @@ paths:
 ---
 # Java Hooks
 
-> This file extends [common/hooks.md](../common/hooks.md) with Java-specific content.
+> This file extends the common hooks rules with Java-specific content.
 
 ## PostToolUse Hooks
 

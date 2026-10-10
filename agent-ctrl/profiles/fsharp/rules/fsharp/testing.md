@@ -6,7 +6,7 @@ paths:
 ---
 # F# Testing
 
-> This file extends [common/testing.md](../common/testing.md) with F#-specific content.
+> This file extends the common testing rules with F#-specific content.
 
 ## Test Framework
 

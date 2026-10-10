@@ -4,7 +4,7 @@ paths:
 ---
 # Rust Patterns
 
-> This file extends [common/patterns.md](../common/patterns.md) with Rust-specific content.
+> This file extends the common patterns rules with Rust-specific content.
 
 ## Repository Pattern with Traits
 

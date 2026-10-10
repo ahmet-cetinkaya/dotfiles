@@ -5,7 +5,7 @@ paths:
 ---
 # PHP Coding Style
 
-> This file extends [common/coding-style.md](../common/coding-style.md) with PHP specific content.
+> This file extends the common coding-style rules with PHP specific content.
 
 ## Standards
 
