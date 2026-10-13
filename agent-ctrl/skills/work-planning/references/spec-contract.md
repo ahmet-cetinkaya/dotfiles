@@ -7,6 +7,8 @@ A spec records **what** the system must do and **why**, never how. It is the ups
 ```
 specs/<capability>/SPEC.md              # living spec: current truth for one capability
 specs/changes/<NNNN>-<slug>/SPEC.md     # change spec: one new feature or one delta
+specs/changes/<NNNN>-<slug>/checklists/ # requirements.md quality record and optional domain checklists
+specs/changes/<NNNN>-<slug>/{research.md,data-model.md,contracts/}  # design, written by /ac:plan when needed
 specs/changes/archive/<NNNN>-<slug>/    # shipped changes, immutable
 ```
 
@@ -15,6 +17,7 @@ All spec artifacts live under `specs/` at the project root; only plans live unde
 - `<capability>` is a short kebab-case domain name (`auth`, `billing`, `export`). `changes` is reserved and cannot be a capability name. A brand-new capability is created by the first change that ships to it.
 - `<NNNN>` is a four-digit sequence: the highest number found under `specs/changes/` (including `archive/`) plus one. Never reuse a number.
 - Spec directories stay outside `.agents/plans/`; the executor selects plans by globbing that directory.
+- The design files beside a spec are the plan's, not the spec's; [design artifacts](design-artifacts.md) defines when each is written.
 
 ## Frontmatter
 
@@ -37,14 +40,15 @@ Lifecycle values are `draft`, `approved`, `in_progress`, and `shipped`.
 ## Change spec body
 
 1. **Intent** — the outcome and the reason, in the user's language, three to five sentences.
-2. **User stories** — `### US<n> — <title> (Priority: P<n>)`. Each story names its independent test (how it could be demonstrated alone) and its Given/When/Then scenarios. P1 is the smallest slice that delivers value on its own.
+2. **User stories** — `### US<n> — <title> (Priority: P<n>)`. Each story says why it has that priority, names its independent test (how it could be demonstrated alone), and lists its Given/When/Then scenarios. P1 is the smallest slice that delivers value on its own.
 3. **Requirements** — `FR-###` in EARS form (see below). Every requirement must be testable, technology-agnostic, and traceable to a story.
-4. **Success criteria** — `SC-###`: measurable outcomes an observer can confirm without reading the code.
-5. **Edge cases** — empty, invalid, boundary, concurrent, unauthorized, and failure inputs, each with the required behavior.
-6. **Assumptions** — defaults adopted instead of asking, so the user can correct them.
-7. **Out of scope** — what this change deliberately does not do.
-8. **Clarifications** — `### Session <YYYY-MM-DD>` with `- Q: … → A: …` lines, appended by later `/ac:spec` runs.
-9. **Deviations** — appended by the executor when implementation cannot follow the spec as written: what deviated, why, and the user's decision. Empty until execution.
+4. **Key entities** — only when the change involves data: each entity, what it represents, its key attributes, identity, and relationships, without storage or schema detail.
+5. **Success criteria** — `SC-###`: measurable outcomes an observer can confirm without reading the code.
+6. **Edge cases** — empty, invalid, boundary, concurrent, unauthorized, and failure inputs, each with the required behavior.
+7. **Assumptions** — defaults adopted instead of asking, so the user can correct them.
+8. **Out of scope** — what this change deliberately does not do.
+9. **Clarifications** — `### Session <YYYY-MM-DD>` with `- Q: … → A: …` lines, appended by later `/ac:spec` runs.
+10. **Deviations** — appended by the executor when implementation cannot follow the spec as written: what deviated, why, and the user's decision. Empty until execution.
 
 When the change alters an existing capability, section 3 is split into delta blocks that reference the living spec:
 
@@ -73,7 +77,7 @@ Make an informed default and record it under Assumptions rather than stalling. M
 
 ## Living spec merge
 
-On ship, the executor applies the change to `specs/<capability>/SPEC.md`: ADDED requirements are appended, MODIFIED ones replace their prior text, REMOVED ones are deleted, and PRESERVED statements are dropped (they described the unchanged baseline). The living spec keeps the same body sections minus Clarifications and Deviations, plus a `## History` list of `<NNNN>-<slug> — <date>` entries.
+On ship, the executor applies the change to `specs/<capability>/SPEC.md`: ADDED requirements are appended, MODIFIED ones replace their prior text, REMOVED ones are deleted, and PRESERVED statements are dropped (they described the unchanged baseline). The living spec keeps the same body sections minus Clarifications and Deviations; checklists stay with the archived change. It adds a `## History` list of `<NNNN>-<slug> — <date>` entries.
 
 ## Traceability
 

@@ -1,6 +1,6 @@
 ---
 name: ac:spec
-description: Write or refine one behavior spec (what and why, never how) under specs/changes before any plan. Re-running on an existing spec asks targeted clarifying questions. Only explicit approval makes a spec plannable.
+description: Write or refine one behavior spec (what and why, never how) under specs/changes before any plan. Re-running on an existing spec asks targeted clarifying questions; --checklist writes a requirements-quality checklist for one domain. Only explicit approval makes a spec plannable.
 ---
 
 # `/ac:spec` — Specify Behavior
@@ -13,6 +13,7 @@ Captures the intended behavior of one change as a testable spec that the user ap
 /ac:spec <intent>                 # new change: write specs/changes/<NNNN>-<slug>/SPEC.md
 /ac:spec <spec-path>              # existing draft: clarify and refine it in place
 /ac:spec <intent> --capability <name>   # target an existing living spec as a delta
+/ac:spec <spec-path> --checklist <domain>   # requirements-quality checklist for one domain
 ```
 
 ## Workflow
@@ -29,7 +30,7 @@ Write no file until the direction is clear. When the intent arrives as a solutio
 
 ### 3. Write the change spec
 
-Create `specs/changes/<NNNN>-<slug>/SPEC.md` following the spec contract: intent, prioritized user stories with Given/When/Then scenarios, `FR-###` requirements in EARS form, measurable `SC-###` success criteria, edge cases, assumptions, and out-of-scope boundaries. `<NNNN>` is the next unused number across `specs/changes/` and its archive; `<slug>` is two to four kebab-case words.
+Create `specs/changes/<NNNN>-<slug>/SPEC.md` following the spec contract: intent, prioritized user stories with a priority reason, an independent test, and Given/When/Then scenarios, `FR-###` requirements in EARS form, key entities when data is involved, measurable `SC-###` success criteria, edge cases, assumptions, and out-of-scope boundaries. If no user flow can be identified, stop and say so instead of writing a spec. `<NNNN>` is the next unused number across `specs/changes/` and its archive; `<slug>` is two to four kebab-case words.
 
 When the change alters an existing capability, write the requirements as `ADDED`, `MODIFIED`, and `REMOVED` deltas against the living spec and add at least two `PRESERVED` statements naming behavior that must keep working.
 
@@ -37,28 +38,35 @@ Adopt defensible defaults and record them under Assumptions. Mark only what a de
 
 ### 4. Self-check
 
-Run the requirements checklist and the hostile-reader pass from the spec quality reference, fixing findings in place for at most three rounds. Then ask the surviving questions — all in one message, each with a recommended option — and fold the answers into the spec.
+Run the requirements checklist and the hostile-reader pass from the spec quality reference, fixing findings in place for at most three rounds, and write the result to `checklists/requirements.md` beside the spec. Then ask the surviving questions — at most three, all in one message, in the reference's question format — fold the answers into the spec, and re-evaluate the checklist.
 
 ### 5. Refine an existing spec
 
-When given a spec path, rate the coverage taxonomy, ask at most five questions one at a time for `Partial` or `Missing` areas, each with a recommended answer. Write each answer into the affected section immediately, log it under `## Clarifications` as `- Q: … → A: …` for the session date, and remove any marker it resolves.
+When given a spec path, follow the spec quality reference's refinement protocol: rate the coverage taxonomy, ask at most five questions one at a time for `Partial` or `Missing` areas, write each answer into the owning section and the `## Clarifications` log immediately, list unresolved high-impact areas as Deferred, and re-evaluate `checklists/requirements.md`. A spec that is `approved` or later is not refined in place; new behavior is a new change.
 
-### 6. Leave it as a draft
+### 6. Domain checklist on request
+
+With `--checklist <domain>`, write or extend `checklists/<domain>.md` beside the spec following the spec checklist reference: questions that test the requirements text, never the implementation, left unchecked for the reviewer. Do not change the spec in this mode.
+
+### 7. Leave it as a draft
 
 The spec keeps `status: draft`. Say plainly that only explicit user approval changes it to `approved`, and that approval covers the intent, not the risky operations a later plan may propose.
 
 ## Output
 
-The spec path, the user stories with their priorities, the count of requirements and success criteria, adopted assumptions, and any open `[NEEDS CLARIFICATION]` markers.
+The spec path, the user stories with their priorities, the count of requirements and success criteria, adopted assumptions, the requirements checklist result (passing count, failing items), any open `[NEEDS CLARIFICATION]` markers, and, after a refinement, the questions answered and any Deferred areas.
 
 ## Next Step
 
 Close the turn with the spec path and the recommended next command:
 
-- Markers or `Partial` areas remain → answer them, or `/ac:spec <spec-path>` to refine
+- Markers, failing checklist items, or `Partial` areas remain → answer them, or `/ac:spec <spec-path>` to refine
+- The spec touches a high-risk domain (security, privacy, data, accessibility) and needs a reviewer pass → `/ac:spec <spec-path> --checklist <domain>`
 - Spec is complete and you agree with it → approve it, then `/ac:plan <spec-path>`
 - A solution or library choice blocks the intent → `/ac:research <question>` first
 - The direction could not be settled → state the blocking owner-decision and stop
+
+When the spec is large or hard to review from the file alone, also offer `/ac:doc <spec-path> --type explainer` for a readable HTML view before approval. Offer it; do not generate it unasked.
 
 Name exactly one recommendation. Never chain commands automatically.
 
