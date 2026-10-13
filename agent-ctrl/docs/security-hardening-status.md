@@ -1,6 +1,6 @@
 # Claude Code Güvenlik Katmanları — Durum Tablosu
 
-Bu doküman, agent-ctrl üzerinden Claude Code'a uyguladığımız güvenlik katmanlarını özetler. Tam liste `.local/backups/pre-sandbox-removal-20261005/` altındaki yedektedir; şu an **Lite** moddayız ve katmanları kademeli olarak geri ekleyeceğiz.
+Bu doküman, agent-ctrl üzerinden Claude Code'a uyguladığımız güvenlik katmanlarını özetler. Tam liste repoya alınmayan yerel bir yedektedir; şu an **Lite** moddayız ve katmanları kademeli olarak geri ekleyeceğiz.
 
 - **Full**: Katmanın tam uygulandığı hâli (yedekteki settings.json + agents.nix + launcher).
 - **Lite**: Şu anki durum (yedekten geri yüklenen temel işlevsellik).
