@@ -2,9 +2,9 @@
 # Launch Claude Code with per-repository symlink grants and tool temp paths.
 # Each non-comment line in <main-worktree>/.claude/additional-dirs.local names a
 # symlinked directory relative to the current worktree root.
-# LITE MODE: all sandbox/permission hardening is removed for now (see
-# .local/backups/pre-sandbox-removal-20261005/ for the hardened baseline). Only
-# symlink grants, BUN/.NET temp paths and the notify hooks remain.
+# LITE MODE: all sandbox/permission hardening is removed for now; the hardened
+# baseline is kept in a local backup outside the repository. Only symlink
+# grants, BUN/.NET temp paths and the notify hooks remain.
 set -u
 
 if [[ "$PWD" == "$HOME" ]]; then
