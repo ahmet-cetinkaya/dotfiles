@@ -11,7 +11,7 @@ Use for `STATUS`, `HISTORY`, `COMMIT`, `REBASE`, or `PR` work explicitly request
 
 ## Non-trigger
 
-Do not activate to stage or deliver ordinary implementation implicitly. A request to edit code does not authorize commit, push, history rewrite, PR, merge, release, or deploy.
+Do not activate to stage or deliver ordinary implementation implicitly. A request to edit code does not authorize commit, push, history rewrite, PR, merge, release, or deploy. The one standing exception is an approved plan whose `commits` strategy names local commits; the executor makes those with the COMMIT guidance and nothing beyond them.
 
 ## Modes
 

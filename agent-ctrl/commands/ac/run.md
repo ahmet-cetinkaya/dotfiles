@@ -30,13 +30,13 @@ If the plan carries `spec:`, read that spec and move it `approved → in_progres
 
 ### 2. Execute task by task
 
-Turn the plan's tasks into a dependency graph. One genuinely executing task is `in_progress` at a time; parallelize independent tasks only when their write surfaces do not conflict. The executor may coordinate only `worker`, `explorer`, `researcher`, and `advisor`, following the acyclic graph — never `lead` or `planner`.
+Create or resume the run state under `.agents/state/<slug>/` before the first dispatch; a resumed run continues from its recorded state and never replays completed tasks. Turn the plan's tasks into a dependency graph. A task is `in_progress` only while it is genuinely executing; parallelize independent tasks only when their write surfaces do not conflict. The executor may coordinate only `worker`, `explorer`, `researcher`, and `advisor`, following the acyclic graph — never `lead` or `planner`.
 
 Each delegation carries the task goal verbatim, allowed files, inherited decisions, acceptance criteria, required evidence, and exclusions.
 
 ### 3. Verify each result
 
-The executor must inspect every changed file and verify child evidence before marking a task `completed` — a worker's summary is not proof. Record checks as `PASS`, `FAIL`, `BLOCKED`, or `NOT_APPLICABLE` with command, scope, and observable. Security, auth, sensitive data, schema or migrations, shared APIs, CI, and critical user-facing changes require independent `advisor` review.
+The executor must inspect every changed file and verify child evidence before marking a task `completed` — a worker's summary is not proof. Record checks as `PASS`, `FAIL`, `BLOCKED`, or `NOT_APPLICABLE` with command, scope, and observable, as ledger events with captured output under the run's `evidence/`. Security, auth, sensitive data, schema or migrations, shared APIs, CI, and critical user-facing changes require independent `advisor` review.
 
 ### 4. Finish or stop honestly
 
@@ -46,7 +46,7 @@ When implementation cannot follow a linked spec as written, do not change the re
 
 ## Output
 
-Per-task status with evidence, the final verification verdict, and any blockers or follow-ups.
+Per-task status with evidence and commit hashes when committed, the final verification verdict, the run-state path, and any blockers or follow-ups.
 
 ## Next Step
 
@@ -57,11 +57,11 @@ Close the turn by mapping the execution outcome to one command:
 - The change crosses a risk boundary and needs an independent pass → `/ac:review`
 - Blocked on a plan defect or owner-decision → state the blocker and stop
 
-After a clean verify, the delivery path is `/ac:pr`. Never commit, push, or open a PR without explicit authorization.
+After a clean verify, the delivery path is `/ac:pr`; with `commits: none`, commit first through the `git-workflow` skill's COMMIT mode on request. Never push or open a PR without explicit authorization.
 
 ## Boundaries
 
 - Do not start from a draft plan or silently redesign an approved one.
 - Do not run a direct request whose scope or acceptance conditions are unclear; route it to `/ac:plan`.
 - Do not rewrite a spec's requirements to match the code; record deviations and ask.
-- Do not commit, push, open a PR, merge, deploy, or alter shared state without explicit authorization.
+- Commit only as the approved plan's `commits` strategy allows; a direct request without a plan never commits. Do not push, create branches, open a PR, merge, deploy, or alter shared state without explicit authorization.

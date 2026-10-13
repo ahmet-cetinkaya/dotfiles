@@ -19,6 +19,7 @@ Do not activate to implement fixes, conduct an open-ended review, invent project
 2. Discover commands from project instructions, manifests, CI, and neighboring workflows.
 3. Apply relevant [gates](references/gates.md): diagnostics, build, type, lint, tests, security, diff, and hands-on QA on user-facing or operational surfaces.
 4. Record each gate as `PASS`, `FAIL`, `BLOCKED`, or `NOT_APPLICABLE`, with command/tool, scope, and observable.
-5. Return exactly one overall verdict: `READY`, `NOT_READY`, or `INCONCLUSIVE`.
+5. Capture each gate's real output and write the evidence record as the `plan-execution` run-state reference defines, redacting secrets.
+6. Return exactly one overall verdict: `READY`, `NOT_READY`, or `INCONCLUSIVE`, with the evidence record's path.
 
-Any applicable failure makes the result `NOT_READY`. Missing, stale, ambiguous, or blocked evidence makes it `INCONCLUSIVE` unless another known failure already makes it `NOT_READY`. For security, authentication, persistent or sensitive data, schema or migration, shared API, CI, or critical user-facing changes, readiness also requires an independent advisor review and the applicable `secure-engineering` gate. Never modify files while verifying.
+Any applicable failure makes the result `NOT_READY`. Missing, stale, ambiguous, or blocked evidence makes it `INCONCLUSIVE` unless another known failure already makes it `NOT_READY`. For security, authentication, persistent or sensitive data, schema or migration, shared API, CI, or critical user-facing changes, readiness also requires an independent advisor review and the applicable `secure-engineering` gate. Never modify project files while verifying; the evidence record and its ledger events are the only writes.
