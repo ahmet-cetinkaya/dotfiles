@@ -39,4 +39,3 @@ Legacy source: `agent-ctrl.old/profiles/<id>/` — directory IDs unchanged for c
 - Artifacts: agents (1), rules (7), mcps (1)
 - Tags: web, html, css, http, browser
 - Legacy path: `agent-ctrl.old/profiles/web-platform/`
-

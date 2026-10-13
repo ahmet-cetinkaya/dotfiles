@@ -15,4 +15,3 @@ Legacy source: `agent-ctrl.old/profiles/<id>/` — directory IDs unchanged for c
 - Artifacts: skills (11)
 - Tags: mcp, protocol, tools, integrations
 - Legacy path: `agent-ctrl.old/profiles/mcp/`
-

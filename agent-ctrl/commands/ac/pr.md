@@ -32,7 +32,7 @@ gh pr list --head <branch> --json number
 ```
 
 | Check | Condition | Action if failed |
-|---|---|---|
+| --- | --- | --- |
 | `gh` available & authed | `gh auth status` ok | **STOP**: install <https://cli.github.com/> / run `gh auth login`. |
 | On a feature branch | current branch ≠ base | **STOP** if on base: "Switch to a feature branch first." |
 | Clean working dir | no uncommitted changes | **STOP**: "Uncommitted changes — commit or stash first." |
@@ -102,8 +102,7 @@ If rebase conflicts occur, **STOP** and inform the user.
 
 **Body** — if a template was found, fill each section (keep all sections; mark "N/A" rather than deleting). Otherwise use the structure below.
 
-Use GitHub alert blocks when they clarify skimmable PR context: `NOTE` for useful context, `TIP` for optional success guidance, `IMPORTANT` for required reviewer/user information, `WARNING` for immediate risk, and `CAUTION` for negative consequences.
-Use Mermaid diagrams when they make architecture, data flow, state transitions, or rollout sequencing easier to review than prose alone.
+Use GitHub alert blocks when they clarify skimmable PR context: `NOTE` for useful context, `TIP` for optional success guidance, `IMPORTANT` for required reviewer/user information, `WARNING` for immediate risk, and `CAUTION` for negative consequences. Use Mermaid diagrams when they make architecture, data flow, state transitions, or rollout sequencing easier to review than prose alone.
 
 ```markdown
 ### 🚀 Context
@@ -112,9 +111,7 @@ Use Mermaid diagrams when they make architecture, data flow, state transitions, 
 
 #### 🔗 Related [optional]
 
-Always a Markdown list — one reference per line, never inline prose or a comma-separated
-run. Use the closing keyword that matches the relationship, and keep one item per
-issue/PR even when several share a keyword.
+Always a Markdown list — one reference per line, never inline prose or a comma-separated run. Use the closing keyword that matches the relationship, and keep one item per issue/PR even when several share a keyword.
 
 - Closes #N
 - Fixes #N

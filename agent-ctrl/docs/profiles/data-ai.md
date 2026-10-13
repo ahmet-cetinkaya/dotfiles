@@ -15,4 +15,3 @@ Legacy source: `agent-ctrl.old/profiles/<id>/` — directory IDs unchanged for c
 - Artifacts: agents (1), skills (3)
 - Tags: ai, training, mlops, pytorch
 - Legacy path: `agent-ctrl.old/profiles/machine-learning/`
-

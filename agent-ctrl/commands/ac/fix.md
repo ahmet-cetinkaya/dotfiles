@@ -5,9 +5,7 @@ description: Root-cause-driven bug, regression, failing-test, build-failure, and
 
 # `/ac:fix` — Fix a Defect
 
-Root-cause fix flow. Use this when behavior is broken: a bug, regression, failing test,
-build failure, runtime error, or issue report. It diagnoses first, proves the failure
-when possible, applies the smallest fix, then runs the verification gate.
+Root-cause fix flow. Use this when behavior is broken: a bug, regression, failing test, build failure, runtime error, or issue report. It diagnoses first, proves the failure when possible, applies the smallest fix, then runs the verification gate.
 
 ## Usage
 
@@ -19,13 +17,7 @@ when possible, applies the smallest fix, then runs the verification gate.
 
 ## Workflow
 
-Activate `systematic-debugging` and route the workflow through `executor`. The skill
-owns the debugging loop: reproduce, trace to the first invalid state, test competing
-hypotheses, fix at the owning layer, prove red → green, and escalate to `advisor` or
-stop with a blocker after repeated failed attempts. This command adds the entry gate,
-the flags, and the report around that loop. Use `explorer` for code-path discovery,
-`researcher` only for external contracts, and one `worker` for each scoped diagnosis or
-implementation task.
+Activate `systematic-debugging` and route the workflow through `executor`. The skill owns the debugging loop: reproduce, trace to the first invalid state, test competing hypotheses, fix at the owning layer, prove red → green, and escalate to `advisor` or stop with a blocker after repeated failed attempts. This command adds the entry gate, the flags, and the report around that loop. Use `explorer` for code-path discovery, `researcher` only for external contracts, and one `worker` for each scoped diagnosis or implementation task.
 
 ### 1. Triage
 
@@ -35,48 +27,31 @@ Route out of scope early:
 
 - PR review comments → **`/ac:pr-address`**.
 - New feature, component, API, or service → **`/ac:plan`** then **`/ac:run`**.
-- Broad refactor, cleanup, or quality pass → **`/ac:review`** for findings, then a scoped
-  plan or fix per finding.
+- Broad refactor, cleanup, or quality pass → **`/ac:review`** for findings, then a scoped plan or fix per finding.
 
 ### 2. Diagnose and fix
 
-Run the skill's loop. Do not change code before the causal chain from trigger to first
-invalid state to symptom is stated. On top of the loop:
+Run the skill's loop. Do not change code before the causal chain from trigger to first invalid state to symptom is stated. On top of the loop:
 
 - With `--diagnose-only`, stop after the diagnosis and the recommended fix plan.
-- Reproduce from existing evidence first: the failing test or the reported path. Add
-  the smallest regression test, in the project's own test conventions, only when
-  nothing captures the bug yet.
-- Apply one semantic fix and change only the files the bug needs. Sweep callers of the
-  changed function and fix the shared owner once; patching only the reported path
-  leaves sibling callers broken.
+- Reproduce from existing evidence first: the failing test or the reported path. Add the smallest regression test, in the project's own test conventions, only when nothing captures the bug yet.
+- Apply one semantic fix and change only the files the bug needs. Sweep callers of the changed function and fix the shared owner once; patching only the reported path leaves sibling callers broken.
 - No drive-by refactors, formatting, cleanup, or speculative hardening.
 - Ask the user only when investigation is genuinely blocked by missing information.
 
 ### 3. Verify
 
-Verify the specific reproduction or regression test first, then activate
-`readiness-verification` for the affected scope. A new hard-to-diagnose failure loops
-back to diagnosis instead of stacking patches. When the fix touches security, auth,
-sensitive data, migrations, shared APIs, CI, or another high-risk boundary, apply the
-`secure-engineering` gate and an independent `advisor` pass.
+Verify the specific reproduction or regression test first, then activate `readiness-verification` for the affected scope. A new hard-to-diagnose failure loops back to diagnosis instead of stacking patches. When the fix touches security, auth, sensitive data, migrations, shared APIs, CI, or another high-risk boundary, apply the `secure-engineering` gate and an independent `advisor` pass.
 
 ### 4. Optional targeted review
 
-With `--with-review`, or when the fix touches risky logic, run `/ac:review` scoped to
-the relevant lens (errors, types, security).
+With `--with-review`, or when the fix touches risky logic, run `/ac:review` scoped to the relevant lens (errors, types, security).
 
-Cleanup the fix exposes is a separate follow-up (`/ac:review --area clean-code` or
-`--area simplify`), never bundled into the fix itself.
+Cleanup the fix exposes is a separate follow-up (`/ac:review --area clean-code` or `--area simplify`), never bundled into the fix itself.
 
 ### 5. Commit strategy (only when separately authorized)
 
-Committing is not part of the fix flow; it requires its own authorization. When the user
-does authorize it, apply the local-fixup policy from the `git-workflow` skill: if the
-complete change belongs wholly to a related commit that is provably unpushed, stage only
-the relevant files or hunks and use `git commit --fixup <sha>` instead of a noisy
-standalone commit. Otherwise create a normal semantic commit. Never rewrite published
-history without explicit authorization.
+Committing is not part of the fix flow; it requires its own authorization. When the user does authorize it, apply the local-fixup policy from the `git-workflow` skill: if the complete change belongs wholly to a related commit that is provably unpushed, stage only the relevant files or hunks and use `git commit --fixup <sha>` instead of a noisy standalone commit. Otherwise create a normal semantic commit. Never rewrite published history without explicit authorization.
 
 ## Output
 

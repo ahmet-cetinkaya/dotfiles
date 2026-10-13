@@ -1,8 +1,6 @@
 # Claude Code Güvenlik Katmanları — Durum Tablosu
 
-Bu doküman, agent-ctrl üzerinden Claude Code'a uyguladığımız güvenlik katmanlarını özetler.
-Tam liste `.local/backups/pre-sandbox-removal-20261005/` altındaki yedektedir; şu an **Lite**
-moddayız ve katmanları kademeli olarak geri ekleyeceğiz.
+Bu doküman, agent-ctrl üzerinden Claude Code'a uyguladığımız güvenlik katmanlarını özetler. Tam liste `.local/backups/pre-sandbox-removal-20261005/` altındaki yedektedir; şu an **Lite** moddayız ve katmanları kademeli olarak geri ekleyeceğiz.
 
 - **Full**: Katmanın tam uygulandığı hâli (yedekteki settings.json + agents.nix + launcher).
 - **Lite**: Şu anki durum (yedekten geri yüklenen temel işlevsellik).
@@ -12,7 +10,7 @@ Son güncelleme: 2026-10-05
 ## Katmanlar
 
 | # | Katman | Full | Lite | Nerede / Nasıl |
-|---|---|---|---|---|
+| --- | --- | --- | --- | --- |
 | 1 | OS sandbox (bwrap) | ✅ | ❌ | `sandbox.enabled` |
 | 2 | Sandbox başlatılamazsa çık | ✅ | ❌ | `sandbox.failIfUnavailable` |
 | 3 | Sandbox dışı yeniden deneme kapalı | ✅ | ❌ | `sandbox.allowUnsandboxedCommands: false` |
@@ -63,8 +61,7 @@ Son güncelleme: 2026-10-05
 - 4, 5, 6, 8 → 1 gerektirir (ağ/dosya/ortam sınırları sandbox'ın parçası).
 - 23 → sandbox'ın admin-required olmaması gerekir; 19 açıksa kullanıcı ayarından gelir.
 - 11, 12, 13, 14, 15, 16, 17 → kalıp eşleştirmeli; OS sınırı değil (K3 "yavaşlatıcı").
-- 42, 43 → yalnızca sandbox kapalıyken anlamlı; sandbox geri gelince `allow` yerine
-  sandbox'ın kendi kısıtı geçerli olur ve bunlar kaldırılabilir.
+- 42, 43 → yalnızca sandbox kapalıyken anlamlı; sandbox geri gelince `allow` yerine sandbox'ın kendi kısıtı geçerli olur ve bunlar kaldırılabilir.
 
 ## Full → Lite geçişinde bilinen bedeller
 
@@ -83,5 +80,4 @@ Son güncelleme: 2026-10-05
 6. 11–17 (kalıp deny'leri; atlatılabilir olduğu için en son).
 7. 18 (bypass kilidi; kullanıcı rahatlığına göre).
 
-Her adımdan sonra: `agent-ctrl apply claude --override --no-prompt` + rebuild (gerekliyse) +
-InsurUp worktree'inde derleme/test duman testi.
+Her adımdan sonra: `agent-ctrl apply claude --override --no-prompt` + rebuild (gerekliyse) + InsurUp worktree'inde derleme/test duman testi.

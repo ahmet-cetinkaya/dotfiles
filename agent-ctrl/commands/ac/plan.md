@@ -5,8 +5,7 @@ description: Create one decision-complete plan under .agents/plans without imple
 
 # `/ac:plan` — Plan Work
 
-Turns an underspecified request into one decision-complete plan file that an executor
-can carry out without follow-up questions. No product code is written.
+Turns an underspecified request into one decision-complete plan file that an executor can carry out without follow-up questions. No product code is written.
 
 ## Usage
 
@@ -21,44 +20,23 @@ Activate `work-planning` and route the request to `planner`.
 
 ### 1. Repository before questions
 
-Inspect project instructions, existing patterns, configs, and conventions first. An
-existing convention beats a question every time. Delegate internal discovery to
-`explorer` and external contracts to `researcher`; route genuine architecture tradeoffs
-to `advisor`.
+Inspect project instructions, existing patterns, configs, and conventions first. An existing convention beats a question every time. Delegate internal discovery to `explorer` and external contracts to `researcher`; route genuine architecture tradeoffs to `advisor`.
 
 ### 2. Interview only for what evidence cannot settle
 
-Ask about scope boundaries, intended behavior the code cannot reveal, constraints, and
-the definition of done. Batch questions — three sharp questions in one message beat
-nine rounds of one. State inferable assumptions instead of asking about them.
+Ask about scope boundaries, intended behavior the code cannot reveal, constraints, and the definition of done. Batch questions — three sharp questions in one message beat nine rounds of one. State inferable assumptions instead of asking about them.
 
 ### 3. Write exactly one plan
 
-Write `.agents/plans/<slug>.md` with `status: draft`, containing: Goal, Context (paths
-and constraints found), Decisions (each resolved ambiguity), Scope in/out, numbered
-tasks with dependencies and per-task acceptance criteria, QA/evidence expectations, and
-final verification. Every task must be independently verifiable — if its acceptance
-criteria cannot be stated, it is not specified well enough yet.
+Write `.agents/plans/<slug>.md` with `status: draft`, containing: Goal, Context (paths and constraints found), Decisions (each resolved ambiguity), Scope in/out, numbered tasks with dependencies and per-task acceptance criteria, QA/evidence expectations, and final verification. Every task must be independently verifiable — if its acceptance criteria cannot be stated, it is not specified well enough yet.
 
 Keep unresolved user-owned decisions as explicit blockers inside the plan.
 
-**Delivery shape.** After discovery, recommend phased delivery only when both hold: the
-review scope, coupling, risk, or context needed make the total PR not meaningfully
-reviewable, and coherent phases exist that can each be scoped, tested, and reviewed as
-their own PR into an umbrella branch. Use no fixed file or line thresholds. Ask the user
-to choose, and record the choice (or a blocker while undecided) in the same plan; if the
-user declines, record the concern and keep a single PR. Small or unsplittable work stays
-a single PR, and a clear small request gets no extra question. Phases group the existing
-numbered tasks inside the one plan; see the plan contract's "Phased delivery".
+**Delivery shape.** After discovery, recommend phased delivery only when both hold: the review scope, coupling, risk, or context needed make the total PR not meaningfully reviewable, and coherent phases exist that can each be scoped, tested, and reviewed as their own PR into an umbrella branch. Use no fixed file or line thresholds. Ask the user to choose, and record the choice (or a blocker while undecided) in the same plan; if the user declines, record the concern and keep a single PR. Small or unsplittable work stays a single PR, and a clear small request gets no extra question. Phases group the existing numbered tasks inside the one plan; see the plan contract's "Phased delivery".
 
 ### 4. Plan from a spec
 
-When given a spec path, start only from a spec with `status: approved` and no open
-`[NEEDS CLARIFICATION]` marker — refuse a draft and point back to `/ac:spec`. Record
-the path as `spec:` in the plan frontmatter, run the Constitution Check against the
-project's instruction files under Decisions, and add a **Traceability** table mapping
-every `FR-###`, `SC-###`, and `PB-<n>` to the tasks and evidence that prove it. A
-criterion with no task is a planning gap; a task with no criterion needs a stated reason.
+When given a spec path, start only from a spec with `status: approved` and no open `[NEEDS CLARIFICATION]` marker — refuse a draft and point back to `/ac:spec`. Record the path as `spec:` in the plan frontmatter, run the Constitution Check against the project's instruction files under Decisions, and add a **Traceability** table mapping every `FR-###`, `SC-###`, and `PB-<n>` to the tasks and evidence that prove it. A criterion with no task is a planning gap; a task with no criterion needs a stated reason.
 
 ## Output
 
@@ -77,8 +55,6 @@ Say plainly that `/ac:run` requires explicit approval — writing the plan is no
 
 ## Boundaries
 
-- Do not edit product code, execute the plan, commit, or push. Do not create branches or
-  PRs while planning; phased-delivery branches and PRs are proposals only.
+- Do not edit product code, execute the plan, commit, or push. Do not create branches or PRs while planning; phased-delivery branches and PRs are proposals only.
 - Only explicit user approval changes the plan to `status: approved`.
-- Approval authorizes later execution of the plan, not the risky operations listed
-  inside it — those still need their own authorization at execution time.
+- Approval authorizes later execution of the plan, not the risky operations listed inside it — those still need their own authorization at execution time.

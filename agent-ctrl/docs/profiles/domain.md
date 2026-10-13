@@ -21,4 +21,3 @@ Legacy source: `agent-ctrl.old/profiles/<id>/` — directory IDs unchanged for c
 - Artifacts: skills (58)
 - Tags: media, audio, video, image, ffmpeg
 - Legacy path: `agent-ctrl.old/profiles/media/`
-

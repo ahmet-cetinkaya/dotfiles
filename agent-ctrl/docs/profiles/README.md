@@ -1,10 +1,9 @@
 # Profile Catalog
 
-Restored legacy profile catalog: 38 profiles across 8 categories. Directory IDs are stable
-(unchanged from the legacy tree) for compatibility; display names and category tags were normalized.
+Restored legacy profile catalog: 38 profiles across 8 categories. Directory IDs are stable (unchanged from the legacy tree) for compatibility; display names and category tags were normalized.
 
 | ID | Name | Category | Artifacts | Tags |
-|---|---|---|---|---|
+| --- | --- | --- | --- | --- |
 | `angular` | Angular | [framework](framework.md) | skills (36), rules (5) | frontend, angular, typescript, rxjs, spa |
 | `atlassian` | Atlassian | [integration](integration.md) | skills (1), mcps (2) | atlassian, jira, confluence, tracking |
 | `backend` | Backend Development | [domain](domain.md) | skills (9) | backend, api, microservices, persistence, distributed |

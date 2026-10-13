@@ -3,7 +3,7 @@
 Score evidence qualitatively rather than inventing false precision.
 
 | Decision | Use when | Required evidence |
-|---|---|---|
+| --- | --- | --- |
 | Adopt | One maintained option fits the need and project constraints directly | Version/API fit, maintenance, license, dependency and operational cost |
 | Extend | An existing local or installed solution owns most of the behavior | Extension seam, affected callers, compatibility and test surface |
 | Compose | A small combination of established capabilities is clearer than one large dependency or custom system | Boundary between parts, failure handling, integration cost |

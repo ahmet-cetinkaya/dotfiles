@@ -27,7 +27,7 @@ Read-only: findings are reported, never auto-fixed.
 Each area is a lens defined in [`risk-review`](../../skills/risk-review/SKILL.md); load only the selected ones.
 
 | Area | Focus | Partitioned? |
-|---|---|---|
+| --- | --- | --- |
 | **correctness** | Logic errors, edge cases, broken invariants, concurrency, regressions | — (always active) |
 | **clean-code** | Readability, naming, structure, duplication, dead code — the write-time `clean-code` rule, checked | — |
 | **security** | Trust boundaries, authn/authz, injection, secrets, sensitive data | — |
@@ -51,6 +51,7 @@ Collect the files in scope from the target (PR / git diff / path), per the rules
 - Inspect what the files do and what changed, and mark every area the content warrants as recommended in the same question, with a one-line reason each (`errors` for new failure paths, `tests` when test files changed, `security` for auth or input handling).
 
 **Ask through the runtime's own question tool, not through chat text.** Use the native interactive prompt the agent runtime provides (in Claude Code: `AskUserQuestion` with `multiSelect: true`), so the areas render as selectable options rather than a list the user has to retype. One option per review area, each carrying its one-line description as the option label/description. If the tool is not in your tool list it may be deferred: load it first (Claude Code: `ToolSearch` with `select:AskUserQuestion`). Fall back to a plain numbered list in chat only after loading was attempted and the runtime still exposes no question tool, and say that you fell back.
+
 - **Correctness is always included**, whether or not it was selected.
 - When the diff crosses a risk boundary (auth, persistent or sensitive data, schema or migration, shared API, CI), add `security` and route an independent pass to `advisor` even if it was not selected. State that you did so.
 

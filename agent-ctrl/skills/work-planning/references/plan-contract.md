@@ -5,7 +5,7 @@ A durable plan under `.agents/plans/<slug>.md` contains frontmatter followed by 
 ```yaml
 ---
 status: draft
-spec:                      # optional: specs/changes/<NNNN>-<slug>/SPEC.md this plan implements
+spec: # optional: specs/changes/<NNNN>-<slug>/SPEC.md this plan implements
 ---
 ```
 

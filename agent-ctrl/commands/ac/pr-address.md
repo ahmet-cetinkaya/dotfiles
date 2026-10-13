@@ -78,8 +78,7 @@ Close the turn by mapping the feedback state to one command:
 - Feedback requires a design change → `/ac:plan <request>`
 - Owner-decisions remain unresolved → list them and stop
 
-Name exactly one recommendation. Commit, push, replies, and thread resolution each stay
-separately authorized.
+Name exactly one recommendation. Commit, push, replies, and thread resolution each stay separately authorized.
 
 ## Boundaries
 

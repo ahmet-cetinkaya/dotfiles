@@ -75,4 +75,3 @@ Legacy source: `agent-ctrl.old/profiles/<id>/` — directory IDs unchanged for c
 - Artifacts: agents (1), skills (1), rules (5)
 - Tags: typescript, types, node, frontend, backend
 - Legacy path: `agent-ctrl.old/profiles/typescript/`
-

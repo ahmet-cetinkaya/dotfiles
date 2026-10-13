@@ -15,4 +15,3 @@ Legacy source: `agent-ctrl.old/profiles/<id>/` — directory IDs unchanged for c
 - Artifacts: skills (8)
 - Tags: research, investigation, literature, synthesis
 - Legacy path: `agent-ctrl.old/profiles/research/`
-

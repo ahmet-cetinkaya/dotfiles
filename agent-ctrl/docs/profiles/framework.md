@@ -51,4 +51,3 @@ Legacy source: `agent-ctrl.old/profiles/<id>/` — directory IDs unchanged for c
 - Artifacts: agents (1), commands (1), skills (2), rules (5)
 - Tags: vue, vuex, pinia, frontend, spa
 - Legacy path: `agent-ctrl.old/profiles/vue/`
-

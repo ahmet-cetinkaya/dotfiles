@@ -3,7 +3,7 @@
 Evaluate only applicable gates, but never silently skip one.
 
 | Gate | Evidence |
-|---|---|
+| --- | --- |
 | Intent and acceptance fit | Requirement-to-change trace and unmet-item check; with a linked spec, a criterion ↔ evidence table covering every `FR-###`, `SC-###`, and `PB-<n>`, plus a drift note for code behavior no requirement asks for |
 | Diagnostics and types | Project language-server or type command over changed scope |
 | Build | Project-defined build or compile command |

@@ -6,7 +6,7 @@ Audit of the `agent-ctrl` prompt surface for dated prompting patterns, stale rep
 
 - **Scope:** the whole working directory's prompt surface. Audited line by line: `agents/` (7), `commands/ac/` (12), `rules/` (2), `skills/` (9 `SKILL.md` + 20 references), `settings/omo/custom_prompts/` (4) — about 2,300 lines. **`profiles/`** (38 profiles, 2,675 tracked files, 567 markdown files, about 122K lines) was only grep-sampled; it is listed as a gap below. Not read: `settings/claude/settings.json`, `mcps/*.json`, `.env` (key-presence grep only). `.local/` is the legacy copy and was ignored. `~/.claude/CLAUDE.md` is user-level and out of scope; it is the rendered copy of `rules/`, so any rule edit propagates there on the next apply.
 - **Target model:** Claude Fable 5.1 for everything Claude Code loads. Agent files pin aliases (`opus`, `sonnet`, `haiku`, `fable`), audited as the current generation of each. The four omo prompts are audited against their pins in `settings/omo/omo.jsonc`: SISYPHUS → `claude-opus-5`, ATLAS → `claude-sonnet-5`, EXPLORE/LIBRARIAN → `claude-haiku-4-5`.
-- **Provenance:** the core catalog was rewritten on 2026-09-27 (`27025865` … `45a117de`), so it carries no retired-model era text. Uncommitted edits dated 2026-10-08 exist in `agents/*`, `rules/safety.md`, `commands/ac/review.md`, `README.md`, and `settings/omo/*`; those are marked *(working tree)* below.
+- **Provenance:** the core catalog was rewritten on 2026-09-27 (`27025865` … `45a117de`), so it carries no retired-model era text. Uncommitted edits dated 2026-10-08 exist in `agents/*`, `rules/safety.md`, `commands/ac/review.md`, `README.md`, and `settings/omo/*`; those are marked _(working tree)_ below.
 
 ## Summary
 
@@ -25,32 +25,32 @@ Ordered by confidence. Pattern codes refer to the audit groups: G1a pressure lan
 ### High
 
 | # | Location | Evidence | Pattern | Why obsolete | Action |
-|---|---|---|---|---|---|
+| --- | --- | --- | --- | --- | --- |
 | H1 | `commands/ac/review.md:32,57-65,119` | `✅ 8 aspects` … `comments (C1-C5), environments (E1-E2), functions (F1-F4), naming (N1-N7), architecture (G1-G10), hygiene (G11-G20), logic (G21-G36), tests (T1-T9)` … `default to all eight` | G2 volatile specifics | No file in the catalog defines these codes (`grep G21` hits only `.local/agent-ctrl.old/skills/review-clean-code/`). `lenses.md:3-10` lists eight lenses and none is `clean-code`, yet `review.md:27` says every area is a lens defined there. `docs/rules/clean-code.md:4` repeats the stale claim. | `rewrite` — one clean-code lens in `lenses.md`; drop step 3 and the aspect question |
 | H2 | `skills/work-planning/references/question-filter.md:15` vs `commands/ac/plan.md:32-33`, `agents/planner.md:31` (also `spec-quality.md:14`, `spec.md:60`) | "Ask one focused question at a time, never a checklist dump." vs "Batch questions — three sharp questions in one message beat nine rounds of one." | G2 contradicting instruction files | Both load in `/ac:plan` (skill + agent). `question-filter.md` is the newer line by blame (`45a117de`) vs `02fbef34`, but four files batch and one forbids it. Assumption: the shared intent is "few questions, together, each with a default; no dump of everything askable" — rewrite the one outlier. | `rewrite` `question-filter.md:15` |
 | H3 | `README.md:11` | "`profiles/`: intentionally empty in this first version" | G2 stale fact | `profiles/` holds 38 tracked profiles (`docs/profiles/README.md`, commit `0e5bf088`); `commands/ac/verify.md:38-40` already relies on profile verification skills. | `rewrite` |
-| H4 | `README.md:13` *(working tree)* | "`settings/claude/`, `settings/opencode/`, and `settings/pi/`" | G2 stale path | `settings/pi/` is deleted in the working tree; its content moved to `settings/omo/agent/`. | `rewrite` |
-| H5 | `settings/omo/README.md:12,26,43,86,121,165` *(working tree)* | "`custom_prompts` -> `~/Configs/agent-ctrl/settings/omo/agents`", "prompts under `agents/`", "File: `agents/SISYPHUS.md`" ×4 | G2 stale path | The directory is `settings/omo/custom_prompts/` (`agents/` deleted, `custom_prompts/` untracked); `omo.jsonc:67,99,108,146` already load `custom_prompts/*.md`. | `rewrite` |
+| H4 | `README.md:13` _(working tree)_ | "`settings/claude/`, `settings/opencode/`, and `settings/pi/`" | G2 stale path | `settings/pi/` is deleted in the working tree; its content moved to `settings/omo/agent/`. | `rewrite` |
+| H5 | `settings/omo/README.md:12,26,43,86,121,165` _(working tree)_ | "`custom_prompts` -> `~/Configs/agent-ctrl/settings/omo/agents`", "prompts under `agents/`", "File: `agents/SISYPHUS.md`" ×4 | G2 stale path | The directory is `settings/omo/custom_prompts/` (`agents/` deleted, `custom_prompts/` untracked); `omo.jsonc:67,99,108,146` already load `custom_prompts/*.md`. | `rewrite` |
 | H6 | `settings/omo/agent/README.md:1-3,28-33` vs `settings/omo/README.md:16` | "# Pi platform-specific settings … `agent-ctrl apply pi` copies everything under this directory" vs "`agent/` … is live runtime state … must never be replaced … or overwritten" | G2 contradiction | The file was moved from `settings/pi/` into a directory the sibling README declares not an apply target. Which README is current is an in-flight decision. | `flag` — decide whether `settings/omo/agent/` is an apply source or runtime state, then rewrite the loser |
 | H7 | `commands/ac/fix.md:69-70` | "Use `clean-code` or `simplify` only as a separate follow-up" | G2 unresolved name | No skill or command named `clean-code`/`simplify` exists; `rules/clean-code.md` is a rule, not a step to "use". The catalog's cleanup entry points are `/ac:review --area clean-code` / `--area simplify`. | `rewrite` |
 | H8 | `profiles/mcp/skills/mcp-builder/scripts/evaluation.py:223,318,324`; `reference/evaluation.md:488,599` | `model: str = "claude-3-7-sonnet-20250219"`, `-m claude-3-5-sonnet-20241022` | G4 API fossil / G1d retired model | Retired model IDs as the script default and documented example; every run of the shipped script targets a model that will not resolve. | `rewrite` → `claude-opus-5-5` (unversioned, no date suffix) |
-| H9 | `rules/safety.md:13` *(working tree)* vs `docs/rules/safety.md:7` | "They leave the sandbox only when every command in the call matches `sandbox.excludedCommands`" vs "The rule names no provider paths, hooks, models, or invocation tools" | G2 contradiction, inside a safety rule | `sandbox.excludedCommands` is a Claude Code settings key, rendered unchanged into OpenCode's `AGENTS.md` where it means nothing; `settings/claude/settings.json` has no `sandbox` key (0 matches). | `flag` (safety rule — not rewritten here): move the sandbox mechanics to a Claude-only location, or update the docs record |
+| H9 | `rules/safety.md:13` _(working tree)_ vs `docs/rules/safety.md:7` | "They leave the sandbox only when every command in the call matches `sandbox.excludedCommands`" vs "The rule names no provider paths, hooks, models, or invocation tools" | G2 contradiction, inside a safety rule | `sandbox.excludedCommands` is a Claude Code settings key, rendered unchanged into OpenCode's `AGENTS.md` where it means nothing; `settings/claude/settings.json` has no `sandbox` key (0 matches). | `flag` (safety rule — not rewritten here): move the sandbox mechanics to a Claude-only location, or update the docs record |
 
 ### Medium
 
 | # | Location | Evidence | Pattern | Why obsolete | Action |
-|---|---|---|---|---|---|
-| M1 | `agents/advisor.md:17`, `agents/planner.md:73`, `agents/researcher.md:31` *(working tree)* | "You have Read, Grep, Glob, WebFetch, and WebSearch. You have no Bash, no Edit, no Write." / "You have no Edit tool" / "You have no shell." | G3 prose tool list shadowing the real list | The frontmatter `tools:` is the contract. The pending diff proves the drift: researcher lost Bash and its prose had to be rewritten in the same hunk. State the behavior, not the inventory. | `rewrite` |
+| --- | --- | --- | --- | --- | --- |
+| M1 | `agents/advisor.md:17`, `agents/planner.md:73`, `agents/researcher.md:31` _(working tree)_ | "You have Read, Grep, Glob, WebFetch, and WebSearch. You have no Bash, no Edit, no Write." / "You have no Edit tool" / "You have no shell." | G3 prose tool list shadowing the real list | The frontmatter `tools:` is the contract. The pending diff proves the drift: researcher lost Bash and its prose had to be rewritten in the same hunk. State the behavior, not the inventory. | `rewrite` |
 | M2 | `agents/lead.md:30-32,97-98`; `settings/omo/custom_prompts/SISYPHUS.md:98` | "Anything taking more than one step gets planned before implementation — either you produce and track a task breakdown yourself" / "create an atomic todo list before editing. Each todo must state where, how, why, and the expected result" | G1b "plan before acting", G1c choreography | Current models plan unprompted; a mandatory breakdown for any two-step edit produces over-planning. The routing half (planner when the user wants a plan file) is context and stays. | `rewrite` |
-| M3 | `commands/ac/review.md:51` *(working tree)* | "**Always state your recommended areas — one or several, whatever the content warrants, never capped at one.** … Never ask without a recommendation." | G1d migration-relative phrasing / patch accretion, G1a | "never capped at one" is a diff against a prior behavior the model never saw; two emphatic negatives for one requirement. | `rewrite` |
+| M3 | `commands/ac/review.md:51` _(working tree)_ | "**Always state your recommended areas — one or several, whatever the content warrants, never capped at one.** … Never ask without a recommendation." | G1d migration-relative phrasing / patch accretion, G1a | "never capped at one" is a diff against a prior behavior the model never saw; two emphatic negatives for one requirement. | `rewrite` |
 | M4 | `commands/ac/pr.md:15,18,148` | `[--draft]` "recognized (draft is the default regardless)"; "ALWAYS `--draft`. Never create a non-draft PR." | G2 option that does nothing; G1a | A documented flag with no effect is a menu entry that dilutes; the policy itself is real and keeps its reason. | `rewrite` |
 | M5 | `profiles/csharp/agents/csharp-reviewer.md:5` | `model: omniroute/combo/claude-sonnet` | G2 contradiction | `README.md:56`: "Source prompts contain no provider model pins"; every other profile agent uses the bare alias `sonnet`. | `rewrite` |
-| M6 | `README.md:52` | "Use a temporary path for sandbox validation" | G2 stale fact (observed, not repository-contradicted) | For `apply claude`, `--path` selects the *source* catalog; the target is always `~/.claude` (`AGENT_CTRL_CLAUDE_HOME` overrides). Followed literally without `--dry-run` it deleted `~/.claude/{skills,agents,commands}` on 2026-10-08. | `rewrite` |
+| M6 | `README.md:52` | "Use a temporary path for sandbox validation" | G2 stale fact (observed, not repository-contradicted) | For `apply claude`, `--path` selects the _source_ catalog; the target is always `~/.claude` (`AGENT_CTRL_CLAUDE_HOME` overrides). Followed literally without `--dry-run` it deleted `~/.claude/{skills,agents,commands}` on 2026-10-08. | `rewrite` |
 
 ### Flags (low confidence, or not edited by rule)
 
 - **F1** `agents/explorer.md:14-25` — read-only Bash enforced only by prose ("You must never run a command that writes…"). G1d: enforce in config what can be enforced. Keep the text (fragile operation); check whether agent-ctrl can render a tool or permission restriction for this agent.
-- **F2** `commands/ac/review.md:53` *(working tree)* — `ToolSearch` / "say that you fell back" is one session's harness workaround encoded as a rule (G2 recency trap). Cannot verify it reproduces; leave until it misfires again.
+- **F2** `commands/ac/review.md:53` _(working tree)_ — `ToolSearch` / "say that you fell back" is one session's harness workaround encoded as a rule (G2 recency trap). Cannot verify it reproduces; leave until it misfires again.
 - **F3** `agents/advisor.md:51` — "generate at least three candidate causes" (G1c numeric method). Idiom only.
 - **F4** `settings/omo/custom_prompts/ATLAS.md:179`, `SISYPHUS.md:199` — "Do not narrate every tool call" (G1d update suppressor) already paired with a positive "when" line; on Opus 5 / Sonnet 5 no documented harm. Re-test when the pins move to 5.5.
 - **F5** `settings/omo/custom_prompts/SISYPHUS.md:151` — TypeScript-only prohibitions (`as any`, `@ts-ignore`) in a stack-agnostic prompt. Has its reason; low.
@@ -199,7 +199,7 @@ One finding per hunk. `flag` items are not included.
 @@ -15,4 +15,3 @@
 -## Read-only, absolutely
 +## Read-only
- 
+
 -You have Read, Grep, Glob, WebFetch, and WebSearch. You have no Bash, no Edit, no Write.
 -You do not modify files, do not run commands, and do not produce a patch that someone is
 +You do not modify files, do not run commands, and do not produce a patch that someone is
@@ -290,7 +290,7 @@ One finding per hunk. `flag` items are not included.
 Every finding is closed. Status per item:
 
 | # | Status | What was done |
-|---|---|---|
+| --- | --- | --- |
 | H1 | Fixed | `clean-code` lens added to `lenses.md`; aspect menu removed from `review.md`; `docs/rules/clean-code.md` corrected (also closes F6). |
 | H2 | Fixed | `question-filter.md` now batches the few surviving questions with defaults. |
 | H3, H4, M6 | Fixed | `README.md`: 38 profiles, no `settings/pi/`, and `--path` is documented as the source catalog, not a destination. |

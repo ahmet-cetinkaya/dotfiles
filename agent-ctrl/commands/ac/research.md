@@ -5,8 +5,7 @@ description: Research existing tools, libraries, and patterns before writing cod
 
 # `/ac:research` — Research Before You Code
 
-Never write custom code for a solved problem. This flow searches the repository, then
-the ecosystem, evaluates candidates, and returns an explicit decision.
+Never write custom code for a solved problem. This flow searches the repository, then the ecosystem, evaluates candidates, and returns an explicit decision.
 
 ## Usage
 
@@ -16,28 +15,19 @@ the ecosystem, evaluates candidates, and returns an explicit decision.
 
 ## Workflow
 
-Activate `solution-research` and route the question to `researcher`; use `explorer`
-first for in-repo candidates.
+Activate `solution-research` and route the question to `researcher`; use `explorer` first for in-repo candidates.
 
-1. **Repo first** — search the current codebase for an existing implementation or
-   near-miss that could be extended. Delegate to `explorer` for symbols, call sites,
-   and impact of extending an existing candidate.
-2. **Pin versions** — anchor everything to the versions in the manifest/lockfile, not
-   the latest release.
-3. **External search** — package registries, official docs, changelogs, source
-   repositories, and maintained real-world usage. Primary sources outrank blog posts
-   and aggregators.
-4. **Evaluate** — functionality fit, maintenance and community health, documentation
-   quality, license compatibility, dependency weight, and security posture.
-5. **Cross-check** — verify surprising claims against a second source; report
-   contradictions instead of silently picking a side.
+1. **Repo first** — search the current codebase for an existing implementation or near-miss that could be extended. Delegate to `explorer` for symbols, call sites, and impact of extending an existing candidate.
+2. **Pin versions** — anchor everything to the versions in the manifest/lockfile, not the latest release.
+3. **External search** — package registries, official docs, changelogs, source repositories, and maintained real-world usage. Primary sources outrank blog posts and aggregators.
+4. **Evaluate** — functionality fit, maintenance and community health, documentation quality, license compatibility, dependency weight, and security posture.
+5. **Cross-check** — verify surprising claims against a second source; report contradictions instead of silently picking a side.
 
 ## Output
 
 A short recommendation:
 
-- **Decision** — `Adopt`, `Extend`, `Compose`, or `Build`, with the chosen
-  tool/approach and why.
+- **Decision** — `Adopt`, `Extend`, `Compose`, or `Build`, with the chosen tool/approach and why.
 - **Evidence** — links for external claims, `path:line` for local ones, version limits.
 - **Caveats** — license/maintenance concerns, migration cost, confidence, and gaps.
 

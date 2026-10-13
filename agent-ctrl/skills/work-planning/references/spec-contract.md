@@ -22,8 +22,8 @@ All spec artifacts live under `specs/` at the project root; only plans live unde
 ---
 status: draft
 capability: <capability>
-plan:                      # .agents/plans/<slug>.md once one exists
-supersedes:                # optional: <NNNN>/FR-### entries this change replaces
+plan: # .agents/plans/<slug>.md once one exists
+supersedes: # optional: <NNNN>/FR-### entries this change replaces
 ---
 ```
 
@@ -57,13 +57,13 @@ When the change alters an existing capability, section 3 is split into delta blo
 
 Use EARS patterns with `SHALL`:
 
-| Pattern | Form |
-|---|---|
-| Ubiquitous | `THE SYSTEM SHALL <behavior>` |
-| Event-driven | `WHEN <trigger> THE SYSTEM SHALL <behavior>` |
-| State-driven | `WHILE <state> THE SYSTEM SHALL <behavior>` |
-| Unwanted behavior | `IF <condition> THEN THE SYSTEM SHALL <behavior>` |
-| Optional feature | `WHERE <feature is present> THE SYSTEM SHALL <behavior>` |
+| Pattern           | Form                                                     |
+| ----------------- | -------------------------------------------------------- |
+| Ubiquitous        | `THE SYSTEM SHALL <behavior>`                            |
+| Event-driven      | `WHEN <trigger> THE SYSTEM SHALL <behavior>`             |
+| State-driven      | `WHILE <state> THE SYSTEM SHALL <behavior>`              |
+| Unwanted behavior | `IF <condition> THEN THE SYSTEM SHALL <behavior>`        |
+| Optional feature  | `WHERE <feature is present> THE SYSTEM SHALL <behavior>` |
 
 Scenarios under user stories use `Given <state>`, `When <action>`, `Then <observable>`. A requirement without an observable is not finished.
 

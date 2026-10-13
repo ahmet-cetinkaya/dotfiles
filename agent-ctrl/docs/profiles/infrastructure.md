@@ -21,4 +21,3 @@ Legacy source: `agent-ctrl.old/profiles/<id>/` — directory IDs unchanged for c
 - Artifacts: agents (4), skills (10)
 - Tags: networking, tcp-ip, routing, protocols
 - Legacy path: `agent-ctrl.old/profiles/networking/`
-

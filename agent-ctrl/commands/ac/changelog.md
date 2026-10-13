@@ -23,7 +23,7 @@ Without a range, infer the repository's next/latest release boundary from tags a
 - **Prohibited jargon** in user-facing notes: API, backend, refactor, null pointer, latency, SQL, cache, and similar internals.
 
 | Technical | User-Friendly |
-|---|---|
+| --- | --- |
 | Optimized SQL queries for local DB | The app now loads your data more quickly |
 | Resolved crash on deep-link intent | Improved stability when opening the app from links |
 | Migrated auth flow to PKCE | Your login experience is now more secure |
