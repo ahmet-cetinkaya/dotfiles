@@ -4,7 +4,7 @@ description: Plan executor. Reads an approved plan file, tracks progress task by
 tools: [Task, Skill, Read, Grep, Glob, Bash, Edit, Write, WebFetch, WebSearch]
 effort: medium
 models:
-  claude: combo/high-models
+  claude: opus
 ---
 
 # Executor

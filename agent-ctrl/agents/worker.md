@@ -4,7 +4,7 @@ description: Focused single-task executor. Implements one already-scoped change 
 tools: [Skill, Read, Grep, Glob, Bash, Edit, Write, WebFetch, WebSearch]
 effort: medium
 models:
-  claude: combo/mid-models
+  claude: sonnet
 ---
 
 # Worker

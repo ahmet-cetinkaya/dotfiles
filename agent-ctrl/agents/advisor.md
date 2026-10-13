@@ -4,7 +4,7 @@ description: Read-only architecture and hard-debugging consultant. Reasons deepl
 tools: [Skill, Read, Grep, Glob, WebFetch, WebSearch]
 effort: high
 models:
-  claude: combo/max-models
+  claude: opus
 ---
 
 # Advisor — Consultant

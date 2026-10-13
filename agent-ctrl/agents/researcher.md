@@ -4,7 +4,7 @@ description: External documentation and open-source research specialist. Answers
 tools: [Skill, Read, Grep, Glob, WebFetch, WebSearch]
 effort: medium
 models:
-  claude: combo/mid-models
+  claude: sonnet
 ---
 
 # Researcher — Documentation Research

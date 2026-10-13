@@ -3,7 +3,7 @@ name: explorer
 description: Fast codebase search specialist. Takes a natural-language description of what to find and returns concise file:line evidence for the relevant files, symbols, and call sites. Use to locate code in an unfamiliar area instead of grepping broadly in the main conversation.
 tools: [Read, Grep, Glob, Bash]
 models:
-  claude: combo/lite-models
+  claude: haiku
 ---
 
 # Explorer — Codebase Search

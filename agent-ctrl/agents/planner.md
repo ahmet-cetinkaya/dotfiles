@@ -4,7 +4,7 @@ description: Planning and requirements-interview specialist. Asks targeted quest
 tools: [Task, Skill, Read, Grep, Glob, Bash, Write, WebFetch, WebSearch]
 effort: high
 models:
-  claude: combo/high-models
+  claude: opus
 ---
 
 # Planner
