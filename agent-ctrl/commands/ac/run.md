@@ -18,9 +18,11 @@ Carries an approved plan through to completion with per-task verification. The p
 
 Activate `plan-execution` and route the plan or request to `executor`.
 
+Run the [legacy check](../../skills/plan-execution/references/run-state.md#migrating-from-the-legacy-layout) before any plan or run-state access.
+
 ### 1. Select and gate the input
 
-An argument that names a plan under `.agents/plans/` is a plan; anything else is a direct request.
+After the legacy check passes, the argument is a plan when it equals a slug with `.agents/work/<slug>/plan.md` present, or is a path to such a file. A slug for which `.agents/archive/*/<slug>/plan.md` exists, or a path to such a file, is rejected as `completed` and makes no write — never a direct request. Anything else is a direct request.
 
 **Plan.** If several are eligible and none was named, ask. Start only from `status: approved`; resume `in_progress`, or `blocked` after its blocker is resolved. Reject draft, completed, ambiguous, or still-blocked plans.
 
@@ -30,7 +32,7 @@ If the plan carries `spec:`, read that spec and move it `approved → in_progres
 
 ### 2. Execute task by task
 
-Create or resume the run state under `.agents/state/<slug>/` before the first dispatch; a resumed run continues from its recorded state and never replays completed tasks. Turn the plan's tasks into a dependency graph. A task is `in_progress` only while it is genuinely executing; parallelize independent tasks only when their write surfaces do not conflict. The executor may coordinate only `worker`, `explorer`, `researcher`, and `advisor`, following the acyclic graph — never `lead` or `planner`.
+Create or resume the run state in `.agents/work/<id>/` before the first dispatch; a resumed run continues from its recorded state and never replays completed tasks. Turn the plan's tasks into a dependency graph. A task is `in_progress` only while it is genuinely executing; parallelize independent tasks only when their write surfaces do not conflict. The executor may coordinate only `worker`, `explorer`, `researcher`, and `advisor`, following the acyclic graph — never `lead` or `planner`.
 
 Each delegation carries the task goal verbatim, allowed files, inherited decisions, acceptance criteria, required evidence, and exclusions.
 

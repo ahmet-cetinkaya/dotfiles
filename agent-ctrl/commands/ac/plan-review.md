@@ -1,6 +1,6 @@
 ---
 name: ac:plan-review
-description: Dual independent review of a plan — executability and adversarial lanes — for decision completeness, feasibility, dependencies, safety, rollback, and verifiable execution. Read-only on the plan; returns one verdict and concrete amendments.
+description: Two-lane review of a plan — mechanical executability checks plus one adversarial advisor session, or two independent sessions with --deep — for decision completeness, feasibility, dependencies, safety, rollback, and verifiable execution. Read-only on the plan; returns one verdict and concrete amendments.
 ---
 
 # `/ac:plan-review` — Adversarial Plan Review
@@ -11,20 +11,25 @@ Challenge a plan before implementation. Surface hidden assumptions, dependency c
 
 ```
 /ac:plan-review <plan-path | pasted plan>
+/ac:plan-review <plan-path> --deep   # two independent advisor sessions
 ```
 
 ## Workflow
 
-Activate `risk-review`. Use `explorer` to verify repository claims and `researcher` for external API, dependency, platform, or operational assumptions. Apply `secure-engineering` when risk triggers are present.
+Activate `risk-review`. Verify repository claims with direct reads and searches; use `explorer` only when a claim needs a broad search, and `researcher` only for an external API, dependency, platform, or operational assumption the repository cannot settle. Apply `secure-engineering` when risk triggers are present.
 
-### Dual review
+Run the [legacy check](../../skills/plan-execution/references/run-state.md#migrating-from-the-legacy-layout) before any plan or run-state access.
 
-One round is two independent `advisor` passes dispatched together against the same plan bytes. Record `sha256sum` of the plan first; each lane receives only the plan path, that digest, and its own lane contract — never the other lane's output or your conclusions.
+### Two lanes, one advisor session by default
 
-- **Executability lane** — step 1, plus: every referenced file, symbol, and command exists; each task can start from what the plan gives it; no tasks contradict each other; every task's QA names a tool, concrete steps, and an expected observable. Approve by default and reject only for true blockers, at most three, each specific and actionable.
-- **Adversarial lane** — steps 2–5.
+Every round has two lanes. Record `sha256sum` of the plan first.
 
-Each lane first re-hashes the plan and returns `INCONCLUSIVE` if the digest differs. A lane that fails or returns no verdict makes the round `INCONCLUSIVE`, never a pass.
+- **Executability lane** — step 1, plus: every referenced file, symbol, and command exists; each task can start from what the plan gives it; no tasks contradict each other; every task's QA names a tool, concrete steps, and an expected observable. Approve by default and reject only for true blockers, at most three, each specific and actionable. These checks are mechanical: run them yourself with direct reads and searches — no agent.
+- **Adversarial lane** — steps 2–5, in one `advisor` session that receives only the plan path, the digest, and this lane contract — never your executability findings or conclusions.
+
+Use two separate `advisor` sessions, one per lane, only when `--deep` is given or the user explicitly asks for high accuracy or a deep review. A risk boundary alone does not add a session: execution already requires an independent `advisor` review of risky changes. When the plan crosses a risk boundary (security, auth, sensitive data, schema or migration, shared API, CI, or a critical user-facing flow) and `--deep` was not given, say so in the report and suggest rerunning with `--deep`. Never use more than two advisor sessions in one round.
+
+The advisor re-hashes the plan first and returns `INCONCLUSIVE` if the digest differs. A lane that fails or returns no verdict makes the round `INCONCLUSIVE`, never a pass.
 
 ### 1. Validate structure and status
 
@@ -59,9 +64,9 @@ Merge the two lanes: the round verdict is the worse of the two, and `VALID` requ
 
 A finding is blocking only when it cites concrete evidence for one of: a conflict with an explicit requirement or accepted decision, an existing failing regression, a reproducible broken flow, a concrete security, data-loss, or compatibility risk, or a conflict with an external API, provider, or release contract. Everything else — speculative hardening, durability, or edge cases the accepted scope never required — is a non-blocking improvement, and a plan whose only findings are non-blocking is `VALID`. Fixes take the smallest edit that resolves the cited blocker and never grow scope.
 
-A re-review of an amended plan runs both lanes fresh against the new digest and checks only the earlier blocking findings, regressions the fixes introduced, and new findings that meet the blocking bar; it does not rediscover the plan. After five rounds without `VALID`, stop and ask the user to continue, accept, or adjust.
+A re-review of an amended plan reruns the executability checks yourself and continues the same advisor session with the new digest and the fix summary when the runtime can continue an agent; it starts a fresh session only when it cannot or the earlier session is gone. A lane that returned `VALID` with no blocker is not rerun unless the fix touched what it approved. The re-review checks only the earlier blocking findings, regressions the fixes introduced, and new findings that meet the blocking bar; it does not rediscover the plan. After three rounds without `VALID`, stop and ask the user to continue, accept, or adjust.
 
-For a plan file, record each lane's verdict, the round, and the digest in the plan's run state (`state.json` review receipts and a `review` ledger event under `.agents/state/<slug>/`). Any later change to the plan invalidates both receipts; before reporting `VALID`, re-hash the plan and require it to match the reviewed digest. A pasted plan gets the verdict without receipts.
+For a plan file, record each lane's verdict, the round, and the digest in the plan's work directory `.agents/work/<slug>/` (`state.json` review receipts and a `plan_review` ledger event). A plan that is already archived gets the verdict, and its receipts go to a new plan-less item (`.agents/work/<YYYYMMDD>-<scope-slug>/`) per the run-state contract's Archive rules; archived items are never edited. Any later change to the plan invalidates both receipts; before reporting `VALID`, re-hash the plan and require it to match the reviewed digest. A pasted plan gets the verdict without receipts.
 
 ## Output
 
@@ -102,6 +107,7 @@ Executability: <verdict> · Adversarial: <verdict> · Round <n> · Plan sha256 <
 Close the turn by mapping the verdict to one command:
 
 - `VALID` → approve the plan, then `/ac:run <plan-path>`
+- `VALID` on a plan that crosses a risk boundary, reviewed without `--deep` → `/ac:plan-review <plan-path> --deep` before approval
 - `VALID_WITH_CHANGES` → apply the amendments via `/ac:plan <request>`, then re-review if the changes were material
 - `INVALID` → `/ac:plan <request>` to redesign from the blocking findings
 - The gap is in the spec, not the plan → `/ac:spec <spec-path>` to refine it first

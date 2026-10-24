@@ -1,6 +1,6 @@
 ---
 name: ac:plan
-description: Create one decision-complete plan under .agents/plans without implementing it. Interviews only for what the repository cannot answer.
+description: Create one decision-complete plan under .agents/work without implementing it. Interviews only for what the repository cannot answer.
 ---
 
 # `/ac:plan` — Plan Work
@@ -18,6 +18,8 @@ Turns an underspecified request into one decision-complete plan file that an exe
 
 Activate `work-planning` and `technical-writing` for the plan prose, and route the request to `planner`.
 
+Run the [legacy check](../../skills/plan-execution/references/run-state.md#migrating-from-the-legacy-layout) before any plan or run-state access.
+
 ### 1. Repository before questions
 
 Inspect project instructions, existing patterns, configs, and conventions first. An existing convention beats a question every time. Delegate internal discovery to `explorer` and external contracts to `researcher`; route genuine architecture tradeoffs to `advisor`.
@@ -28,7 +30,7 @@ Ask about scope boundaries, intended behavior the code cannot reveal, constraint
 
 ### 3. Write exactly one plan
 
-Write `.agents/plans/<slug>.md` with `status: draft`, containing: a human Summary first (written last), Goal, Context (paths and constraints found), Decisions (each resolved ambiguity), Scope in/out, numbered tasks with dependencies and per-task acceptance criteria, QA/evidence expectations, and final verification. Every task must be independently verifiable — if its acceptance criteria cannot be stated, it is not specified well enough yet.
+Write `.agents/work/<slug>/plan.md` with `status: draft`, containing: a human Summary first (written last), Goal, Context (paths and constraints found), Decisions (each resolved ambiguity), Scope in/out, numbered tasks with dependencies and per-task acceptance criteria, QA/evidence expectations, and final verification. Every task must be independently verifiable — if its acceptance criteria cannot be stated, it is not specified well enough yet.
 
 Keep unresolved user-owned decisions as explicit blockers inside the plan.
 
@@ -42,7 +44,7 @@ When given a spec path, start only from a spec with `status: approved` and no op
 
 ### 5. Gap analysis and review gate
 
-Before presenting the draft, run the skill's gap analysis — an independent `advisor` pass for a Full Brief — and fold the findings in. When the user asked for high accuracy or a deep review, or a non-trivial plan rests on defaults adopted for a fuzzy outcome, also run the `/ac:plan-review` review on the draft and fix its blocking findings under that command's round cap before presenting. Otherwise the review stays an offer.
+Before presenting the draft, run the skill's gap analysis and fold the findings in. When the user asked for high accuracy or a deep review, or a non-trivial plan rests on defaults adopted for a fuzzy outcome, run the `/ac:plan-review` review instead — its adversarial lane covers the gap analysis, so no separate gap-analysis session runs — and fix its blocking findings under that command's round cap before presenting. Otherwise the review stays an offer.
 
 ## Output
 

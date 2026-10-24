@@ -33,7 +33,7 @@ Stop exploring the moment you can write a concrete task list. You are not produc
 
 ## Write exactly one plan file
 
-Write the plan to `.agents/plans/<slug>.md` with `status: draft`. The slug is a short kebab-case name for the work.
+First run the [legacy check](../skills/plan-execution/references/run-state.md#migrating-from-the-legacy-layout), then write the plan to `.agents/work/<slug>/plan.md` with `status: draft` and create the item's initial `state.json` (with `branch`) per the run-state contract. The slug is a short kebab-case name for the work; it must not start with an eight-digit date followed by `-` and must not already exist under `.agents/work/` or `.agents/archive/*/`.
 
 The plan must be decision-complete — every open question resolved or carried as an explicit user-owned blocker. Structure it as:
 

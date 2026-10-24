@@ -1,5 +1,4 @@
 {
-  "plansDirectory": ".agents/plans",
   "outputStyle": "Explanatory",
   "showThinkingSummaries": true,
   "askUserQuestionTimeout": "10m",

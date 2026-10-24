@@ -12,11 +12,11 @@ specs/changes/<NNNN>-<slug>/{research.md,data-model.md,contracts/}  # design, wr
 specs/changes/archive/<NNNN>-<slug>/    # shipped changes, immutable
 ```
 
-All spec artifacts live under `specs/` at the project root; only plans live under `.agents/plans/`.
+All spec artifacts live under `specs/` at the project root; only work items live under `.agents/work/`.
 
 - `<capability>` is a short kebab-case domain name (`auth`, `billing`, `export`). `changes` is reserved and cannot be a capability name. A brand-new capability is created by the first change that ships to it.
 - `<NNNN>` is a four-digit sequence: the highest number found under `specs/changes/` (including `archive/`) plus one. Never reuse a number.
-- Spec directories stay outside `.agents/plans/`; the executor selects plans by globbing that directory.
+- Spec directories stay outside `.agents/work/`; the executor selects plans by globbing `.agents/work/*/plan.md`.
 - The design files beside a spec are the plan's, not the spec's; [design artifacts](design-artifacts.md) defines when each is written.
 
 ## Frontmatter
@@ -25,10 +25,12 @@ All spec artifacts live under `specs/` at the project root; only plans live unde
 ---
 status: draft
 capability: <capability>
-plan: # .agents/plans/<slug>.md once one exists
+plan: # .agents/work/<slug>/plan.md once one exists
 supersedes: # optional: <NNNN>/FR-### entries this change replaces
 ---
 ```
+
+A plan moved to the archive resolves per the [run-state contract](../../plan-execution/references/run-state.md) archive rule.
 
 Lifecycle values are `draft`, `approved`, `in_progress`, and `shipped`.
 

@@ -12,7 +12,7 @@ You execute an approved plan faithfully and verify every step. You do not redesi
 
 ## 1. Start from the plan
 
-Read the plan under `.agents/plans/*.md`. If more than one plan is eligible and the caller did not name one, ask which to execute rather than guessing.
+First run the [legacy check](../skills/plan-execution/references/run-state.md#migrating-from-the-legacy-layout), then read candidate plans from `.agents/work/*/plan.md`. If more than one plan is eligible and the caller did not name one, ask which to execute rather than guessing.
 
 Start a plan only from `status: approved`, resume `in_progress`, or resume `blocked` after its blocker is resolved. Reject draft, completed, ambiguous, or still-blocked plans. Execute the plan with its acceptance criteria and its final verification pass intact. A task is `in_progress` only while it is genuinely executing — parallel tasks may be `in_progress` together — and `completed` only after its gates actually pass.
 
@@ -59,7 +59,7 @@ Broaden checks when a failure, a shared-interface change, a dependency change, o
 
 ## 6. Keep progress and evidence accurate
 
-Keep the run state under `.agents/state/<slug>/` as the `plan-execution` run-state reference defines: create or resume `state.json` before the first dispatch, read `notepad.md` once before each batch and pass the relevant entries on, append each check and task transition to `ledger.jsonl`, capture real output under `evidence/`, and append workers' reported learnings to the notepad. You are the only writer of that state. Record verification scope, commands run, outcomes, and outstanding checks as you go. Never represent a deferred or unexecuted check as passed. When a task fails, resume it with the actual failure output rather than a paraphrase.
+Keep the run state in the work item's directory, `.agents/work/<id>/`, as the `plan-execution` run-state reference defines: create or resume `state.json` before the first dispatch, read `notepad.md` once before each batch and pass the relevant entries on, append each check and task transition to `ledger.jsonl`, capture real output under `evidence/`, and append workers' reported learnings to the notepad. You are the only writer of that state. At run start and resume, set `state.json` `branch` to the current branch when it is missing or different. Record verification scope, commands run, outcomes, and outstanding checks as you go. Never represent a deferred or unexecuted check as passed. When a task fails, resume it with the actual failure output rather than a paraphrase.
 
 ## 7. Stop when done
 

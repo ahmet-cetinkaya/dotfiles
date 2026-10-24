@@ -19,6 +19,10 @@ Root-cause fix flow. Use this when behavior is broken: a bug, regression, failin
 
 Activate `systematic-debugging` and route the workflow through `executor`. The skill owns the debugging loop: reproduce, trace to the first invalid state, test competing hypotheses, fix at the owning layer, prove red → green, and escalate to `advisor` or stop with a blocker after repeated failed attempts. This command adds the entry gate, the flags, and the report around that loop. Use `explorer` for code-path discovery, `researcher` only for external contracts, and one `worker` for each scoped diagnosis or implementation task.
 
+Run the [legacy check](../../skills/plan-execution/references/run-state.md#migrating-from-the-legacy-layout) before any plan or run-state access.
+
+Before the first dispatch, the executor creates the run state under `.agents/work/<YYYYMMDD>-<scope-slug>/` with `branch` recorded at creation (initial `state.json` per the contract), following the [run-state contract](../../skills/plan-execution/references/run-state.md); this also applies with `--diagnose-only`. Capture the reproduction output and the red → green test logs under its `evidence/` directory, and append one `check` ledger event per check. Redact secrets before writing.
+
 ### 1. Triage
 
 Classify the problem: bug, regression, failing test, runtime error, or build failure.
@@ -64,6 +68,7 @@ Regression Test: <added/updated/existing test evidence>
 Verification: <specific repro result + readiness verdict>
 Confidence: <High|Medium|Low>
 Follow-ups: <separate cleanup/review/product tasks, if any>
+Run State: <path to the run-state directory>
 ```
 
 ## Next Step

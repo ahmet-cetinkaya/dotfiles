@@ -19,6 +19,25 @@ Parse arguments: the first non-flag token is the **base branch** (default `main`
 
 ---
 
+## Phase 0 — ARCHIVE SWEEP
+
+Run the [legacy check](../../skills/plan-execution/references/run-state.md#migrating-from-the-legacy-layout) first; if it stops, stop the command. Then apply the Archive section of the [run-state contract](../../skills/plan-execution/references/run-state.md) to the finished items in `.agents/work/`.
+
+Use an item's `branch` value only if it matches `^[A-Za-z0-9._/-]+$`, and pass it single-quoted. Otherwise skip the item and report it as `unsafe branch name`. Make one standalone call per distinct `branch` of finished items:
+
+```
+gh pr list --head '<branch>' --author '@me' --state merged --json number,mergedAt
+```
+
+Each `gh` call runs alone, with no pipe, chain, redirect, or `$(...)`.
+
+- Archive an item to `.agents/archive/<YYYY>/<id>/` only when a returned PR's `mergedAt` is later than the item's `updated_at`, compared as UTC instants.
+- Report every item in `.agents/work/` that is not archived, with one reason: `not finished`, `no branch`, `unsafe branch name`, `no merged PR`, `merged before updated_at`, `archive not ignored`, or `archive exists`, using the first reason in this list that applies.
+- If `gh` is unavailable or unauthenticated, skip and report the whole sweep; Phase 1 then stops as today.
+- The sweep never writes to the remote.
+
+---
+
 ## Phase 1 — VALIDATE (fail-fast)
 
 Identify the **source branch** (current HEAD) and **base branch**. Then check, stopping on the first hard failure:
@@ -72,7 +91,7 @@ git diff origin/<base>..HEAD --name-only
 
 ### Planning artifacts
 
-Reference these in the PR body if present: `.agents/plans/`, plus any repository-specific product or design documents the branch implements.
+Reference the plans of work items whose `state.json` `branch` equals the head branch (`.agents/work/<id>/plan.md`), summarized in the body because they are git-ignored, plus any repository-specific product or design documents the branch implements.
 
 ---
 
@@ -153,8 +172,10 @@ gh pr create --base <base> --title "<title>" --body "<body>" --draft
 
 ```bash
 gh pr view --json number,url,title,state,baseRefName,headRefName,additions,deletions,changedFiles
-gh pr checks --json name,status,conclusion 2>/dev/null || true
+gh pr checks --json name,status,conclusion
 ```
+
+Run each call alone. A non-zero exit from `gh pr checks` (no checks yet, pending, or failing checks) does not fail this phase; report its output and exit status in Phase 6.
 
 Once `gh pr view` confirms the draft PR, open it in the user's browser:
 
@@ -176,6 +197,8 @@ Changes: +<additions> -<deletions> across <changedFiles> files
 CI Checks: <status summary | "pending" | "none configured">
 Artifacts referenced: <any plans/specs linked in the body>
 Non-compliant commits: <list, or "none">
+Archived: <.agents/archive/<YYYY>/<id>/ paths, or "none">
+Archive skipped: <items with reasons, or "none">
 
 Next:
   gh pr view <number> --web   → reopen in browser (already opened once in Phase 5)
@@ -208,4 +231,5 @@ Name exactly one recommendation. Never mark the PR ready, merge, or deploy.
 ## Boundaries
 
 - The command authorizes pushing the current branch and creating a **draft** PR. It does not authorize merge, release, deploy, marking ready, or rewriting published history.
+- The archive sweep's move of finished, merged work items under `.agents/` is the command's only local file change outside its existing behavior; the sweep only reads merge state from the remote.
 - Never bypass hooks, use plain `--force`, or push when validation or the readiness gate is not clean.

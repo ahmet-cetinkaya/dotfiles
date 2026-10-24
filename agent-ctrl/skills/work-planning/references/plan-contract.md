@@ -1,6 +1,6 @@
 # Plan Contract
 
-A durable plan under `.agents/plans/<slug>.md` contains frontmatter followed by the plan body:
+A durable plan under `.agents/work/<slug>/plan.md` contains frontmatter followed by the plan body:
 
 ```yaml
 ---
@@ -26,7 +26,7 @@ The plan body contains:
 10. **Final verification** — checks over the complete delivered state, covering four dimensions: plan and spec compliance (every criterion has evidence), code quality, real-surface QA, and scope fidelity (nothing unrequested added, nothing requested missing).
 11. **Traceability** — required when `spec:` is set: a table with one row per `FR-###`, `SC-###`, and `PB-<n>` from the spec, naming the task(s) that satisfy it and the evidence source that proves it. A criterion with no task is a planning gap; a task with no criterion is unrequested work and needs a stated reason.
 
-Plans are working documents that age with their run: recommend git-ignoring `.agents/plans/` together with `.agents/state/`, and keep durable design in the spec directory. Do not edit `.gitignore` unasked.
+Plans are working documents that age with their run: recommend git-ignoring `.agents/work/` together with `.agents/archive/`, and keep durable design in the spec directory. Do not edit `.gitignore` unasked.
 
 A plan derived from a spec writes its durable design beside the spec as [design artifacts](design-artifacts.md) — `research.md`, `data-model.md`, and `contracts/`, each only when its condition holds — and its Context names the ones written. It starts only from a spec with `status: approved` and no `[NEEDS CLARIFICATION]` marker; the plan's Decisions section records the Constitution Check — whether the design honors the project's instruction files (`AGENTS.md`, `CLAUDE.md`, or equivalent) and, for each conflict, the justification or the owner-decision it raises.
 
@@ -66,7 +66,7 @@ Approving a plan with `per-task` or `per-phase` authorizes exactly those local c
 Execution rules:
 
 - Only the executor commits, and only after the task's or phase's checks pass. Workers never commit. Commits are serialized because parallel tasks share one git index.
-- Stage by path the declared write set of the committed tasks only; never `git add -A` or `git add .`. Unrelated working-tree changes, the plan file, and `.agents/state/` stay out of every commit. When a write-set file also holds unrelated changes that predate the run, stage only the task's hunks; when they cannot be separated, skip that commit and report it.
+- Stage by path the declared write set of the committed tasks only; never `git add -A` or `git add .`. Unrelated working-tree changes and the work directory under `.agents/work/` stay out of every commit. When a write-set file also holds unrelated changes that predate the run, stage only the task's hunks; when they cannot be separated, skip that commit and report it.
 - Write the message with the `git-workflow` commit guidance: local style, no co-author or AI trailers. Use the plan's proposed message unless the delivered change makes it inaccurate.
 - Never bypass hooks. A failing hook means the task is not complete: fix the cause, rerun the checks, and commit again.
 - Record the commit hash and message on the task's `task_completed` ledger event.

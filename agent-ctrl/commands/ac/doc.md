@@ -19,6 +19,8 @@ If the user asks to “explain” or “draft,” return documentation in chat. 
 
 Activate `technical-writing`.
 
+Run the [legacy check](../../skills/plan-execution/references/run-state.md#migrating-from-the-legacy-layout) before any plan or run-state access.
+
 ### 1. Resolve target and audience
 
 Identify the exact function, module, API, feature, or flow; its intended reader; and the required form:
@@ -27,7 +29,7 @@ Identify the exact function, module, API, feature, or flow; its intended reader;
 - **reference** — signatures, inputs, outputs, errors, examples, compatibility;
 - **guide** — task-oriented steps, prerequisites, verification, troubleshooting;
 - **architecture** — responsibilities, boundaries, control/data flow, tradeoffs.
-- **explainer** — a readable HTML view of a plan or spec under `.agents/plans/` or `specs/`, for the user who must approve it. See step 6.
+- **explainer** — a readable HTML view of a plan or spec under `.agents/work/` or `specs/`, for the user who must approve it. See step 6.
 
 ### 2. Establish repository truth
 
@@ -56,7 +58,7 @@ The source plan or spec stays the only contract; approval is still given to the 
 - Say what approval authorizes and what it does not.
 - Cite the task, requirement, or decision ID for every claim. Put the source path and the date at the top, and state that the source file wins on any conflict.
 
-Publish it as an artifact when the runtime supports artifacts. Otherwise write `.agents/plans/<slug>.explain.html` (or `explain.html` next to the spec) as one self-contained file. Check that the target is git-ignored before writing; if it is not, ask before writing it. Do not edit the source plan or spec.
+Publish it as an artifact when the runtime supports artifacts. Otherwise write `.agents/work/<slug>/plan.explain.html` (or `explain.html` next to the spec) as one self-contained file. Check that the target is git-ignored before writing; if it is not, ask before writing it. Writing the explainer to a work item sets that item's `state.json` `updated_at`. Do not edit the source plan or spec.
 
 ## Output
 

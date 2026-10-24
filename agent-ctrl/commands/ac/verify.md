@@ -16,6 +16,8 @@ Answers one question with evidence: is the current state actually done and safe 
 
 ## Order of Operations
 
+Run the [legacy check](../../skills/plan-execution/references/run-state.md#migrating-from-the-legacy-layout) before any plan or run-state access.
+
 1. **Reflection first** — validate the _task_ was actually accomplished. When a spec is linked (via the plan's `spec:` or the scope argument), reflection means a criterion ↔ evidence table: one row per `FR-###`, `SC-###`, user-story scenario, and `PB-<n>` with the action or check that proves it. A checked task or a completion claim is not evidence: assess the current behavior. Classify every gap as `missing` (absent), `partial` (present but not satisfying the criterion), `contradicts` (conflicts with the spec or a project-instruction rule), or `unrequested` (behavior no requirement asks for). A criterion without evidence is an unmet requirement.
 2. **Mechanical gate last** — confirm the code is _correct_ (build → type → lint → test → security → diff).
 
@@ -48,7 +50,7 @@ Type checks and tests verify code correctness, not feature correctness. When the
 
 ### 4. Collect the evidence
 
-Capture the real output of every gate and criterion check under the run state's `evidence/` directory — `.agents/state/<slug>/` for a plan, `.agents/state/<YYYYMMDD>-<scope-slug>/` otherwise — and write the evidence record (`evidence/<date>-verify.md`: tested, observed, why enough, omitted), appending a `check` ledger event per gate. Redact secrets before writing. A gate without a captured observable is `BLOCKED`, not `PASS`.
+Capture the real output of every gate and criterion check under the run state's `evidence/` directory — `.agents/work/<slug>/` for a plan, `.agents/work/<YYYYMMDD>-<scope-slug>/` otherwise; an archived plan is verified into a new plan-less item — and write the evidence record (`reports/<stamp>-verify.md`: tested, observed, why enough, omitted), appending a `check` ledger event per gate. Redact secrets before writing. A gate without a captured observable is `BLOCKED`, not `PASS`.
 
 ## Output
 
@@ -78,6 +80,6 @@ Name exactly one recommendation. Never fix failures inside this command.
 
 ## Boundaries
 
-- Verification only — do not fix failures here; route them to `/ac:fix`. The evidence record and ledger events are the only writes.
+- Verification only — do not fix failures here; route them to `/ac:fix`. The evidence record, ledger events, and the work item's `state.json` (created with the item, or its `updated_at` refreshed) are the only writes.
 - Never report `READY` with a failing or skipped required gate, or with a spec criterion lacking evidence.
 - Do not weaken, skip, or mark tests as expected-failure to force a green result.

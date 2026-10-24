@@ -7,7 +7,7 @@ description: "Central code-review hub. With no area argument, asks (multi-select
 
 This command is the **single entry point** for all code review. It does not review code itself — it selects a **target**, resolves which **review areas** to run, applies the matching lenses from the `risk-review` skill, and consolidates their output into one report.
 
-Read-only: findings are reported, never auto-fixed.
+Read-only on project files: findings are reported, never auto-fixed. The only writes are the review record, its ledger event, and the work item's `state.json` under `.agents/work/` (step 5).
 
 ## Usage
 
@@ -40,6 +40,8 @@ Each area is a lens defined in [`risk-review`](../../skills/risk-review/SKILL.md
 
 ## Flow
 
+Run the [legacy check](../../skills/plan-execution/references/run-state.md#migrating-from-the-legacy-layout) before any plan or run-state access.
+
 ### 1. Resolve target
 
 Collect the files in scope from the target (PR / git diff / path), per the rules above. Include untracked files when reviewing working-tree changes — new files are where defects hide.
@@ -67,6 +69,10 @@ Reviewers may use **`serena`** for symbol-level navigation and **`codegraph`** f
 
 Compile every lens's findings into a single, structured **Code Review Report**, grouped by area with the highest-severity findings first.
 
+### 5. Record the findings
+
+Write the consolidated report under the run state's `reports/` directory — `.agents/work/<slug>/` when the reviewed changes implement a plan, `.agents/work/<YYYYMMDD>-<scope-slug>/` otherwise; an archived plan is reviewed into a new plan-less item — as `reports/<stamp>-code-review.md`, following the [run-state contract](../../skills/plan-execution/references/run-state.md). Keep the report's verdict, areas, findings, and evidence gaps; add the target and the reviewed revision (commit, PR head, or `working tree`). Append one `code_review` ledger event carrying the verdict and the record path. Redact secrets before writing; a finding whose evidence cannot be redacted reliably is summarized, not copied.
+
 ## Finding discipline
 
 Report only findings satisfying the [finding contract](../../skills/risk-review/references/finding-contract.md) — every one needs a stable `file:line` pointer, severity and impact, a concrete failure scenario, reproduction or evidence, and a remedy at the owning layer. Suspicions without evidence belong under "Evidence gaps", never as findings.
@@ -83,6 +89,7 @@ Findings (by severity):
     Issue / scenario / evidence / remedy
 
 Evidence gaps: <what could not be verified and why>
+Record: <path to the review record>
 ```
 
 ## Apply Findings
@@ -107,7 +114,7 @@ Name exactly one primary recommendation. Never apply fixes from this command.
 
 ## Boundaries
 
-- This command **only** orchestrates and reports. It does not modify files.
+- This command **only** orchestrates and reports. It does not modify project files; it writes only its review record, ledger event, and the work item's `state.json` under `.agents/work/`.
 - Never skip the area question when no `--area` is supplied — area selection is the point of the hub.
 - Do not apply a lens that was not selected, except the always-on correctness lens and risk-triggered security escalation.
 - Do not soften severity to avoid friction, or invent findings to appear thorough. Security, auth, and data-handling findings are never downgraded without evidence.
