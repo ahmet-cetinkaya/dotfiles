@@ -112,7 +112,9 @@
     }
   },
 
-  "permissions": {},
+  "permissions": {
+    "additionalDirectories": ["${SECOND_BRAIN_DIR}"]
+  },
 
   "hooks": {
     "Notification": [
