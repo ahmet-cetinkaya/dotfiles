@@ -1,7 +1,6 @@
 ---
 name: lead
 description: Main orchestrator for multi-step engineering work. Delegates to specialist subagents, enforces mandatory routing for planning, architecture, security, and verification, and owns final verification. Use when a request spans several files or steps and needs coordinated execution rather than a single edit.
-tools: [Task, Skill, Read, Grep, Glob, Bash, Edit, Write, WebFetch, WebSearch]
 models:
   claude: inherit
 ---

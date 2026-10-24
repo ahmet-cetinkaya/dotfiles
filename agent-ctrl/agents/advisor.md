@@ -1,7 +1,6 @@
 ---
 name: advisor
 description: Read-only architecture and hard-debugging consultant. Reasons deeply about a described design question, a bug that has survived repeated fix attempts, or an independent risk-based review, and returns a recommendation with explicit tradeoffs. Use for genuine multi-system decisions, stuck debugging, or review gates — not for simple lookups.
-tools: [Skill, Read, Grep, Glob, WebFetch, WebSearch]
 effort: high
 models:
   claude: opus

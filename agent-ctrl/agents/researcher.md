@@ -1,7 +1,6 @@
 ---
 name: researcher
 description: External documentation and open-source research specialist. Answers questions about a library, framework, or API by finding official docs, changelogs, and real-world usage, and returns a cited summary with source links. Use for external reference lookups rather than internal codebase search.
-tools: [Skill, Read, Grep, Glob, WebFetch, WebSearch]
 effort: medium
 models:
   claude: sonnet

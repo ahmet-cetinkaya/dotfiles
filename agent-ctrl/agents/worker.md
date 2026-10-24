@@ -1,7 +1,6 @@
 ---
 name: worker
 description: Focused single-task executor. Implements one already-scoped change directly, verifies it with available diagnostics and tests, and reports concisely. Use when the work is already defined and needs execution rather than planning or exploration.
-tools: [Skill, Read, Grep, Glob, Bash, Edit, Write, WebFetch, WebSearch]
 effort: medium
 models:
   claude: sonnet

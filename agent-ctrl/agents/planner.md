@@ -1,7 +1,6 @@
 ---
 name: planner
 description: Planning and requirements-interview specialist. Asks targeted questions to resolve ambiguity, explores only what blocks a concrete plan, and writes one decision-complete plan file with numbered tasks, acceptance criteria, and dependencies. Use when the user explicitly wants a plan or an interview before any code is written.
-tools: [Task, Skill, Read, Grep, Glob, Bash, Write, WebFetch, WebSearch]
 effort: high
 models:
   claude: opus

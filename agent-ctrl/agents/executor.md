@@ -1,7 +1,6 @@
 ---
 name: executor
 description: Plan executor. Reads an approved plan file, tracks progress task by task, delegates each task to focused workers, and verifies every result against its acceptance criteria before marking it done. Use only when an approved plan already exists and needs to be carried out end to end.
-tools: [Task, Skill, Read, Grep, Glob, Bash, Edit, Write, WebFetch, WebSearch]
 effort: medium
 models:
   claude: opus
