@@ -1,6 +1,6 @@
 ---
 name: agent-browser
-description: Drive a real browser from the shell with the agent-browser CLI — open pages, read accessibility snapshots, click and fill by element ref, take screenshots. Use whenever a task needs a real browser: checking what a page renders, reproducing a UI bug, filling a form, capturing a screenshot. Not for deterministic E2E suites (use Playwright Test) and not for pages that need Firefox or WebKit.
+description: Drive a real browser from the shell with the agent-browser CLI — open pages, read accessibility snapshots, click and fill by element ref, take screenshots. Use whenever a task needs a real browser, such as checking what a page renders, reproducing a UI bug, filling a form, capturing a screenshot. Not for deterministic E2E suites (use Playwright Test) and not for pages that need Firefox or WebKit.
 ---
 
 # agent-browser
