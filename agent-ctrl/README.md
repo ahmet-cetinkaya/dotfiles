@@ -6,7 +6,7 @@ This is the source catalog applied by [agent-ctrl](https://github.com/ahmet-ceti
 
 - `agents/`: 7 coordinated `ac-*` agents.
 - `commands/ac/`: 12 explicit workflow commands: `spec`, `plan`, `plan-review`, `run`, `fix`, `research`, `review`, `verify`, `doc`, `changelog`, `pr`, and `pr-address`.
-- `skills/`: 9 descriptive skills, each with a short routing contract and focused references.
+- `skills/`: 10 skills, each with a short routing contract and focused references.
 - `rules/`: 2 shared rules, `safety.md` and `clean-code.md`.
 - `profiles/`: 38 optional language, framework, platform, and domain profiles, applied per project; see `docs/profiles/README.md`.
 - `mcps/`: existing MCP definitions.
