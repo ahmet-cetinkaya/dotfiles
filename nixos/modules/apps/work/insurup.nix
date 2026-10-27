@@ -34,6 +34,11 @@ in {
     # CLI Tools
     gh
 
+    # Local HTTPS for ./dev-env domain (certutil from nssTools lets mkcert
+    # register its CA in the Chrome/Firefox NSS stores)
+    mkcert
+    nssTools
+
     # Database
     mongosh
     # mongodb-compass  # TODO: re-enable once nixpkgs fixes wrap-gapps-hook
