@@ -9,7 +9,7 @@ This is the source catalog applied by [agent-ctrl](https://github.com/ahmet-ceti
 - `skills/`: 10 skills, each with a short routing contract and focused references.
 - `rules/`: 2 shared rules, `safety.md` and `clean-code.md`.
 - `profiles/`: 38 optional language, framework, platform, and domain profiles, applied per project; see `docs/profiles/README.md`.
-- `mcps/`: existing MCP definitions.
+- `mcps/`: existing MCP definitions, applied globally. The AFFiNE servers are not here: they are local-scoped to the ACBrain project (`projects["/home/ac/Documents/ACBrain"].mcpServers` in `~/.claude.json`) so only sessions in that vault load them.
 - `settings/claude/` and `settings/opencode/`: platform-specific settings copied by apply. `settings/omo/`: the standalone `oh-my-openagent` config, symlinked (not apply-copied) into `~/.config/opencode/.omo/`.
 - `docs/`: composition indexes and one provenance record per executable artifact. Documentation is kept outside scanned artifact directories.
 
