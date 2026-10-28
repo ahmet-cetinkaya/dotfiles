@@ -21,7 +21,7 @@ Every `.agents/` path in this contract, including the legacy check, resolves aga
 
 `<stamp>` is the UTC write time in `YYYYMMDDTHHMMSSZ` form. Report names carry the full time so a second run on the same day never overwrites the first, and the form has no colons so it is a safe file name on every platform.
 
-Only the orchestrating agent writes state: the planner when it creates a work item, the executor during a run or a verification, the main session during a plan review, a code review, a user-requested migration, or when the user approves a plan, the `/ac:doc` session when it writes `plan.explain.html`, and the `/ac:pr` session during its archive sweep. Workers never write it; they return findings and evidence, and the orchestrator records them. This keeps parallel workers from conflicting on shared files.
+Only the orchestrating agent writes state: the planner when it creates a work item, the main session during a `/ac:run` run, the executor during a verification, the main session during a plan review, a code review, a user-requested migration, or when the user approves a plan, the `/ac:doc` session when it writes `plan.explain.html`, and the `/ac:pr` session during its archive sweep. Workers never write it; they return findings and evidence, and the orchestrator records them. This keeps parallel workers from conflicting on shared files.
 
 Runtime state is local and never committed. Before the first write to a work item, check `git check-ignore -q .agents/work/`; when it is not ignored, say so once and recommend adding `.agents/work/` and `.agents/archive/` to `.gitignore`, not `.agents/`, because `.agents/skills/` is committed in some runtimes. Do not edit `.gitignore` unasked.
 

@@ -42,5 +42,5 @@ One file per interface, in the format natural for it — OpenAPI or JSON Schema 
 ## Rules
 
 - The plan's Context names each written artifact; tasks and acceptance criteria cite the entry, entity, or contract they implement.
-- When implementation changes a design decision, a worker updates the artifact and the executor records the reason under the spec's Deviations, asking the user before a requirement-affecting change.
+- When implementation changes a design decision, the executing session updates the artifact and records the reason under the spec's Deviations, asking the user before a requirement-affecting change.
 - The artifacts move to `archive/` with the change on ship. A new change that alters a contract writes its own `contracts/` entry rather than editing an archived one.

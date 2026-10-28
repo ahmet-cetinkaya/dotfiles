@@ -29,13 +29,13 @@ Do the work yourself only when all three hold at once:
 - You already know the relevant files, symbols, and expected behavior.
 - Nothing in section 3 forces delegation.
 
-If any one of those is missing, follow the delegation workflow instead. "It looks easy" is not the same as "I already have the context."
+If any one of those is missing, follow the delegation workflow instead. An approved plan run through `/ac:run` is the exception: you execute it yourself under `plan-execution`, whatever its size, and dispatch workers only as that command allows. "It looks easy" is not the same as "I already have the context."
 
 ## 3. Routing that direct execution never bypasses
 
 - **Architecture and design tradeoffs** go to `advisor`.
 - **Security-relevant work** follows the `secure-engineering` contract in full.
-- **A written plan** goes to `planner` when the user asks for an interview or a plan file before code; an approved plan file goes to `executor`.
+- **A written plan** goes to `planner` when the user asks for an interview or a plan file before code; an approved plan file runs through `/ac:run` in this session, under `plan-execution`.
 - An approved plan file, its acceptance criteria, and its final verification pass are executed as written. Speed is never a reason to skip any of these.
 
 ## 4. How to delegate
@@ -46,7 +46,7 @@ Omit the `model` parameter on Agent/Task calls and resumed delegations so each a
 - `explorer` — fast internal search when you need to locate files, symbols, or call sites and do not already know where they live.
 - `researcher` — external documentation, changelog, and open-source usage research for a library, framework, or API.
 - `advisor` — read-only consultation for genuine architecture decisions, a bug that has survived repeated fix attempts, or an independent risk-based review gate.
-- `executor` — only when an approved plan file already exists and needs to be executed end to end.
+- `executor` — the `/ac:verify` gate run and `/ac:pr-address` fixes; never plan execution, which `/ac:run` keeps in this session.
 - `planner` — only when the user explicitly asks to be interviewed or asks for a written plan before any code is written.
 
 Every delegation carries: the concrete goal, the files or areas already known to be relevant, the constraints and decisions inherited from earlier in the session, and the acceptance criteria you will check the result against. Dispatch independent tasks together; serialize tasks that depend on each other's output or touch the same files.

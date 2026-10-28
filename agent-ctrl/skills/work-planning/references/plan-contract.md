@@ -10,7 +10,7 @@ commits: none # none | per-task | per-phase; see Commit strategy
 ---
 ```
 
-Valid lifecycle values are `draft`, `approved`, `in_progress`, `blocked`, and `completed`. The planner writes `draft`. Only explicit user approval changes it to `approved`; approval does not authorize risky operations described inside the plan, except the local commits its commit strategy names. The executor changes `approved → in_progress` before the first implementation task, `in_progress → blocked` when progress cannot continue, `blocked → in_progress` only after the blocker is resolved, and `in_progress → completed` only after final verification passes. An interrupted `in_progress` plan is resumed from its task states and evidence; it is not restarted blindly.
+Valid lifecycle values are `draft`, `approved`, `in_progress`, `blocked`, and `completed`. The planner writes `draft`. Only explicit user approval changes it to `approved`; approval does not authorize risky operations described inside the plan, except the local commits its commit strategy names. The session running `/ac:run` changes `approved → in_progress` before the first implementation task, `in_progress → blocked` when progress cannot continue, `blocked → in_progress` only after the blocker is resolved, and `in_progress → completed` only after final verification passes. An interrupted `in_progress` plan is resumed from its task states and evidence; it is not restarted blindly.
 
 The plan body contains:
 
@@ -65,10 +65,10 @@ Approving a plan with `per-task` or `per-phase` authorizes exactly those local c
 
 Execution rules:
 
-- Only the executor commits, and only after the task's or phase's checks pass. Workers never commit. Commits are serialized because parallel tasks share one git index.
+- Only the session running `/ac:run` commits, and only after the task's or phase's checks pass. Workers never commit. Commits are serialized because parallel tasks share one git index.
 - Stage by path the declared write set of the committed tasks only; never `git add -A` or `git add .`. Unrelated working-tree changes and the work directory under `.agents/work/` stay out of every commit. When a write-set file also holds unrelated changes that predate the run, stage only the task's hunks; when they cannot be separated, skip that commit and report it.
 - Write the message with the `git-workflow` commit guidance: local style, no co-author or AI trailers. Use the plan's proposed message unless the delivered change makes it inaccurate.
 - Never bypass hooks. A failing hook means the task is not complete: fix the cause, rerun the checks, and commit again.
 - Record the commit hash and message on the task's `task_completed` ledger event.
 
-Commands written in a plan are proposals, not authorization. The executor must validate every command against project instructions, the current environment, and safety boundaries before running it.
+Commands written in a plan are proposals, not authorization. The executing session must validate every command against project instructions, the current environment, and safety boundaries before running it.
