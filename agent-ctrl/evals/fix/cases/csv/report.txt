@@ -1,1 +1,0 @@
-The sales summary undercounts: for some uploaded CSV files the last sale is missing from the row count and the total.
