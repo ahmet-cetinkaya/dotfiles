@@ -16,7 +16,7 @@ Turns an underspecified request into one decision-complete plan file that an exe
 
 ## Workflow
 
-Activate `work-planning` and `technical-writing` for the plan prose, and route the request to `planner`.
+Activate `work-planning` and `technical-writing` for the plan prose, and write the plan yourself, in this session: discovery, the interview, and the plan build on each other, and only this session can ask the user directly — subagents have no question tool. Do not route the request to `planner`.
 
 Run the [legacy check](../../skills/plan-execution/references/run-state.md#migrating-from-the-legacy-layout) before any plan or run-state access.
 

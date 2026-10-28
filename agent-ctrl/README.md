@@ -23,8 +23,8 @@ Spec-driven work is optional and adds one artifact upstream of the plan. `/ac:sp
 
 ## Delegation graph
 
-- `lead` may call planner, executor, worker, explorer, researcher, or advisor. It runs `/ac:run` plans and the `/ac:fix` loop itself, dispatching workers only for parallel task batches.
-- `planner` may call explorer, researcher, or advisor only.
+- `lead` may call planner, executor, worker, explorer, researcher, or advisor. It writes `/ac:plan` plans, runs `/ac:run` plans, and runs the `/ac:fix` loop itself, dispatching workers only for parallel task batches.
+- `planner` writes `/ac:spec` specs and may call explorer, researcher, or advisor only.
 - `executor` serves the `/ac:verify` gate and `/ac:pr-address` fixes, and may call worker, explorer, researcher, or advisor only.
 - `worker`, `explorer`, `researcher`, and `advisor` are leaves and never delegate.
 - No child calls back to `lead`; the graph has no cycle.

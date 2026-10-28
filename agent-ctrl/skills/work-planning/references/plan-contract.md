@@ -10,7 +10,7 @@ commits: none # none | per-task | per-phase; see Commit strategy
 ---
 ```
 
-Valid lifecycle values are `draft`, `approved`, `in_progress`, `blocked`, and `completed`. The planner writes `draft`. Only explicit user approval changes it to `approved`; approval does not authorize risky operations described inside the plan, except the local commits its commit strategy names. The session running `/ac:run` changes `approved → in_progress` before the first implementation task, `in_progress → blocked` when progress cannot continue, `blocked → in_progress` only after the blocker is resolved, and `in_progress → completed` only after final verification passes. An interrupted `in_progress` plan is resumed from its task states and evidence; it is not restarted blindly.
+Valid lifecycle values are `draft`, `approved`, `in_progress`, `blocked`, and `completed`. `/ac:plan` writes `draft`. Only explicit user approval changes it to `approved`; approval does not authorize risky operations described inside the plan, except the local commits its commit strategy names. The session running `/ac:run` changes `approved → in_progress` before the first implementation task, `in_progress → blocked` when progress cannot continue, `blocked → in_progress` only after the blocker is resolved, and `in_progress → completed` only after final verification passes. An interrupted `in_progress` plan is resumed from its task states and evidence; it is not restarted blindly.
 
 The plan body contains:
 
@@ -59,7 +59,7 @@ The `commits` field decides whether execution commits. It defaults to `none`: ex
 - `per-task` — one commit per verified task.
 - `per-phase` — one commit per phase in phased delivery, after every task in the phase is verified.
 
-Small single-PR work keeps `none` without a question. For a multi-task or phased plan, the planner recommends a value and asks it together with the other surviving questions. A plan with `per-task` or `per-phase` carries a `## Commit strategy` section listing each commit's tasks, the files it stages, and a proposed message in the repository's own style.
+Small single-PR work keeps `none` without a question. For a multi-task or phased plan, `/ac:plan` recommends a value and asks it together with the other surviving questions. A plan with `per-task` or `per-phase` carries a `## Commit strategy` section listing each commit's tasks, the files it stages, and a proposed message in the repository's own style.
 
 Approving a plan with `per-task` or `per-phase` authorizes exactly those local commits on the current branch. It never authorizes branch creation, push, PR, merge, history rewrite, or amend; those stay separate user actions.
 

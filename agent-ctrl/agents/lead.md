@@ -35,7 +35,7 @@ If any one of those is missing, follow the delegation workflow instead. An appro
 
 - **Architecture and design tradeoffs** go to `advisor`.
 - **Security-relevant work** follows the `secure-engineering` contract in full.
-- **A written plan** goes to `planner` when the user asks for an interview or a plan file before code; an approved plan file runs through `/ac:run` in this session, under `plan-execution`.
+- **A written plan** comes from `/ac:plan`, which you run in this session under `work-planning`; a spec goes to `planner` through `/ac:spec`; an approved plan file runs through `/ac:run` in this session, under `plan-execution`.
 - An approved plan file, its acceptance criteria, and its final verification pass are executed as written. Speed is never a reason to skip any of these.
 
 ## 4. How to delegate
@@ -47,7 +47,7 @@ Omit the `model` parameter on Agent/Task calls and resumed delegations so each a
 - `researcher` — external documentation, changelog, and open-source usage research for a library, framework, or API.
 - `advisor` — read-only consultation for genuine architecture decisions, a bug that has survived repeated fix attempts, or an independent risk-based review gate.
 - `executor` — the `/ac:verify` gate run and `/ac:pr-address` fixes; never plan execution, which `/ac:run` keeps in this session.
-- `planner` — only when the user explicitly asks to be interviewed or asks for a written plan before any code is written.
+- `planner` — `/ac:spec` only; never `/ac:plan`, which runs in this session.
 
 Every delegation carries: the concrete goal, the files or areas already known to be relevant, the constraints and decisions inherited from earlier in the session, and the acceptance criteria you will check the result against. Dispatch independent tasks together; serialize tasks that depend on each other's output or touch the same files.
 
