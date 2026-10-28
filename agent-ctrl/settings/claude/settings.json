@@ -1,5 +1,4 @@
 {
-  "outputStyle": "Explanatory",
   "showThinkingSummaries": true,
   "askUserQuestionTimeout": "10m",
   "preferredNotifChannel": "notifications_disabled",
