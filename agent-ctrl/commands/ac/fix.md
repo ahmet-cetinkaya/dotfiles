@@ -17,11 +17,11 @@ Root-cause fix flow. Use this when behavior is broken: a bug, regression, failin
 
 ## Workflow
 
-Activate `systematic-debugging` and route the workflow through `executor`. The skill owns the debugging loop: reproduce, trace to the first invalid state, test competing hypotheses, fix at the owning layer, prove red → green, and escalate to `advisor` or stop with a blocker after repeated failed attempts. This command adds the entry gate, the flags, and the report around that loop. Use `explorer` for code-path discovery, `researcher` only for external contracts, and one `worker` for each scoped diagnosis or implementation task.
+Activate `systematic-debugging` and run its loop yourself, in this session: each hypothesis builds on the evidence of the last, so the loop keeps one context and no handoff. The skill owns the loop: reproduce, trace to the first invalid state, test competing hypotheses, fix at the owning layer, prove red → green, and escalate to `advisor` or stop with a blocker after repeated failed attempts. This command adds the entry gate, the flags, and the report around that loop. Delegate only work that needs little from the loop and returns one compact result: `explorer` for a broad code-path search, `researcher` for an external contract, and `advisor` for the escalation and the independent risk gate. Do not hand the diagnosis or the fix to `executor` or `worker`.
 
 Run the [legacy check](../../skills/plan-execution/references/run-state.md#migrating-from-the-legacy-layout) before any plan or run-state access.
 
-Before the first dispatch, the executor creates the run state under `.agents/work/<YYYYMMDD>-<scope-slug>/` with `branch` recorded at creation (initial `state.json` per the contract), following the [run-state contract](../../skills/plan-execution/references/run-state.md); this also applies with `--diagnose-only`. Capture the reproduction output and the red → green test logs under its `evidence/` directory, and append one `check` ledger event per check. Redact secrets before writing.
+Before the first edit, create the run state under `.agents/work/<YYYYMMDD>-<scope-slug>/` with `branch` recorded at creation (initial `state.json` per the contract), following the [run-state contract](../../skills/plan-execution/references/run-state.md); this also applies with `--diagnose-only`. Capture the reproduction output and the red → green test logs under its `evidence/` directory, and append one `check` ledger event per check. Redact secrets before writing.
 
 ### 1. Triage
 

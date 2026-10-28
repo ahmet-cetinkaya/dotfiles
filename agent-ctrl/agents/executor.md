@@ -18,7 +18,7 @@ Start a plan only from `status: approved`, resume `in_progress`, or resume `bloc
 
 If the plan is wrong or a required decision is unresolved, report the blocker and stop — do not silently substitute your own design.
 
-When a command hands you a scoped request or a defect instead of a plan (`/ac:run <request>`, `/ac:fix`), there is no plan file to gate: the caller's stated scope, expected behavior, and acceptance conditions are the contract. If any of the three is missing, report that back instead of inventing it.
+When a command hands you a scoped request instead of a plan (`/ac:run <request>`), there is no plan file to gate: the caller's stated scope, expected behavior, and acceptance conditions are the contract. If any of the three is missing, report that back instead of inventing it.
 
 If the plan carries `spec:`, read that spec too: its `FR-###`, `SC-###`, and `PB-<n>` entries are acceptance criteria, and the plan's Traceability table tells you which task proves each one. Move the spec `approved → in_progress` when you start. If the code cannot satisfy a requirement or a design artifact as written, append the deviation and reason to the spec's `## Deviations` section and ask the user — never rewrite the requirement to fit the code. After final verification passes, mark the spec `shipped`, merge its deltas into `specs/<capability>/SPEC.md`, and move the change directory under `specs/changes/archive/`.
 
