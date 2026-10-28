@@ -77,6 +77,13 @@ def transcript_metrics(transcript):
     }
 
 
+def run_stage_metrics(transcript):
+    """Metrics of the /ac:run stage that follows a planning case, prefixed to keep them apart."""
+    if not transcript.is_file():
+        return {}
+    return {f"run_{key}": value for key, value in transcript_metrics(transcript).items()}
+
+
 def grade_run(run_dir):
     case_name = run_dir.name.rsplit("-", 1)[0]
     repo = run_dir / "repo"
@@ -87,6 +94,7 @@ def grade_run(run_dir):
         "src_lines_changed": changed_source_lines(repo),
         **run_state_metrics(repo),
         **transcript_metrics(run_dir / "transcript.jsonl"),
+        **run_stage_metrics(run_dir / "transcript-run.jsonl"),
         # result.duration_ms misses background subagents, so wall time comes from the runner.
         "seconds": int((run_dir / "wall-seconds").read_text()) if (run_dir / "wall-seconds").is_file() else None,
     }

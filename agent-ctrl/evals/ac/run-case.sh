@@ -19,12 +19,25 @@ git -C "$run_dir/repo" init -q
 git -C "$run_dir/repo" add -A
 git -C "$run_dir/repo" -c user.name=eval -c user.email=eval@localhost commit -qm "seed"
 
+# Run one headless session in the case repository; stdout becomes the given transcript.
+run_claude() {
+  local prompt=$1 transcript=$2
+  HOME=$claude_home timeout "$RUN_TIMEOUT" claude -p "$prompt" \
+    --agent lead --model opus --output-format stream-json --verbose \
+    --permission-mode acceptEdits --strict-mcp-config --settings '{"disableAllHooks": true}' \
+    --allowedTools "Bash(python3:*)" "Bash(git status:*)" "Bash(git diff:*)" "Bash(git log:*)" \
+    "Bash(ls:*)" "Bash(mkdir:*)" "Bash(date:*)" "Bash(sha256sum:*)" "Bash(cat:*)" "Bash(grep:*)" \
+    > "$transcript" 2>> "$run_dir/stderr.log" || echo "exit $? ($(basename "$transcript"))" >> "$run_dir/exit-status"
+}
+
 cd "$run_dir/repo"
 started_at=$(date +%s)
-HOME=$claude_home timeout "$RUN_TIMEOUT" claude -p "$(cat "$EVAL_DIR/cases/$case_name/prompt.txt")" \
-  --agent lead --model opus --output-format stream-json --verbose \
-  --permission-mode acceptEdits --strict-mcp-config --settings '{"disableAllHooks": true}' \
-  --allowedTools "Bash(python3:*)" "Bash(git status:*)" "Bash(git diff:*)" "Bash(git log:*)" \
-  "Bash(ls:*)" "Bash(mkdir:*)" "Bash(date:*)" "Bash(sha256sum:*)" "Bash(cat:*)" "Bash(grep:*)" \
-  > "$run_dir/transcript.jsonl" 2> "$run_dir/stderr.log" || echo "exit $?" > "$run_dir/exit-status"
+run_claude "$(cat "$EVAL_DIR/cases/$case_name/prompt.txt")" "$run_dir/transcript.jsonl"
+# Plan cases: stand in for the user's approval, then execute the plan with the current /ac:run.
+if [ -f "$EVAL_DIR/cases/$case_name/then-run" ]; then
+  for plan in .agents/work/*/plan.md; do
+    [ -f "$plan" ] && sed -i 's/^status: draft$/status: approved/' "$plan"
+  done
+  run_claude "/ac:run" "$run_dir/transcript-run.jsonl"
+fi
 echo $(($(date +%s) - started_at)) > "$run_dir/wall-seconds"
