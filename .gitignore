@@ -36,6 +36,7 @@ temp/
 *.backup
 *.orig
 *.old
+*_backup.json
 
 # Neovim
 *.swp
@@ -126,20 +127,16 @@ hs_err_pid*
 *.sqlite3
 
 # AI Agent files
-**/**/.codegraph/
-**/**/.omo/
-!agent-ctrl/settings/opencode/.omo/
-!agent-ctrl/settings/opencode/.omo/**
-agent-ctrl/settings/opencode/.omo/codegraph/
-agent-ctrl/settings/opencode/.omo/lsp-daemon/
-agent-ctrl/settings/opencode/.omo/run-continuation/
-agent-ctrl/settings/opencode/.omo/*.bak*
 *AGENTS.md
 *CLAUDE.md
 *GEMINI.md
 *QWEN.md
 .ai/
+**/.agents/
 .claude/
+.codegraph
+/.mcp.json
+.omo/
 .gemini/
 .opencode/
 .qwen/
@@ -147,6 +144,10 @@ agent-ctrl/settings/opencode/.omo/*.bak*
 .specify/
 graphify-out/
 opencode.json
+
+# Nix build outputs
+/nixos/result
+/nixos/result-*
 
 # Archives
 *.7z
