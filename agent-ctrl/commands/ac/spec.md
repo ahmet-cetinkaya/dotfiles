@@ -30,7 +30,7 @@ Write no file until the direction is clear. When the intent arrives as a solutio
 
 ### 3. Write the change spec
 
-Create `specs/changes/<NNNN>-<slug>/SPEC.md` following the spec contract: intent, prioritized user stories with a priority reason, an independent test, and Given/When/Then scenarios, `FR-###` requirements in EARS form, key entities when data is involved, measurable `SC-###` success criteria, edge cases, assumptions, and out-of-scope boundaries. If no user flow can be identified, stop and say so instead of writing a spec. `<NNNN>` is the next unused number across `specs/changes/` and its archive; `<slug>` is two to four kebab-case words.
+Create `specs/changes/<NNNN>-<slug>/SPEC.md` following the spec contract: intent, prioritized user stories with a priority reason, an independent test, and Given/When/Then scenarios, `FR-###` requirements in EARS form, the user experience (or `none — no user interface`), key entities when data is involved, measurable `SC-###` success criteria, edge cases, assumptions, and out-of-scope boundaries. If no user flow can be identified, stop and say so instead of writing a spec. `<NNNN>` is the next unused number across `specs/changes/` and its archive; `<slug>` is two to four kebab-case words.
 
 When the change alters an existing capability, write the requirements as `ADDED`, `MODIFIED`, and `REMOVED` deltas against the living spec and add at least two `PRESERVED` statements naming behavior that must keep working.
 
@@ -38,11 +38,11 @@ Adopt defensible defaults and record them under Assumptions. Mark only what a de
 
 ### 4. Self-check
 
-Run the requirements checklist and the hostile-reader pass from the spec quality reference, fixing findings in place for at most three rounds, and write the result to `checklists/requirements.md` beside the spec. Then ask the surviving questions — at most three, all in one message, in the reference's question format — fold the answers into the spec, and re-evaluate the checklist.
+Run the requirements checklist and the hostile-reader pass from the spec quality reference, fixing findings in place for at most three rounds, and write the result to `checklists/requirements.md` beside the spec. When the spec breaks the spec contract's Size rule, recommend the split with the surviving questions; a declined split is recorded under Out of scope. Then ask the surviving questions — at most three, all in one message, in the reference's question format — fold the answers into the spec, and re-evaluate the checklist.
 
 ### 5. Refine an existing spec
 
-When given a spec path, follow the spec quality reference's refinement protocol: rate the coverage taxonomy, ask at most five questions one at a time for `Partial` or `Missing` areas, write each answer into the owning section and the `## Clarifications` log immediately, list unresolved high-impact areas as Deferred, and re-evaluate `checklists/requirements.md`. A spec that is `approved` or later is not refined in place; new behavior is a new change.
+When given a spec path, follow the spec quality reference's refinement protocol: rate the coverage taxonomy, ask at most five questions one at a time for `Partial` or `Missing` areas, write each answer into the owning section and the `## Clarifications` log immediately, list unresolved high-impact areas as Deferred, and re-evaluate `checklists/requirements.md`. A spec that is `approved` or later is not refined in place; new behavior is a new change, and removing scope follows the spec contract's Descoping rule.
 
 ### 6. Domain checklist on request
 

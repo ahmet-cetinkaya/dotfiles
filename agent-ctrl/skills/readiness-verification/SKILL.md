@@ -15,7 +15,7 @@ Do not activate to implement fixes, conduct an open-ended review, invent project
 
 ## Gate
 
-1. Confirm the target, intended outcome, scope, and acceptance criteria before running expensive checks. When a spec is linked, its `FR-###`, `SC-###`, and `PB-<n>` entries are the acceptance criteria; each needs its own evidence row.
+1. Confirm the target, intended outcome, scope, and acceptance criteria before running expensive checks. When a spec is linked, its `FR-###`, `SC-###`, and `PB-<n>` entries are the acceptance criteria; each needs its own evidence row, except a struck-through descoped entry, whose row cites its move and the decision under the spec's Deviations.
 2. Discover commands from project instructions, manifests, CI, and neighboring workflows.
 3. Apply relevant [gates](references/gates.md): diagnostics, build, type, lint, tests, security, diff, and hands-on QA on user-facing or operational surfaces.
 4. Record each gate as `PASS`, `FAIL`, `BLOCKED`, or `NOT_APPLICABLE`, with command/tool, scope, and observable.

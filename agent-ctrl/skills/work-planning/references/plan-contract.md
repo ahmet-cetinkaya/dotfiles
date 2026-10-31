@@ -24,7 +24,7 @@ The plan body contains:
 8. **Per-task acceptance criteria** — observable proof for each task.
 9. **QA and evidence** — project-defined checks, real-surface scenarios, risk gates, rollback evidence, and expected observables.
 10. **Final verification** — checks over the complete delivered state, covering four dimensions: plan and spec compliance (every criterion has evidence), code quality, real-surface QA, and scope fidelity (nothing unrequested added, nothing requested missing).
-11. **Traceability** — required when `spec:` is set: a table with one row per `FR-###`, `SC-###`, and `PB-<n>` from the spec, naming the task(s) that satisfy it and the evidence source that proves it. A criterion with no task is a planning gap; a task with no criterion is unrequested work and needs a stated reason.
+11. **Traceability** — required when `spec:` is set: a table with one row per `FR-###`, `SC-###`, and `PB-<n>` from the spec, naming the task(s) that satisfy it and the evidence source that proves it. A criterion with no task is a planning gap, unless it is struck through as descoped and its row cites the move; a task with no criterion is unrequested work and needs a stated reason.
 
 Plans are working documents that age with their run: recommend git-ignoring `.agents/work/` together with `.agents/archive/`, and keep durable design in the spec directory. Do not edit `.gitignore` unasked.
 

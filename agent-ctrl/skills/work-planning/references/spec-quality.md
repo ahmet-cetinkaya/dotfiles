@@ -39,13 +39,14 @@ Content quality:
 
 - [ ] No implementation detail: no language, framework, storage, API, or file names.
 - [ ] Focused on user value and business need, readable by a non-technical stakeholder.
-- [ ] Sections that do not apply are removed, not left as "N/A."
+- [ ] Sections that do not apply are removed, not left as "N/A," except User experience.
 
 Requirement completeness:
 
 - [ ] Every `FR-###` uses an EARS pattern with `SHALL` and one observable behavior.
 - [ ] Every `FR-###` traces to a user story; every story has a priority reason, an independent test, and at least one scenario.
 - [ ] Every `SC-###` meets the success-criteria rules above.
+- [ ] User experience lists the flow, states, a fixed design link when a design exists, and accessibility, with every state covered by a scenario or `FR-###`; or it states `none — no user interface`.
 - [ ] Edge cases cover empty, invalid, boundary, concurrent, unauthorized, and failure inputs.
 - [ ] Key entities are listed when the change involves data.
 - [ ] Changes to existing behavior include `PRESERVED` statements (at least two).
@@ -57,6 +58,7 @@ Readiness:
 - [ ] At most three `[NEEDS CLARIFICATION]` markers; none inside an approved spec.
 - [ ] No vague words ("works," "fast," "secure," "robust," "intuitive") and no placeholders (`TODO`, `???`, `<…>`) without an observable.
 - [ ] Terminology is consistent across stories, requirements, entities, and criteria.
+- [ ] The spec meets the spec contract's Size rule, or Out of scope records the declined split.
 
 ## Hostile-reader pass
 

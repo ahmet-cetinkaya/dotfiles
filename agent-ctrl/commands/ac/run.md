@@ -44,7 +44,7 @@ Inspect every changed file and verify the evidence before marking a task `comple
 
 Run the plan's final verification pass against the delivered state. If the plan is wrong or a required decision is unresolved, report the blocker — do not substitute a design. Update task states in the plan file as they change. When this session implemented any task, report the run as `completed — self-verified`: the independent readiness gate is then `/ac:verify`, required before `/ac:pr`.
 
-When implementation cannot follow a linked spec as written, do not change the requirement silently: append the deviation and its reason to the spec's `## Deviations` section, ask the user, and continue only with their decision. After final verification passes, move the spec to `shipped`, merge its deltas into the living spec under `specs/<capability>/SPEC.md`, and move the change directory under `specs/changes/archive/`.
+When implementation cannot follow a linked spec as written, do not change the requirement silently: append the deviation and its reason to the spec's `## Deviations` section, ask the user, and continue only with their decision. Dropping or moving a requirement follows the spec contract's Descoping rule. After final verification passes, move the spec to `shipped`, merge its deltas into the living spec under `specs/<capability>/SPEC.md`, and move the change directory under `specs/changes/archive/`.
 
 ## Output
 
