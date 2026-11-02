@@ -3,7 +3,7 @@
 # The sandbox policy lives in settings.json; this launcher adds what depends on the
 # repository: symlink grants from <main-worktree>/.claude/additional-dirs.local,
 # audited widenings from <main-worktree>/.claude/claude-launcher.local.json
-# (allowDotnetState, allowedDomains), git access from linked worktrees, and a
+# (allowDotnetState, allowNugetConfig, allowedDomains), git access from linked worktrees, and a
 # write deny on <main-worktree>/.claude so a session cannot widen the next one.
 # `claude --lite` starts one session with the sandbox off, as a rollback.
 set -u
@@ -11,6 +11,7 @@ set -u
 readonly DOMAIN_PATTERN='^(\*\.)?[a-z0-9-]+(\.[a-z0-9-]+)+(:[0-9]+)?$'
 readonly WRITE_DENY_PATH='["sandbox","filesystem","denyWrite"]'
 readonly WRITE_ALLOW_PATH='["sandbox","filesystem","allowWrite"]'
+readonly READ_ALLOW_PATH='["sandbox","filesystem","allowRead"]'
 readonly DOMAIN_ALLOW_PATH='["sandbox","network","allowedDomains"]'
 
 is_lite=0
@@ -148,6 +149,11 @@ if [[ -n "$main_worktree" ]]; then
       # /tmp/.dotnet/shm, and a cold restore writes the package caches.
       append_setting "$WRITE_ALLOW_PATH" "$HOME/.local/share/dotnet/runfile" "/tmp/.dotnet/shm" \
         "$HOME/.nuget/packages" "$HOME/.local/share/NuGet" "$HOME/.dotnet"
+    fi
+
+    if jq -e '.allowNugetConfig == true' "$main_worktree/$policy" >/dev/null 2>&1; then
+      # Private feeds keep their credentials here; opened only for repositories that opt in.
+      append_setting "$READ_ALLOW_PATH" "$HOME/.nuget/NuGet/NuGet.Config"
     fi
 
     mapfile -t policy_domains < <(jq -r \
