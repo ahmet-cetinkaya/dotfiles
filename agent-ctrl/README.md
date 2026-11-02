@@ -57,6 +57,25 @@ agent-ctrl apply opencode --path /tmp/agent-ctrl-opencode --override --no-prompt
 
 Then apply to the live target without `--path`, for example `agent-ctrl apply claude --override --no-prompt`. The Claude apply replaces `~/.claude/settings.json` with `settings/claude/settings.json`, dropping preferences Claude Code saved there, and merges only `mcpServers` into `~/.claude.json`. Applying to real home configuration is a separate user-authorized action.
 
+## Claude sandbox
+
+`settings/claude/settings.json` runs every Bash command Claude starts inside the Claude Code sandbox, and `autoAllowBashIfSandboxed` lets a sandboxed command run without a prompt.
+
+- **Secrets.** `sandbox.filesystem.denyRead` and matching `Read(...)` deny rules block credential files, both `.env` files, `~/.claude.json`, and `~/.nuget/NuGet/NuGet.Config`. A denied directory such as `~/.ssh` appears empty inside the sandbox. `sandbox.credentials.envVars` removes the gateway and API tokens, including every name in `~/Configs/zsh/.env`, from the environment of sandboxed commands.
+- **Writes.** Writes stay in the working directory and the temp directory. Shell startup files, `~/Configs/zsh`, `~/Configs/nixos`, `~/.local/bin`, `~/.dotnet/tools`, systemd and autostart, the Claude settings, and `settings/claude` itself are write-denied.
+- **Network.** `allowedDomains` holds the hosts every session needs. Any other host asks once (`strictAllowlist` is `false`). Known exfiltration hosts in `deniedDomains` are blocked.
+- **Outside the sandbox.** `gh`, `git push`, `podman`, `docker`, `aspire`, and `agent-ctrl apply` are in `excludedCommands` and ask before they run. A sandboxed command that fails can ask to retry outside the sandbox.
+- **Bypass mode.** The launcher makes bypass selectable with Shift+Tab, and a session never starts in it. In a recorded check, an unsandboxed `cat` of a read-denied path was still refused in bypass mode. Commands that read a file indirectly are not guaranteed to match a deny rule, and bypass approves every unsandboxed retry and excluded command, so bypass weakens the secret guarantee. Use it only for narrow, trusted work.
+
+The launcher adds what depends on the repository. An untracked `.claude/claude-launcher.local.json` in the main worktree accepts two fields:
+
+- `allowDotnetState: true` makes the .NET and NuGet state paths writable.
+- `allowedDomains` holds extra hosts for that repository.
+
+The launcher applies the file to every worktree, makes the common git directory writable from linked worktrees, and keeps `hooks`, `config`, and the main worktree's `.claude` write-denied, so a session cannot widen the next one.
+
+`claude --lite` starts one session with the sandbox off, which is the rollback when the sandbox blocks work. Run the `evals/ac` harness from a `--lite` session or a plain terminal, because its nested `claude -p` runs need the gateway token. Moving these rules into the Nix managed settings and closing the unsandboxed retry is deferred until two weeks of normal work pass without a `--lite` session.
+
 ## Claude and OpenCode coexistence
 
 Claude and OpenCode both default to `lead`, and the shared catalog is rendered by agent-ctrl. OpenCode keeps `oh-my-openagent@latest` for its runtime, routing, and existing settings. Its Claude artifact import switches remain disabled, preventing duplicate commands, skills, hooks, plugins, agents, or MCP definitions. Delegating source agents use Claude's backward-compatible `Task` alias; agent-ctrl renders the OpenCode tool map in lowercase.
