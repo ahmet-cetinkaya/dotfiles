@@ -1,11 +1,43 @@
 #!/usr/bin/env bash
-# Launch Claude Code with per-repository symlink grants and tool temp paths.
-# Each non-comment line in <main-worktree>/.claude/additional-dirs.local names a
-# symlinked directory relative to the current worktree root.
-# LITE MODE: all sandbox/permission hardening is removed for now; the hardened
-# baseline is kept in a local backup outside the repository. Only symlink
-# grants, BUN/.NET temp paths and the notify hooks remain.
+# Launch Claude Code inside its Bash sandbox with per-repository grants.
+# The sandbox policy lives in settings.json; this launcher adds what depends on the
+# repository: symlink grants from <main-worktree>/.claude/additional-dirs.local,
+# audited widenings from <main-worktree>/.claude/claude-launcher.local.json
+# (allowDotnetState, allowedDomains), git access from linked worktrees, and a
+# write deny on <main-worktree>/.claude so a session cannot widen the next one.
+# `claude --lite` starts one session with the sandbox off, as a rollback.
 set -u
+
+readonly DOMAIN_PATTERN='^(\*\.)?[a-z0-9-]+(\.[a-z0-9-]+)+(:[0-9]+)?$'
+readonly WRITE_DENY_PATH='["sandbox","filesystem","denyWrite"]'
+readonly WRITE_ALLOW_PATH='["sandbox","filesystem","allowWrite"]'
+readonly DOMAIN_ALLOW_PATH='["sandbox","network","allowedDomains"]'
+
+is_lite=0
+forwarded_args=()
+for arg in "$@"; do
+  if [[ "$arg" == --lite ]]; then
+    is_lite=1
+  else
+    forwarded_args+=("$arg")
+  fi
+done
+
+# Append values to the array at a JSON path in settings_json, keeping it unique.
+append_setting() {
+  local json_path=$1
+  shift
+  settings_json=$(jq -c --argjson path "$json_path" --args \
+    'setpath($path; ((getpath($path) // []) + $ARGS.positional | unique))' \
+    "$@" <<<"$settings_json")
+}
+
+# A tracked file or a symlinked .claude is repository-controlled, so it cannot widen access.
+is_local_trust_file() {
+  local relative_path=$1
+  [[ -f "$main_worktree/$relative_path" && ! -L "$main_worktree/.claude" ]] &&
+    ! git -C "$main_worktree" ls-files --error-unmatch -- "$relative_path" >/dev/null 2>&1
+}
 
 if [[ "$PWD" == "$HOME" ]]; then
   printf '%s\n' 'claude: launching from $HOME may freeze (sandbox scans the whole home dir). cd into a project first.' >&2
@@ -89,9 +121,53 @@ if (( ${#additional_dirs[@]} )); then
     "${additional_dirs[@]}" <<<"$settings_json")
 fi
 
+if [[ -n "$main_worktree" ]]; then
+  # A deny on a path that does not exist may not be enforced, so create the
+  # directory first; an empty directory does not show in git. A symlinked .claude
+  # is distrusted, so it is denied but never followed.
+  [[ -L "$main_worktree/.claude" ]] || mkdir -p "$main_worktree/.claude"
+  append_setting "$WRITE_DENY_PATH" "$main_worktree/.claude"
+
+  if [[ "$worktree_root" != "$main_worktree" ]]; then
+    # Linked worktrees commit into the common git dir. Hooks and config run later
+    # outside the sandbox (git push is excluded), so they stay write-denied.
+    append_setting "$WRITE_ALLOW_PATH" "$common_git_dir"
+    append_setting "$WRITE_DENY_PATH" "$common_git_dir/hooks" "$common_git_dir/config"
+  fi
+
+  policy=.claude/claude-launcher.local.json
+  if is_local_trust_file "$policy"; then
+    if [[ $(jq -r '.allowDotnetState // false' "$main_worktree/$policy" 2>/dev/null) == true ]]; then
+      # `dotnet run file.cs` keeps its virtual project in runfile, named mutexes use
+      # /tmp/.dotnet/shm, and a cold restore writes the package caches.
+      append_setting "$WRITE_ALLOW_PATH" "$HOME/.local/share/dotnet/runfile" "/tmp/.dotnet/shm" \
+        "$HOME/.nuget/packages" "$HOME/.local/share/NuGet" "$HOME/.dotnet"
+    fi
+
+    mapfile -t policy_domains < <(jq -r \
+      '.allowedDomains // [] | if type == "array" then .[] | strings else empty end' \
+      "$main_worktree/$policy" 2>/dev/null)
+    valid_domains=()
+    for domain in "${policy_domains[@]}"; do
+      if [[ "$domain" =~ $DOMAIN_PATTERN ]]; then
+        valid_domains+=("$domain")
+      else
+        printf 'claude: ignoring invalid allowedDomains entry: %s\n' "$domain" >&2
+      fi
+    done
+    (( ${#valid_domains[@]} )) && append_setting "$DOMAIN_ALLOW_PATH" "${valid_domains[@]}"
+  fi
+fi
+
+if (( is_lite )); then
+  settings_json=$(jq -c '.sandbox.enabled = false' <<<"$settings_json")
+  printf '%s\n' 'claude: lite mode — sandbox disabled for this session' >&2
+fi
+
 if [[ ${CLAUDE_LAUNCHER_PRINT_SETTINGS:-0} == 1 ]]; then
   printf '%s\n' "$settings_json"
   exit 0
 fi
 
-exec claude --settings "$settings_json" "$@"
+# Offer bypass mode in the Shift+Tab mode cycle without starting in it.
+exec claude --allow-dangerously-skip-permissions --settings "$settings_json" "${forwarded_args[@]}"
