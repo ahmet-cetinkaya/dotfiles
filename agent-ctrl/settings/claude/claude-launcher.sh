@@ -141,6 +141,14 @@ if [[ -n "$main_worktree" ]]; then
   append_setting "$WRITE_ALLOW_PATH" "$common_git_dir"
   append_setting "$WRITE_DENY_PATH" "$common_git_dir/hooks" "$common_git_dir/config"
 
+  # git commit, fetch, and pull also run unsandboxed, so a hooks directory moved into
+  # the working tree with core.hooksPath (husky, for example) stays write-denied too.
+  hooks_path=$(git -C "$worktree_root" config --get core.hooksPath 2>/dev/null || true)
+  if [[ -n "$hooks_path" ]]; then
+    [[ "$hooks_path" == /* ]] || hooks_path="$worktree_root/$hooks_path"
+    append_setting "$WRITE_DENY_PATH" "$hooks_path"
+  fi
+
   policy=.claude/claude-launcher.local.json
   if is_local_trust_file "$policy"; then
     if jq -e '.allowDotnetState == true' "$main_worktree/$policy" >/dev/null 2>&1; then

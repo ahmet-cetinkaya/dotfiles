@@ -139,6 +139,14 @@
       "Read(~/Configs/zsh/.env)",
       "Read(**/.env)"
     ],
+    "allow": [
+      "Bash(git commit)",
+      "Bash(git commit *)",
+      "Bash(git fetch)",
+      "Bash(git fetch *)",
+      "Bash(git pull)",
+      "Bash(git pull *)"
+    ],
     "ask": [
       "Bash(git push)",
       "Bash(git push *)",
@@ -166,6 +174,12 @@
       "gh *",
       "git push",
       "git push *",
+      "git commit",
+      "git commit *",
+      "git fetch",
+      "git fetch *",
+      "git pull",
+      "git pull *",
       "podman *",
       "docker *",
       "aspire *",
