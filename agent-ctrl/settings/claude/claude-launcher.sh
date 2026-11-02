@@ -153,9 +153,10 @@ if [[ -n "$main_worktree" ]]; then
   if is_local_trust_file "$policy"; then
     if jq -e '.allowDotnetState == true' "$main_worktree/$policy" >/dev/null 2>&1; then
       # `dotnet run file.cs` keeps its virtual project in runfile, named mutexes use
-      # /tmp/.dotnet/shm, and a cold restore writes the package caches.
+      # /tmp/.dotnet/shm, a cold restore writes the package caches, and Aspire keeps
+      # its logs and state in ~/.aspire.
       append_setting "$WRITE_ALLOW_PATH" "$HOME/.local/share/dotnet/runfile" "/tmp/.dotnet/shm" \
-        "$HOME/.nuget/packages" "$HOME/.local/share/NuGet" "$HOME/.dotnet"
+        "$HOME/.nuget/packages" "$HOME/.local/share/NuGet" "$HOME/.dotnet" "$HOME/.aspire"
     fi
 
     if jq -e '.allowNugetConfig == true' "$main_worktree/$policy" >/dev/null 2>&1; then

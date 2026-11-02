@@ -70,7 +70,7 @@ Then apply to the live target without `--path`, for example `agent-ctrl apply cl
 
 The launcher adds what depends on the repository. An untracked `.claude/claude-launcher.local.json` in the main worktree accepts three fields:
 
-- `allowDotnetState: true` makes the .NET and NuGet state paths writable.
+- `allowDotnetState: true` makes the .NET, NuGet, and Aspire state paths writable.
 - `allowNugetConfig: true` makes `~/.nuget/NuGet/NuGet.Config`, which holds private feed credentials, readable to that repository's sandboxed commands. The Read tool deny stays.
 - `allowedDomains` holds extra hosts for that repository.
 
