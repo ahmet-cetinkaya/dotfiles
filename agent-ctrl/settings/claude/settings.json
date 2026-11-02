@@ -112,7 +112,106 @@
   },
 
   "permissions": {
-    "additionalDirectories": ["${SECOND_BRAIN_DIR}"]
+    "additionalDirectories": ["${SECOND_BRAIN_DIR}"],
+    "deny": [
+      "Read(~/.ssh/**)",
+      "Read(~/.gnupg/**)",
+      "Read(~/.aws/**)",
+      "Read(~/.config/gh/**)",
+      "Read(~/.docker/**)",
+      "Read(~/.npmrc)",
+      "Read(~/.config/google-chrome/**)",
+      "Read(~/.config/chromium/**)",
+      "Read(~/.config/BraveSoftware/**)",
+      "Read(~/.thunderbird/**)",
+      "Read(~/.claude/.credentials.json)",
+      "Read(~/.claude/settings.json)",
+      "Read(~/Configs/agent-ctrl/.env)",
+      "Read(~/.codex/auth.json)",
+      "Read(~/.gemini/oauth_creds.json)",
+      "Read(~/.gemini/google_accounts.json)",
+      "Read(~/.local/share/opencode/auth.json)",
+      "Read(~/.nuget/NuGet/NuGet.Config)",
+      "Read(~/.config/Slack/**)",
+      "Read(~/.config/Code/User/globalStorage/**)",
+      "Read(~/.config/VSCodium/User/globalStorage/**)",
+      "Read(~/.claude.json)",
+      "Read(~/Configs/zsh/.env)",
+      "Read(**/.env)"
+    ]
+  },
+
+  "sandbox": {
+    "filesystem": {
+      "denyRead": [
+        "~/.ssh",
+        "~/.gnupg",
+        "~/.aws",
+        "~/.config/gh",
+        "~/.docker",
+        "~/.npmrc",
+        "~/.config/google-chrome",
+        "~/.config/chromium",
+        "~/.config/BraveSoftware",
+        "~/.thunderbird",
+        "~/.claude/.credentials.json",
+        "~/.claude/settings.json",
+        "~/Configs/agent-ctrl/.env",
+        "~/.codex/auth.json",
+        "~/.gemini/oauth_creds.json",
+        "~/.gemini/google_accounts.json",
+        "~/.local/share/opencode/auth.json",
+        "~/.nuget/NuGet/NuGet.Config",
+        "~/.config/Slack",
+        "~/.config/Code/User/globalStorage",
+        "~/.config/VSCodium/User/globalStorage",
+        "~/.claude.json",
+        "~/Configs/zsh/.env"
+      ]
+    },
+    "network": {
+      "deniedDomains": [
+        "pastebin.com",
+        "transfer.sh",
+        "*.ngrok.io",
+        "*.ngrok-free.app",
+        "webhook.site",
+        "requestbin.net",
+        "*.trycloudflare.com"
+      ]
+    },
+    "credentials": {
+      "envVars": [
+        {
+          "name": "ANTHROPIC_AUTH_TOKEN",
+          "mode": "deny"
+        },
+        {
+          "name": "OMNIROUTE_AUTH_TOKEN",
+          "mode": "deny"
+        },
+        {
+          "name": "OMNIROUTE_API_KEY",
+          "mode": "deny"
+        },
+        {
+          "name": "DOKPLOY_API_KEY",
+          "mode": "deny"
+        },
+        {
+          "name": "HF_TOKEN",
+          "mode": "deny"
+        },
+        {
+          "name": "CLAUDE_CODE_MESSAGING_TOKEN",
+          "mode": "deny"
+        },
+        {
+          "name": "WHPH_MCP_TOKEN",
+          "mode": "deny"
+        }
+      ]
+    }
   },
 
   "hooks": {
