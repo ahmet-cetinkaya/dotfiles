@@ -145,7 +145,9 @@
       "Bash(git fetch)",
       "Bash(git fetch *)",
       "Bash(git pull)",
-      "Bash(git pull *)"
+      "Bash(git pull *)",
+      "Bash(git branch)",
+      "Bash(git branch *)"
     ],
     "ask": [
       "Bash(git push)",
@@ -180,6 +182,8 @@
       "git fetch *",
       "git pull",
       "git pull *",
+      "git branch",
+      "git branch *",
       "podman *",
       "docker *",
       "aspire *",
