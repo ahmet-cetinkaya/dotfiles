@@ -27,9 +27,15 @@ done
 append_setting() {
   local json_path=$1
   shift
-  settings_json=$(jq -c --argjson path "$json_path" --args \
+  local merged
+  # Without this check a jq failure would pass an empty --settings and silently drop the denies.
+  if ! merged=$(jq -c --argjson path "$json_path" --args \
     'setpath($path; ((getpath($path) // []) + $ARGS.positional | unique))' \
-    "$@" <<<"$settings_json")
+    "$@" <<<"$settings_json"); then
+    printf '%s\n' 'claude: settings merge failed; refusing to start' >&2
+    exit 1
+  fi
+  settings_json=$merged
 }
 
 # A tracked file or a symlinked .claude is repository-controlled, so it cannot widen access.
@@ -137,7 +143,7 @@ if [[ -n "$main_worktree" ]]; then
 
   policy=.claude/claude-launcher.local.json
   if is_local_trust_file "$policy"; then
-    if [[ $(jq -r '.allowDotnetState // false' "$main_worktree/$policy" 2>/dev/null) == true ]]; then
+    if jq -e '.allowDotnetState == true' "$main_worktree/$policy" >/dev/null 2>&1; then
       # `dotnet run file.cs` keeps its virtual project in runfile, named mutexes use
       # /tmp/.dotnet/shm, and a cold restore writes the package caches.
       append_setting "$WRITE_ALLOW_PATH" "$HOME/.local/share/dotnet/runfile" "/tmp/.dotnet/shm" \

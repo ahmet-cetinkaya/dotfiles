@@ -151,7 +151,9 @@
       "mcp__serena__execute_shell_command",
       "Edit(~/Configs/zsh/**)",
       "Edit(~/Configs/agent-ctrl/settings/claude/**)",
-      "Edit(~/Configs/nixos/modules/apps/ai/**)"
+      "Edit(~/Configs/nixos/modules/apps/ai/**)",
+      "Edit(**/.claude/claude-launcher.local.json)",
+      "Edit(**/.claude/additional-dirs.local)"
     ]
   },
 

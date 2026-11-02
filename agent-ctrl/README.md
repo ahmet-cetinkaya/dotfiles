@@ -72,7 +72,13 @@ The launcher adds what depends on the repository. An untracked `.claude/claude-l
 - `allowDotnetState: true` makes the .NET and NuGet state paths writable.
 - `allowedDomains` holds extra hosts for that repository.
 
-The launcher applies the file to every worktree, makes the common git directory writable from linked worktrees, and keeps `hooks`, `config`, and the main worktree's `.claude` write-denied, so a session cannot widen the next one.
+The launcher applies the file to every worktree, makes the common git directory writable from linked worktrees, and keeps `hooks`, `config`, and the main worktree's `.claude` write-denied, so a session cannot widen the next one: edits to either file through the Edit tool also ask.
+
+Known limits:
+
+- The `.claude` deny also covers `.claude/worktrees/`, so worktrees created there by Claude Code are not writable from sandboxed commands; use sibling worktree directories instead.
+- `allowDotnetState` makes `~/.nuget/packages` writable for that repository. MSBuild files in that cache run when an excluded command such as `aspire run` builds, outside the sandbox, so a poisoned package can reach unsandboxed execution.
+- The launcher removes every `--lite` argument, wherever it appears.
 
 `claude --lite` starts one session with the sandbox off, which is the rollback when the sandbox blocks work. Run the `evals/ac` harness from a `--lite` session or a plain terminal, because its nested `claude -p` runs need the gateway token. Moving these rules into the Nix managed settings and closing the unsandboxed retry is deferred until two weeks of normal work pass without a `--lite` session.
 
