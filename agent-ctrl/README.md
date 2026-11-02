@@ -62,7 +62,7 @@ Then apply to the live target without `--path`, for example `agent-ctrl apply cl
 `settings/claude/settings.json` runs every Bash command Claude starts inside the Claude Code sandbox, and `autoAllowBashIfSandboxed` lets a sandboxed command run without a prompt.
 
 - **Secrets.** `sandbox.filesystem.denyRead` and matching `Read(...)` deny rules block credential files, both `.env` files, `~/.claude.json`, and `~/.nuget/NuGet/NuGet.Config`. A denied directory such as `~/.ssh` appears empty inside the sandbox. `sandbox.credentials.envVars` removes the gateway and API tokens, including every name in `~/Configs/zsh/.env`, from the environment of sandboxed commands.
-- **Writes.** Writes stay in the working directory and the temp directory. Shell startup files, `~/Configs/zsh`, `~/Configs/nixos`, `~/.local/bin`, `~/.dotnet/tools`, systemd and autostart, the Claude settings, and `settings/claude` itself are write-denied.
+- **Writes.** Writes stay in the working directory, the temp directory, and the npm cache `~/.npm`. Shell startup files, `~/Configs/zsh`, `~/Configs/nixos`, `~/.local/bin`, `~/.dotnet/tools`, systemd and autostart, the Claude settings, and `settings/claude` itself are write-denied.
 - **Network.** `allowedDomains` holds the hosts every session needs. Any other host asks once (`strictAllowlist` is `false`). Known exfiltration hosts in `deniedDomains` are blocked.
 - **Outside the sandbox.** `gh`, `git push`, `podman`, `docker`, `aspire`, and `agent-ctrl apply` are in `excludedCommands` and ask before they run. A sandboxed command that fails can ask to retry outside the sandbox.
 - **Bypass mode.** The launcher makes bypass selectable with Shift+Tab, and a session never starts in it. In a recorded check, an unsandboxed `cat` of a read-denied path was still refused in bypass mode. Commands that read a file indirectly are not guaranteed to match a deny rule, and bypass approves every unsandboxed retry and excluded command, so bypass weakens the secret guarantee. Use it only for narrow, trusted work.
@@ -73,7 +73,7 @@ The launcher adds what depends on the repository. An untracked `.claude/claude-l
 - `allowNugetConfig: true` makes `~/.nuget/NuGet/NuGet.Config`, which holds private feed credentials, readable to that repository's sandboxed commands. The Read tool deny stays.
 - `allowedDomains` holds extra hosts for that repository.
 
-The launcher applies the file to every worktree, makes the common git directory writable from linked worktrees, and keeps `hooks`, `config`, and the main worktree's `.claude` write-denied, so a session cannot widen the next one: edits to either file through the Edit tool also ask.
+The launcher applies the file to every worktree, makes the common git directory writable so commits work from linked worktrees and subdirectories, and keeps `hooks`, `config`, and the main worktree's `.claude` write-denied, so a session cannot widen the next one: edits to either file through the Edit tool also ask.
 
 Known limits:
 

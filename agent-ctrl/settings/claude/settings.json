@@ -172,6 +172,7 @@
       "agent-ctrl apply *"
     ],
     "filesystem": {
+      "allowWrite": ["~/.npm"],
       "denyWrite": [
         "~/.zshrc",
         "~/.zshenv",

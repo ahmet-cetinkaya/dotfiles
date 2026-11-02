@@ -135,12 +135,11 @@ if [[ -n "$main_worktree" ]]; then
   [[ -L "$main_worktree/.claude" ]] || mkdir -p "$main_worktree/.claude"
   append_setting "$WRITE_DENY_PATH" "$main_worktree/.claude"
 
-  if [[ "$worktree_root" != "$main_worktree" ]]; then
-    # Linked worktrees commit into the common git dir. Hooks and config run later
-    # outside the sandbox (git push is excluded), so they stay write-denied.
-    append_setting "$WRITE_ALLOW_PATH" "$common_git_dir"
-    append_setting "$WRITE_DENY_PATH" "$common_git_dir/hooks" "$common_git_dir/config"
-  fi
+  # Commits write the common git dir, which lies outside the working directory in
+  # linked worktrees and when the session starts in a subdirectory. Hooks and config
+  # run later outside the sandbox (git push is excluded), so they stay write-denied.
+  append_setting "$WRITE_ALLOW_PATH" "$common_git_dir"
+  append_setting "$WRITE_DENY_PATH" "$common_git_dir/hooks" "$common_git_dir/config"
 
   policy=.claude/claude-launcher.local.json
   if is_local_trust_file "$policy"; then
