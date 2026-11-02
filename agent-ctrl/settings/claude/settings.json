@@ -138,11 +138,55 @@
       "Read(~/.claude.json)",
       "Read(~/Configs/zsh/.env)",
       "Read(**/.env)"
+    ],
+    "ask": [
+      "Bash(git push)",
+      "Bash(git push *)",
+      "Bash(gh)",
+      "Bash(gh *)",
+      "Bash(podman *)",
+      "Bash(docker *)",
+      "Bash(aspire *)",
+      "Bash(agent-ctrl apply *)",
+      "mcp__serena__execute_shell_command",
+      "Edit(~/Configs/zsh/**)",
+      "Edit(~/Configs/agent-ctrl/settings/claude/**)",
+      "Edit(~/Configs/nixos/modules/apps/ai/**)"
     ]
   },
 
   "sandbox": {
+    "enabled": true,
+    "autoAllowBashIfSandboxed": true,
+    "allowUnsandboxedCommands": true,
+    "excludedCommands": [
+      "gh",
+      "gh *",
+      "git push",
+      "git push *",
+      "podman *",
+      "docker *",
+      "aspire *",
+      "agent-ctrl apply *"
+    ],
     "filesystem": {
+      "denyWrite": [
+        "~/.zshrc",
+        "~/.zshenv",
+        "~/.bashrc",
+        "~/.profile",
+        "~/Configs/zsh",
+        "~/.config/autostart",
+        "~/.config/environment.d",
+        "~/.config/systemd",
+        "~/.local/bin",
+        "~/.local/share/applications",
+        "~/.dotnet/tools",
+        "~/.claude/settings.json",
+        "~/.claude.json",
+        "~/Configs/agent-ctrl/settings/claude",
+        "~/Configs/nixos"
+      ],
       "denyRead": [
         "~/.ssh",
         "~/.gnupg",
@@ -170,6 +214,16 @@
       ]
     },
     "network": {
+      "strictAllowlist": false,
+      "allowedDomains": [
+        "github.com",
+        "*.github.com",
+        "*.githubusercontent.com",
+        "registry.npmjs.org",
+        "cache.nixos.org",
+        "models.dev",
+        "192.168.1.2:3020"
+      ],
       "deniedDomains": [
         "pastebin.com",
         "transfer.sh",
