@@ -77,6 +77,18 @@ export BUN_TMPDIR="${BUN_TMPDIR:-$user_tmp}"
 # sandbox and keeps the default.
 (( is_lite )) || export EnableSourceControlManagerQueries="${EnableSourceControlManagerQueries:-false}"
 
+# The sandbox forbids creating Unix sockets, which MSBuild's worker nodes and the Roslyn
+# compiler server use. A solution with several projects then fails silently, for
+# example "Build FAILED" with "0 Error(s)". Building projects one after another in the
+# main process needs no sockets; the cost is slower parallel builds. A lite session has
+# no sandbox and keeps the defaults.
+if (( ! is_lite )); then
+  export RestoreBuildInParallel="${RestoreBuildInParallel:-false}"
+  export BuildInParallel="${BuildInParallel:-false}"
+  export UseSharedCompilation="${UseSharedCompilation:-false}"
+  export MSBUILDDISABLENODEREUSE="${MSBUILDDISABLENODEREUSE:-1}"
+fi
+
 settings_json='{"sandbox":{"allowUnsandboxedCommands":true}}'
 worktree_root=$(git -C "$PWD" rev-parse --show-toplevel 2>/dev/null || true)
 common_git_dir=$(git -C "$PWD" rev-parse --path-format=absolute --git-common-dir 2>/dev/null || true)
