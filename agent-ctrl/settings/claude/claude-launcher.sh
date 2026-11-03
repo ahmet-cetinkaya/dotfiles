@@ -63,7 +63,19 @@ sandbox_tmp=${CLAUDE_CODE_TMPDIR:-$HOME/.cache/claude-code/tmp}
 mkdir -p "$sandbox_tmp"
 chmod 700 "$sandbox_tmp"
 export CLAUDE_CODE_TMPDIR="$sandbox_tmp"
-export BUN_TMPDIR="${BUN_TMPDIR:-$sandbox_tmp}"
+# The sandbox only lets commands write the per-user subdirectory Claude Code creates
+# under the temp root, not the root itself, so Bun must extract there.
+user_tmp="$sandbox_tmp/claude-$(id -u)"
+mkdir -p "$user_tmp"
+chmod 700 "$user_tmp"
+export BUN_TMPDIR="${BUN_TMPDIR:-$user_tmp}"
+
+# Every .NET build reads <repo>/.gitmodules through SourceLink. The sandbox masks that
+# path when it does not exist, so the read fails with "access denied" and the build
+# stops after about a second. Turning the git queries off lets sandboxed builds pass;
+# the only cost is that assembly versions carry no commit hash. A lite session has no
+# sandbox and keeps the default.
+(( is_lite )) || export EnableSourceControlManagerQueries="${EnableSourceControlManagerQueries:-false}"
 
 settings_json='{"sandbox":{"allowUnsandboxedCommands":true}}'
 worktree_root=$(git -C "$PWD" rev-parse --show-toplevel 2>/dev/null || true)
@@ -153,10 +165,15 @@ if [[ -n "$main_worktree" ]]; then
   if is_local_trust_file "$policy"; then
     if jq -e '.allowDotnetState == true' "$main_worktree/$policy" >/dev/null 2>&1; then
       # `dotnet run file.cs` keeps its virtual project in runfile, named mutexes use
-      # /tmp/.dotnet/shm, a cold restore writes the package caches, and Aspire keeps
-      # its logs and state in ~/.aspire.
-      append_setting "$WRITE_ALLOW_PATH" "$HOME/.local/share/dotnet/runfile" "/tmp/.dotnet/shm" \
-        "$HOME/.nuget/packages" "$HOME/.local/share/NuGet" "$HOME/.dotnet" "$HOME/.aspire"
+      # /tmp/.dotnet/shm or, when XDG_RUNTIME_DIR is set, $XDG_RUNTIME_DIR/.dotnet/shm,
+      # a cold restore writes the package caches, and Aspire keeps its logs and state
+      # in ~/.aspire. The sandbox cannot create a missing directory it may write, so
+      # they are created first.
+      dotnet_state_dirs=("$HOME/.local/share/dotnet/runfile" "$HOME/.nuget/packages" \
+        "$HOME/.local/share/NuGet" "$HOME/.dotnet" "$HOME/.aspire" "/tmp/.dotnet/shm")
+      [[ -n "${XDG_RUNTIME_DIR:-}" ]] && dotnet_state_dirs+=("$XDG_RUNTIME_DIR/.dotnet")
+      mkdir -p "${dotnet_state_dirs[@]}"
+      append_setting "$WRITE_ALLOW_PATH" "${dotnet_state_dirs[@]}"
     fi
 
     if jq -e '.allowNugetConfig == true' "$main_worktree/$policy" >/dev/null 2>&1; then

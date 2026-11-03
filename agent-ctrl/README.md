@@ -70,7 +70,7 @@ Then apply to the live target without `--path`, for example `agent-ctrl apply cl
 
 The launcher adds what depends on the repository. An untracked `.claude/claude-launcher.local.json` in the main worktree accepts three fields:
 
-- `allowDotnetState: true` makes the .NET, NuGet, and Aspire state paths writable.
+- `allowDotnetState: true` makes the .NET, NuGet, and Aspire state paths writable, including the .NET lock directory under `$XDG_RUNTIME_DIR`. The launcher creates these directories first, because the sandbox cannot create a missing directory it may write.
 - `allowNugetConfig: true` makes `~/.nuget/NuGet/NuGet.Config`, which holds private feed credentials, readable to that repository's sandboxed commands. The Read tool deny stays.
 - `allowedDomains` holds extra hosts for that repository.
 
@@ -81,6 +81,7 @@ Known limits:
 - The `.claude` deny also covers `.claude/worktrees/`, so worktrees created there by Claude Code are not writable from sandboxed commands; use sibling worktree directories instead.
 - `allowDotnetState` makes `~/.nuget/packages` writable for that repository. MSBuild files in that cache run when an excluded command such as `aspire run` builds, outside the sandbox, so a poisoned package can reach unsandboxed execution.
 - The launcher removes every `--lite` argument, wherever it appears.
+- The launcher sets `EnableSourceControlManagerQueries=false` while the sandbox is on. The sandbox masks a missing `.gitmodules`, SourceLink reads it on every .NET build, and the build then stops after about a second; the cost is that assembly versions carry no commit hash. It also points `BUN_TMPDIR` at the writable per-user temp directory, which Bun-packaged tools such as Tailwind need to extract native modules.
 - Masking `GH_TOKEN` through `sandbox.credentials.envVars` does not work here, so `gh` stays outside the sandbox. With `mask` alone the proxy cannot substitute the real token (TLS termination is unavailable). Adding `sandbox.network.tlsTerminate` made the sandbox not start at all, and the commands ran unsandboxed without an error. Never add that setting without `failIfUnavailable: true`, and check a `touch` outside the working directory afterwards.
 
 `claude --lite` starts one session with the sandbox off, which is the rollback when the sandbox blocks work. Run the `evals/ac` harness from a `--lite` session or a plain terminal, because its nested `claude -p` runs need the gateway token. Moving these rules into the Nix managed settings and closing the unsandboxed retry is deferred until two weeks of normal work pass without a `--lite` session.
