@@ -36,7 +36,7 @@ Son güncelleme: 2026-10-05
 | 23 | `gh` komutu sandbox dışı + onaylı çalışma | ✅ | ❌ | `excludedCommands` + `permissions.ask` |
 | 24 | Serena shell aracı ve tarayıcı MCP'leri onaylı | ✅ | ❌ | `permissions.ask: mcp__*` |
 | 25 | `PYTHONSAFEPATH` (stdlib gölgeleme koruması) | ✅ | ✅ | `env.PYTHONSAFEPATH=1` |
-| 26 | Worktree symlink yetkileri (manifest tabanlı) | ✅ | ✅ | `claude-launcher.sh` + `.claude/additional-dirs.local` |
+| 26 | Worktree symlink yetkileri (manifest tabanlı) | ✅ | ✅ | `launcher.sh` + `.claude/additional-dirs.local` |
 | 27 | Bun/.NET temp düzeltmeleri | ✅ | ✅ | Launcher: `BUN_TMPDIR`, `CLAUDE_CODE_TMPDIR`, .NET state dizinleri; `settings.json` `env` ve `allowedDomains` |
 | 28 | Bildirim hook'ları (Stop/Notification, oturum adlı) | ✅ | ✅ | `notify.sh` + `hooks` |
 | 29 | `$HOME`'dan başlatma uyarısı (freeze koruması) | ✅ | ✅ | `claude()` zsh fonksiyonu |
@@ -51,7 +51,7 @@ Son güncelleme: 2026-10-05
 | 38 | `you-should-know` yerleşik modu | ✅ | ✅ | `enabledPlugins` |
 | 39 | Model ID başına `[1m]` bağlam ekleri | ✅ | ✅ | `modelPicker.options[].model` |
 | 40 | Kalıcılık için `denyWrite`/`ask` (hassas kökler) | ❌ | ✅ | Launcher policy reddi: ~/.ssh, ~/.config, /etc, /run vb. |
-| 41 | Manifest güvenlik kontrolleri (tracked/symlink red) | ✅ | ✅ | `claude-launcher.sh` |
+| 41 | Manifest güvenlik kontrolleri (tracked/symlink red) | ✅ | ✅ | `launcher.sh` |
 | 42 | curl localhost allow (dev T9 akışı) | ➖ | ✅ | `permissions.allow` (Lite'a özel; Full'da sandbox zaten kısıtlıyor) |
 | 43 | `./dev-env` okuma alt komutları allow | ➖ | ✅ | `permissions.allow` (Lite'a özel) |
 

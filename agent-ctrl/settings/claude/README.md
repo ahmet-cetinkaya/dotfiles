@@ -5,14 +5,14 @@ This directory holds the Claude Code configuration that `agent-ctrl apply claude
 | File | Purpose |
 |---|---|
 | `settings.json` | Becomes `~/.claude/settings.json`: permissions, sandbox policy, environment, hooks, and status line. |
-| `claude-launcher.sh` | Starts `claude`. Adds what depends on the working directory and offers bypass mode. The `claude` function in `zsh/common.zshrc` calls it. |
+| `launcher.sh` | Starts `claude`. Adds what depends on the working directory and offers bypass mode. The `claude` function in `zsh/common.zshrc` calls it. |
 | `notify.sh` | Desktop notification that the Notification and Stop hooks call. |
 
 `settings.json` is strict JSON: Claude Code reports a comment or a trailing comma as a settings error. The reasons for each rule are in this document, not in the file. The `$schema` key points to the published schema, so an editor can complete and check the keys.
 
 ## How a session starts
 
-`claude-launcher.sh` builds a `--settings` JSON that Claude Code merges over `settings.json`, then runs `claude`. It does these steps in order:
+`launcher.sh` builds a `--settings` JSON that Claude Code merges over `settings.json`, then runs `claude`. It does these steps in order:
 
 1. Takes `--unsafe` out of the arguments (see [Rollback](#rollback)).
 2. Asks for confirmation before it starts in `$HOME`, and refuses when there is no terminal, because the sandbox scans the whole home directory there.
@@ -118,8 +118,8 @@ The unsandboxed retry is closed. Moving these rules into the Nix managed setting
 
 ## Changing the policy
 
-1. Edit `settings.json` or `claude-launcher.sh`.
-2. Run `bash -n claude-launcher.sh` and `jq -e . settings.json`.
+1. Edit `settings.json` or `launcher.sh`.
+2. Run `bash -n launcher.sh` and `jq -e . settings.json`.
 3. Run `CLAUDE_LAUNCHER_PRINT_SETTINGS=1 claude` in a repository and read the result.
 4. Apply with `agent-ctrl apply claude --override --no-prompt`, without `--path`. The launcher is live as soon as the file changes, because `~/.agent-ctrl` links to this directory, but `settings.json` only changes on apply. Apply right after a launcher change.
 5. In a new session, run a command in the sandbox. A sandbox that cannot start fails every Bash command, so this check comes first.
