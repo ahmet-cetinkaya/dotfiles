@@ -1,49 +1,42 @@
 #!/usr/bin/env bash
-# Launch Claude Code inside its Bash sandbox with per-repository grants.
-# The sandbox policy lives in settings.json; this launcher adds what depends on the
-# repository: symlink grants from <main-worktree>/.claude/additional-dirs.local,
-# audited widenings from <main-worktree>/.claude/claude-launcher.local.json
-# (allowDotnetState, allowNugetConfig, allowedDomains), git access from linked worktrees, and a
-# write deny on <main-worktree>/.claude so a session cannot widen the next one.
-# `claude --lite` starts one session with the sandbox off, as a rollback.
+# Launch Claude Code inside its Bash sandbox with what depends on the working directory.
+# The sandbox policy lives in settings.json; this launcher adds symlink grants from
+# <main-worktree>/.claude/additional-dirs.local, git access from linked worktrees, the
+# directories .NET tools need to exist, and a write deny on <main-worktree>/.claude so a
+# session cannot widen the next one.
+# `claude --unsafe` starts one session with the sandbox off, as a rollback.
 set -u
 
-readonly DOMAIN_PATTERN='^(\*\.)?[a-z0-9-]+(\.[a-z0-9-]+)+(:[0-9]+)?$'
 readonly WRITE_DENY_PATH='["sandbox","filesystem","denyWrite"]'
 readonly WRITE_ALLOW_PATH='["sandbox","filesystem","allowWrite"]'
-readonly READ_ALLOW_PATH='["sandbox","filesystem","allowRead"]'
-readonly DOMAIN_ALLOW_PATH='["sandbox","network","allowedDomains"]'
 
-is_lite=0
+is_unsafe=0
 forwarded_args=()
 for arg in "$@"; do
-  if [[ "$arg" == --lite ]]; then
-    is_lite=1
+  if [[ "$arg" == --unsafe ]]; then
+    is_unsafe=1
   else
     forwarded_args+=("$arg")
   fi
 done
 
-# Append values to the array at a JSON path in settings_json, keeping it unique.
-append_setting() {
-  local json_path=$1
-  shift
+# Apply a jq filter to settings_json; extra arguments are passed as jq options.
+# Without the check a jq failure would pass an empty --settings and silently drop the denies.
+update_settings() {
   local merged
-  # Without this check a jq failure would pass an empty --settings and silently drop the denies.
-  if ! merged=$(jq -c --argjson path "$json_path" --args \
-    'setpath($path; ((getpath($path) // []) + $ARGS.positional | unique))' \
-    "$@" <<<"$settings_json"); then
+  if ! merged=$(jq -c "$@" <<<"$settings_json") || [[ -z "$merged" ]]; then
     printf '%s\n' 'claude: settings merge failed; refusing to start' >&2
     exit 1
   fi
   settings_json=$merged
 }
 
-# A tracked file or a symlinked .claude is repository-controlled, so it cannot widen access.
-is_local_trust_file() {
-  local relative_path=$1
-  [[ -f "$main_worktree/$relative_path" && ! -L "$main_worktree/.claude" ]] &&
-    ! git -C "$main_worktree" ls-files --error-unmatch -- "$relative_path" >/dev/null 2>&1
+# Append values to the array at a JSON path in settings_json, keeping it unique.
+append_setting() {
+  local json_path=$1
+  shift
+  update_settings --argjson path "$json_path" \
+    'setpath($path; ((getpath($path) // []) + $ARGS.positional | unique))' --args "$@"
 }
 
 if [[ "$PWD" == "$HOME" ]]; then
@@ -70,26 +63,22 @@ mkdir -p "$user_tmp"
 chmod 700 "$user_tmp"
 export BUN_TMPDIR="${BUN_TMPDIR:-$user_tmp}"
 
-# Every .NET build reads <repo>/.gitmodules through SourceLink. The sandbox masks that
-# path when it does not exist, so the read fails with "access denied" and the build
-# stops after about a second. Turning the git queries off lets sandboxed builds pass;
-# the only cost is that assembly versions carry no commit hash. A lite session has no
-# sandbox and keeps the default.
-(( is_lite )) || export EnableSourceControlManagerQueries="${EnableSourceControlManagerQueries:-false}"
-
-# The sandbox forbids creating Unix sockets, which MSBuild's worker nodes and the Roslyn
-# compiler server use. A solution with several projects then fails silently, for
-# example "Build FAILED" with "0 Error(s)". Building projects one after another in the
-# main process needs no sockets; the cost is slower parallel builds. A lite session has
-# no sandbox and keeps the defaults.
-if (( ! is_lite )); then
-  export RestoreBuildInParallel="${RestoreBuildInParallel:-false}"
-  export BuildInParallel="${BuildInParallel:-false}"
-  export UseSharedCompilation="${UseSharedCompilation:-false}"
-  export MSBUILDDISABLENODEREUSE="${MSBUILDDISABLENODEREUSE:-1}"
-fi
-
 settings_json='{"sandbox":{"allowUnsandboxedCommands":true}}'
+
+# .NET and Aspire write these: `dotnet run file.cs` keeps its virtual project in runfile,
+# named mutexes use /tmp/.dotnet/shm or, when XDG_RUNTIME_DIR is set,
+# $XDG_RUNTIME_DIR/.dotnet/shm, a cold restore writes the package caches, and Aspire keeps
+# its logs and state in ~/.aspire. The sandbox cannot create a missing directory it may
+# write, so they are created first.
+dotnet_state_dirs=("$HOME/.local/share/dotnet/runfile" "$HOME/.nuget/packages" \
+  "$HOME/.local/share/NuGet" "$HOME/.dotnet" "$HOME/.aspire" "/tmp/.dotnet/shm")
+[[ -n "${XDG_RUNTIME_DIR:-}" ]] && dotnet_state_dirs+=("$XDG_RUNTIME_DIR/.dotnet")
+mkdir -p "${dotnet_state_dirs[@]}"
+append_setting "$WRITE_ALLOW_PATH" "${dotnet_state_dirs[@]}"
+# ~/.aspire/bin comes first on PATH, so a file planted there would run instead of git or
+# sudo. The deny sits next to the grant so the two can never ship apart.
+append_setting "$WRITE_DENY_PATH" "$HOME/.aspire/bin"
+
 worktree_root=$(git -C "$PWD" rev-parse --show-toplevel 2>/dev/null || true)
 common_git_dir=$(git -C "$PWD" rev-parse --path-format=absolute --git-common-dir 2>/dev/null || true)
 main_worktree=
@@ -147,18 +136,25 @@ if [[ -n "$worktree_root" && -n "$common_git_dir" && "${common_git_dir##*/}" == 
 fi
 
 if (( ${#additional_dirs[@]} )); then
-  settings_json=$(jq -c --args \
+  update_settings \
     '.permissions.additionalDirectories = ((.permissions.additionalDirectories // []) + ($ARGS.positional | unique))' \
-    "${additional_dirs[@]}" <<<"$settings_json")
+    --args "${additional_dirs[@]}"
 fi
 
-if [[ -n "$main_worktree" ]]; then
-  # A deny on a path that does not exist may not be enforced, so create the
-  # directory first; an empty directory does not show in git. A symlinked .claude
-  # is distrusted, so it is denied but never followed.
-  [[ -L "$main_worktree/.claude" ]] || mkdir -p "$main_worktree/.claude"
-  append_setting "$WRITE_DENY_PATH" "$main_worktree/.claude"
+# Claude Code loads settings, hooks, and skills from .claude, and hooks run outside the
+# sandbox, so no session may write the .claude of its start directory, its worktree, or
+# the main worktree. A deny on a path that does not exist may not be enforced, so the
+# directory is created first; an empty directory does not show in git. A symlinked
+# .claude is distrusted, so it is denied but never followed.
+claude_dirs=("$PWD/.claude")
+[[ -n "$worktree_root" ]] && claude_dirs+=("$worktree_root/.claude")
+[[ -n "$main_worktree" ]] && claude_dirs+=("$main_worktree/.claude")
+for claude_dir in "${claude_dirs[@]}"; do
+  [[ -L "$claude_dir" ]] || mkdir -p "$claude_dir"
+done
+append_setting "$WRITE_DENY_PATH" "${claude_dirs[@]}"
 
+if [[ -n "$main_worktree" ]]; then
   # Commits write the common git dir, which lies outside the working directory in
   # linked worktrees and when the session starts in a subdirectory. Hooks and config
   # run later outside the sandbox (git push is excluded), so they stay write-denied.
@@ -172,45 +168,11 @@ if [[ -n "$main_worktree" ]]; then
     [[ "$hooks_path" == /* ]] || hooks_path="$worktree_root/$hooks_path"
     append_setting "$WRITE_DENY_PATH" "$hooks_path"
   fi
-
-  policy=.claude/claude-launcher.local.json
-  if is_local_trust_file "$policy"; then
-    if jq -e '.allowDotnetState == true' "$main_worktree/$policy" >/dev/null 2>&1; then
-      # `dotnet run file.cs` keeps its virtual project in runfile, named mutexes use
-      # /tmp/.dotnet/shm or, when XDG_RUNTIME_DIR is set, $XDG_RUNTIME_DIR/.dotnet/shm,
-      # a cold restore writes the package caches, and Aspire keeps its logs and state
-      # in ~/.aspire. The sandbox cannot create a missing directory it may write, so
-      # they are created first.
-      dotnet_state_dirs=("$HOME/.local/share/dotnet/runfile" "$HOME/.nuget/packages" \
-        "$HOME/.local/share/NuGet" "$HOME/.dotnet" "$HOME/.aspire" "/tmp/.dotnet/shm")
-      [[ -n "${XDG_RUNTIME_DIR:-}" ]] && dotnet_state_dirs+=("$XDG_RUNTIME_DIR/.dotnet")
-      mkdir -p "${dotnet_state_dirs[@]}"
-      append_setting "$WRITE_ALLOW_PATH" "${dotnet_state_dirs[@]}"
-    fi
-
-    if jq -e '.allowNugetConfig == true' "$main_worktree/$policy" >/dev/null 2>&1; then
-      # Private feeds keep their credentials here; opened only for repositories that opt in.
-      append_setting "$READ_ALLOW_PATH" "$HOME/.nuget/NuGet/NuGet.Config"
-    fi
-
-    mapfile -t policy_domains < <(jq -r \
-      '.allowedDomains // [] | if type == "array" then .[] | strings else empty end' \
-      "$main_worktree/$policy" 2>/dev/null)
-    valid_domains=()
-    for domain in "${policy_domains[@]}"; do
-      if [[ "$domain" =~ $DOMAIN_PATTERN ]]; then
-        valid_domains+=("$domain")
-      else
-        printf 'claude: ignoring invalid allowedDomains entry: %s\n' "$domain" >&2
-      fi
-    done
-    (( ${#valid_domains[@]} )) && append_setting "$DOMAIN_ALLOW_PATH" "${valid_domains[@]}"
-  fi
 fi
 
-if (( is_lite )); then
-  settings_json=$(jq -c '.sandbox.enabled = false' <<<"$settings_json")
-  printf '%s\n' 'claude: lite mode — sandbox disabled for this session' >&2
+if (( is_unsafe )); then
+  update_settings '.sandbox.enabled = false'
+  printf '%s\n' 'claude: unsafe mode — sandbox disabled for this session' >&2
 fi
 
 if [[ ${CLAUDE_LAUNCHER_PRINT_SETTINGS:-0} == 1 ]]; then
@@ -218,5 +180,8 @@ if [[ ${CLAUDE_LAUNCHER_PRINT_SETTINGS:-0} == 1 ]]; then
   exit 0
 fi
 
-# Offer bypass mode in the Shift+Tab mode cycle without starting in it.
-exec claude --allow-dangerously-skip-permissions --settings "$settings_json" "${forwarded_args[@]}"
+# Offer bypass mode in the Shift+Tab mode cycle without starting in it. An unsafe session
+# has no sandbox, so it also gets no bypass mode: one of the two guards always stays.
+bypass_args=()
+(( is_unsafe )) || bypass_args=(--allow-dangerously-skip-permissions)
+exec claude "${bypass_args[@]}" --settings "$settings_json" "${forwarded_args[@]}"

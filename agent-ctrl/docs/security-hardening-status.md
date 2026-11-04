@@ -37,7 +37,7 @@ Son güncelleme: 2026-10-05
 | 24 | Serena shell aracı ve tarayıcı MCP'leri onaylı | ✅ | ❌ | `permissions.ask: mcp__*` |
 | 25 | `PYTHONSAFEPATH` (stdlib gölgeleme koruması) | ✅ | ✅ | `env.PYTHONSAFEPATH=1` |
 | 26 | Worktree symlink yetkileri (manifest tabanlı) | ✅ | ✅ | `claude-launcher.sh` + `.claude/additional-dirs.local` |
-| 27 | Bun/.NET temp düzeltmeleri | ✅ | ✅ | Launcher: `BUN_TMPDIR`, `CLAUDE_CODE_TMPDIR`; policy `allowDotnetState` |
+| 27 | Bun/.NET temp düzeltmeleri | ✅ | ✅ | Launcher: `BUN_TMPDIR`, `CLAUDE_CODE_TMPDIR`, .NET state dizinleri; `settings.json` `env` ve `allowedDomains` |
 | 28 | Bildirim hook'ları (Stop/Notification, oturum adlı) | ✅ | ✅ | `notify.sh` + `hooks` |
 | 29 | `$HOME`'dan başlatma uyarısı (freeze koruması) | ✅ | ✅ | `claude()` zsh fonksiyonu |
 | 30 | statusline sürüm sabitleme | ✅ | ✅ | `ccstatusline@2.2.30` (supply-chain) |
