@@ -92,8 +92,9 @@ The sandbox forbids creating Unix sockets and masks missing paths, which breaks 
 | `UseSharedCompilation=false` | No Roslyn compiler server, which needs a Unix socket. |
 | `MSBUILDDISABLENODEREUSE=1` | No MSBuild worker nodes, which need Unix sockets. |
 | `EnableSourceControlManagerQueries=false` | SourceLink does not read `.gitmodules`. |
+| `DOTNET_TieredPGO=0` | The runtime skips profile-guided JIT instrumentation. Every `csc` process starts faster; an incremental build took 13 s instead of 18 s in four runs. It applies to every .NET process Claude starts, so a long-running app started by `aspire run` reaches its peak speed a little later. |
 
-Without the first three, a solution with several projects fails with `Build FAILED` and `0 Error(s)`. Without the last one, the build stops after about a second, because the sandbox masks a missing `.gitmodules`. The costs are slower parallel builds and assembly versions without a commit hash. Allowing Unix sockets instead would also open the podman, D-Bus, and ssh-agent sockets, so it is not done.
+Without the first three, a solution with several projects fails with `Build FAILED` and `0 Error(s)`. Without the last one, the build stops after about a second, because the sandbox masks a missing `.gitmodules`. The costs are slower parallel builds (an incremental build takes about 13 s with `DOTNET_TieredPGO=0`, against 4 to 5 s with parallel nodes) and assembly versions without a commit hash. No setting gives a parallel build without Unix sockets: `dotnet build -mt` ran all 6793 task launches of one build in an external task host, which needs a socket, and the Linux sandbox cannot allow sockets by path. Re-test `-mt` after an SDK update. Allowing Unix sockets instead would also open the podman, D-Bus, and ssh-agent sockets, so it is not done.
 
 The launcher sets `BUN_TMPDIR` to the writable per-user temp directory. Bun-packaged tools such as Tailwind need it to extract native modules. The path holds the user ID, so it cannot sit in `settings.json`.
 

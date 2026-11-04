@@ -21,6 +21,7 @@
     "BuildInParallel": "false",
     "UseSharedCompilation": "false",
     "MSBUILDDISABLENODEREUSE": "1",
+    "DOTNET_TieredPGO": "0",
 
     "GIT_ALLOW_PROTOCOL": "https:ssh",
 
