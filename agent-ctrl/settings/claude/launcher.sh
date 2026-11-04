@@ -71,10 +71,19 @@ settings_json='{"sandbox":{"allowUnsandboxedCommands":false}}'
 # its logs and state in ~/.aspire. The sandbox cannot create a missing directory it may
 # write, so they are created first.
 dotnet_state_dirs=("$HOME/.local/share/dotnet/runfile" "$HOME/.nuget/packages" \
-  "$HOME/.local/share/NuGet" "$HOME/.dotnet" "$HOME/.aspire" "/tmp/.dotnet/shm")
+  "$HOME/.local/share/NuGet" "$HOME/.dotnet" "$HOME/.aspire" "/tmp/.dotnet/shm" \
+  "$HOME/.insurup/dev-env")
 [[ -n "${XDG_RUNTIME_DIR:-}" ]] && dotnet_state_dirs+=("$XDG_RUNTIME_DIR/.dotnet")
 mkdir -p "${dotnet_state_dirs[@]}"
 append_setting "$WRITE_ALLOW_PATH" "${dotnet_state_dirs[@]}"
+# MSBuild imports every file in this user directory into each project. The file turns the
+# build parallelism off only where SANDBOX_RUNTIME is set, which is inside the sandbox, so
+# the sandbox needs no global build setting that would also slow `aspire run`. The directory
+# stays outside the sandbox write list, so a sandboxed command cannot change the file.
+msbuild_import_dir="$HOME/.local/share/Microsoft/MSBuild/Current/Imports/Microsoft.Common.props/ImportBefore"
+mkdir -p "$msbuild_import_dir"
+cp -f "${BASH_SOURCE[0]%/*}/sandbox-no-sockets.props" "$msbuild_import_dir/"
+
 # ~/.aspire/bin comes first on PATH, so a file planted there would run instead of git or
 # sudo. The deny sits next to the grant so the two can never ship apart.
 append_setting "$WRITE_DENY_PATH" "$HOME/.aspire/bin"

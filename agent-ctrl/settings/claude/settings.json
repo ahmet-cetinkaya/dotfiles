@@ -16,11 +16,6 @@
     "PYTHONSAFEPATH": "1",
     "CLAUDE_CODE_NEW_INIT": "1",
 
-    "EnableSourceControlManagerQueries": "false",
-    "RestoreBuildInParallel": "false",
-    "BuildInParallel": "false",
-    "UseSharedCompilation": "false",
-    "MSBUILDDISABLENODEREUSE": "1",
     "DOTNET_TieredPGO": "0",
 
     "GIT_ALLOW_PROTOCOL": "https:ssh",

@@ -17,7 +17,7 @@ This directory holds the Claude Code configuration that `agent-ctrl apply claude
 1. Takes `--unsafe` out of the arguments (see [Rollback](#rollback)).
 2. Asks for confirmation before it starts in `$HOME`, and refuses when there is no terminal, because the sandbox scans the whole home directory there.
 3. Creates the per-user temp directory and points `BUN_TMPDIR` at it.
-4. Creates the .NET and Aspire state directories and makes them writable.
+4. Creates the .NET, Aspire, and InsurUp `dev-env` state directories and makes them writable, and installs `sandbox-no-sockets.props` (see [Environment for .NET and Bun](#environment-for-net-and-bun)).
 5. Write-denies `~/.aspire/bin`.
 6. Reads the untracked `additional-dirs.local` manifest of the main worktree (see [Linked worktrees](#linked-worktrees)).
 7. Write-denies `.claude` in the start directory, the worktree, and the main worktree.
@@ -54,7 +54,7 @@ Every merge into the settings JSON goes through one checked function. If `jq` fa
 ### Outside the sandbox
 
 - Commands that need credentials or host sockets are in `excludedCommands`. `git commit`, `git fetch`, `git pull`, and `git branch` run there without a prompt, so signed commits, SSH remotes, and branch cleanup work. `git config` stays sandboxed, so a session cannot set `core.hooksPath`.
-- The rest of the daily loop runs without a prompt too: `git push`, `aspire`, and a fixed list of subcommands. `./dev-env aspire` and `make aspire`, the InsurUp wrappers for `aspire run`, are listed on their own, because a wrapper script does not match the `aspire` entry and without them Aspire cannot start. The other `dev-env` subcommands reach MongoDB over the network and stay in the sandbox. For `gh` they are `pr`, `issue`, `run`, `workflow`, `search`, `repo`, `release`, `api`, `auth status`, and `status`. For `podman` and `docker` they are `ps`, `logs`, `images`, `inspect`, `stop`, `rm`, `pull`, and `run`.
+- The rest of the daily loop runs without a prompt too: `git push`, `aspire`, and a fixed list of subcommands. `./dev-env aspire` and `make aspire`, the InsurUp wrappers for `aspire run`, are listed on their own, because a wrapper script does not match the `aspire` entry and without them Aspire cannot start. The other `dev-env` subcommands reach MongoDB over the network and stay in the sandbox, with `~/.insurup/dev-env` writable for the lock file they take. Put no `NAME=value` in front of an excluded command: the entry matches the text of the call, so `ASPIRE_CLI_START_TIMEOUT=600 ./dev-env aspire` stays in the sandbox and fails there. For `gh` they are `pr`, `issue`, `run`, `workflow`, `search`, `repo`, `release`, `api`, `auth status`, and `status`. For `podman` and `docker` they are `ps`, `logs`, `images`, `inspect`, `stop`, `rm`, `pull`, and `run`.
 - Every other `gh`, `podman`, and `docker` subcommand runs inside the sandbox, which has no token and no container socket, so it fails instead of running with full access. This covers `gh alias`, `gh extension`, `gh config`, `gh gist`, `gh secret`, key commands, `gh auth login` and `token`, and `podman` or `docker` `build`, `create`, `cp`, `exec`, `kube play`, and `unshare`. Run them in your own terminal, or add the subcommand to `excludedCommands` and `allow` after a review.
 - A command with an option before the subcommand, such as `gh -R owner/repo pr view`, does not match the list and fails the same way.
 - A command matches only when it runs on its own. Inside a pipe or a `&&` chain it stays sandboxed and fails to authenticate. Shorten output with the tool's own flags.
@@ -86,17 +86,21 @@ Bypass mode is selectable with Shift+Tab. In a recorded check, an unsandboxed `c
 
 ## Environment for .NET and Bun
 
-The sandbox forbids creating Unix sockets and masks missing paths, which breaks several build tools without a clear error. `settings.json` sets these in `env`. They belong to .NET, not to Claude Code, which only passes them on:
+The sandbox forbids creating Unix sockets and masks missing paths, which breaks several build tools without a clear error. A build setting in `env` would also reach commands outside the sandbox, where a serial build takes at least 300 s instead of about 2 minutes and `aspire run` runs into its start timeout. So the build settings sit in a file that applies only inside the sandbox, where `SANDBOX_RUNTIME` is set.
 
-| Variable | Effect |
+The launcher copies `sandbox-no-sockets.props` into the MSBuild user import directory, `$HOME/.local/share/Microsoft/MSBuild/Current/Imports/Microsoft.Common.props/ImportBefore`. MSBuild imports it into every project. The properties belong to .NET, not to Claude Code:
+
+| Property | Effect |
 | --- | --- |
-| `RestoreBuildInParallel=false`, `BuildInParallel=false` | Projects build one after another in the main process. |
-| `UseSharedCompilation=false` | No Roslyn compiler server, which needs a Unix socket. |
-| `MSBUILDDISABLENODEREUSE=1` | No MSBuild worker nodes, which need Unix sockets. |
-| `EnableSourceControlManagerQueries=false` | SourceLink does not read `.gitmodules`. |
-| `DOTNET_TieredPGO=0` | The runtime skips profile-guided JIT instrumentation. Every `csc` process starts faster; an incremental build took 13 s instead of 18 s in four runs. It applies to every .NET process Claude starts, so a long-running app started by `aspire run` reaches its peak speed a little later. |
+| `RestoreBuildInParallel`, `BuildInParallel` set to `false` | Projects build one after another in the main process. |
+| `UseSharedCompilation` set to `false` | No Roslyn compiler server, which needs a Unix socket. |
+| `EnableSourceControlManagerQueries` set to `false` | SourceLink does not read `.gitmodules`. |
 
-Without the first three, a solution with several projects fails with `Build FAILED` and `0 Error(s)`. Without the last one, the build stops after about a second, because the sandbox masks a missing `.gitmodules`. The costs are slower parallel builds (an incremental build takes about 13 s with `DOTNET_TieredPGO=0`, against 4 to 5 s with parallel nodes) and assembly versions without a commit hash. No setting gives a parallel build without Unix sockets: `dotnet build -mt` ran all 6793 task launches of one build in an external task host, which needs a socket, and the Linux sandbox cannot allow sockets by path. Re-test `-mt` after an SDK update. Allowing Unix sockets instead would also open the podman, D-Bus, and ssh-agent sockets, so it is not done.
+Without the first two, a solution with several projects fails with `Build FAILED` and `0 Error(s)`. Without the last one, the build stops after about a second, because the sandbox masks a missing `.gitmodules`. The costs are slower builds (an incremental build of one test project takes about 13 s, against 7 s with parallel nodes) and assembly versions without a commit hash. A build of a solution file also needs `-m:1`; the file cannot set that, and it fails the same way with environment variables. The sandbox does not write to the import directory, so a sandboxed command cannot change the file.
+
+`settings.json` sets `DOTNET_TieredPGO=0` in `env`, because the runtime reads it from the environment. The runtime then skips profile-guided JIT instrumentation. Every `csc` process starts faster: an incremental build took 13 s instead of 18 s in four runs. It applies to every .NET process Claude starts, so a long-running app started by `aspire run` reaches its peak speed a little later.
+
+No setting gives a parallel build without Unix sockets: `dotnet build -mt` ran all 6793 task launches of one build in an external task host, which needs a socket, and the Linux sandbox cannot allow sockets by path. Re-test `-mt` after an SDK update. Allowing Unix sockets instead would also open the podman, D-Bus, and ssh-agent sockets, so it is not done.
 
 The launcher sets `BUN_TMPDIR` to the writable per-user temp directory. Bun-packaged tools such as Tailwind need it to extract native modules. The path holds the user ID, so it cannot sit in `settings.json`.
 
