@@ -3,7 +3,7 @@
 This directory holds the Claude Code configuration that `agent-ctrl apply claude` puts on the machine, and the launcher that starts every session.
 
 | File | Purpose |
-|---|---|
+| --- | --- |
 | `settings.json` | Becomes `~/.claude/settings.json`: permissions, sandbox policy, environment, hooks, and status line. |
 | `launcher.sh` | Starts `claude`. Adds what depends on the working directory and offers bypass mode. The `claude` function in `zsh/common.zshrc` calls it. |
 | `notify.sh` | Desktop notification that the Notification and Stop hooks call. |
@@ -89,7 +89,7 @@ Bypass mode is selectable with Shift+Tab. In a recorded check, an unsandboxed `c
 The sandbox forbids creating Unix sockets and masks missing paths, which breaks several build tools without a clear error. `settings.json` sets these in `env`. They belong to .NET, not to Claude Code, which only passes them on:
 
 | Variable | Effect |
-|---|---|
+| --- | --- |
 | `RestoreBuildInParallel=false`, `BuildInParallel=false` | Projects build one after another in the main process. |
 | `UseSharedCompilation=false` | No Roslyn compiler server, which needs a Unix socket. |
 | `MSBUILDDISABLENODEREUSE=1` | No MSBuild worker nodes, which need Unix sockets. |
