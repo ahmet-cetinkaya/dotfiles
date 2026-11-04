@@ -391,7 +391,6 @@
         "~/.gemini/oauth_creds.json",
         "~/.gemini/google_accounts.json",
         "~/.local/share/opencode/auth.json",
-        "~/.nuget/NuGet/NuGet.Config",
         "~/.config/Slack",
         "~/.config/Code/User/globalStorage",
         "~/.config/VSCodium/User/globalStorage",
