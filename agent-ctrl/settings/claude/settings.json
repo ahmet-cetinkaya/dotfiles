@@ -1,4 +1,5 @@
 {
+  "$schema": "https://json.schemastore.org/claude-code-settings.json",
   "showThinkingSummaries": true,
   "askUserQuestionTimeout": "10m",
   "preferredNotifChannel": "notifications_disabled",
@@ -153,7 +154,6 @@
       "Read(~/.local/share/keyrings/**)",
       "Read(~/.zsh_history)",
       "Read(~/.bash_history)",
-      "Read(//proc/**/environ)",
       "Read(**/.env)",
       "Read(**/.env.*)"
     ],
