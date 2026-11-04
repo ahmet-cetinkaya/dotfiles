@@ -33,7 +33,9 @@
     "ANTHROPIC_DEFAULT_SONNET_MODEL": "cc/claude-sonnet-5-5[1m]",
     "ANTHROPIC_DEFAULT_HAIKU_MODEL": "cc/claude-haiku-5-5",
 
-    "CLAUDE_CODE_SUBAGENT_MODEL": "sonnet"
+    "CLAUDE_CODE_SUBAGENT_MODEL": "sonnet",
+
+    "CLAUDE_CODE_ENABLE_TODO_TOOLS": "1"
   },
 
   "modelPicker": {
@@ -103,6 +105,10 @@
   },
 
   "modelSettings": {
+    "cx/gpt-6-luna[1m]": {
+      "autoCompactWindow": 800000
+    },
+
     "combo/max-models": {
       "autoCompactWindow": 800000
     },
@@ -114,11 +120,43 @@
     },
     "combo/lite-models": {
       "autoCompactWindow": 800000
-    },
-
-    "cx/gpt-6-luna[1m]": {
-      "autoCompactWindow": 800000
     }
+  },
+
+  "hooks": {
+    "Notification": [
+      {
+        "matcher": "permission_prompt|idle_prompt|elicitation_dialog",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "sh \"$HOME/.agent-ctrl/settings/claude/notify.sh\" \"ℹ️ Girdi bekliyor\""
+          }
+        ]
+      }
+    ],
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "sh \"$HOME/.agent-ctrl/settings/claude/notify.sh\" \"✅ Tamamlandı\""
+          }
+        ]
+      }
+    ]
+  },
+
+  "enabledPlugins": {
+    "keep-awake@claude-community": true,
+    "cc-plugin-you-should-know@builtin": true
+  },
+
+  "statusLine": {
+    "type": "command",
+    "command": "bunx -y ccstatusline@2.2.30",
+    "padding": 0,
+    "refreshInterval": 10
   },
 
   "permissions": {
@@ -461,41 +499,5 @@
         }
       ]
     }
-  },
-
-  "hooks": {
-    "Notification": [
-      {
-        "matcher": "permission_prompt|idle_prompt|elicitation_dialog",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "sh \"$HOME/.agent-ctrl/settings/claude/notify.sh\" \"🔐 Girdi bekliyor\""
-          }
-        ]
-      }
-    ],
-    "Stop": [
-      {
-        "hooks": [
-          {
-            "type": "command",
-            "command": "sh \"$HOME/.agent-ctrl/settings/claude/notify.sh\" \"✅ Tamamlandı\""
-          }
-        ]
-      }
-    ]
-  },
-
-  "enabledPlugins": {
-    "keep-awake@claude-community": true,
-    "cc-plugin-you-should-know@builtin": true
-  },
-
-  "statusLine": {
-    "type": "command",
-    "command": "bunx -y ccstatusline@2.2.30",
-    "padding": 0,
-    "refreshInterval": 10
   }
 }
