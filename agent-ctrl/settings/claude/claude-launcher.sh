@@ -63,7 +63,7 @@ mkdir -p "$user_tmp"
 chmod 700 "$user_tmp"
 export BUN_TMPDIR="${BUN_TMPDIR:-$user_tmp}"
 
-settings_json='{"sandbox":{"allowUnsandboxedCommands":true}}'
+settings_json='{"sandbox":{"allowUnsandboxedCommands":false}}'
 
 # .NET and Aspire write these: `dotnet run file.cs` keeps its virtual project in runfile,
 # named mutexes use /tmp/.dotnet/shm or, when XDG_RUNTIME_DIR is set,

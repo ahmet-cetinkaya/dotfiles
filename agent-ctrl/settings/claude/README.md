@@ -52,9 +52,12 @@ Every merge into the settings JSON goes through one checked function. If `jq` fa
 ### Outside the sandbox
 
 - Commands that need credentials or host sockets are in `excludedCommands`. `git commit`, `git fetch`, `git pull`, and `git branch` run there without a prompt, so signed commits, SSH remotes, and branch cleanup work. `git config` stays sandboxed, so a session cannot set `core.hooksPath`.
-- The rest of the daily loop runs without a prompt too: `git push`, every `gh` command, `podman`, `docker`, and `aspire`.
+- The rest of the daily loop runs without a prompt too: `git push`, `aspire`, and a fixed list of subcommands. For `gh` they are `pr`, `issue`, `run`, `workflow`, `search`, `repo`, `release`, `api`, `auth status`, and `status`. For `podman` and `docker` they are `ps`, `logs`, `images`, `inspect`, `stop`, `rm`, `pull`, and `run`.
+- Every other `gh`, `podman`, and `docker` subcommand runs inside the sandbox, which has no token and no container socket, so it fails instead of running with full access. This covers `gh alias`, `gh extension`, `gh config`, `gh gist`, `gh secret`, key commands, `gh auth login` and `token`, and `podman` or `docker` `build`, `create`, `cp`, `exec`, `kube play`, and `unshare`. Run them in your own terminal, or add the subcommand to `excludedCommands` and `allow` after a review.
+- A command with an option before the subcommand, such as `gh -R owner/repo pr view`, does not match the list and fails the same way.
 - A command matches only when it runs on its own. Inside a pipe or a `&&` chain it stays sandboxed and fails to authenticate. Shorten output with the tool's own flags.
-- A sandboxed command that fails can ask to retry outside the sandbox.
+- `allowUnsandboxedCommands` is `false`, so a sandboxed command that fails cannot ask to retry outside the sandbox. The launcher sets it as well as `settings.json`, because the launcher's value wins.
+- `GIT_ALLOW_PROTOCOL=https:ssh` lets git use only HTTPS and SSH. Without it, `git fetch --upload-pack='<command>' <local path>` runs the command on this machine; with it, git refuses the local path with `transport 'file' not allowed`. The cost is that `fetch`, `pull`, and `clone` from a local path or a `file://` URL stop working.
 
 ### Commands that ask
 
@@ -65,7 +68,8 @@ Only critical commands ask, in every mode, including bypass:
 - `gh pr merge`; deleting, archiving, renaming, or editing a repository; creating or deleting a release; deleting an issue;
 - any `gh api` call, because it reaches any endpoint with your token;
 - `gh secret`, `gh auth token`, `gh auth status -t`, SSH and GPG keys, every `gh extension` command, `gh alias`, `gh config set`, and `gh gist create`, also through the `ext` and `gist new` aliases;
-- `podman` and `docker` `system prune`, volume removal, a `run` that mounts host paths or is privileged, and `podman unshare`;
+- `gh` with `--body-file` or `-F` and a path that starts with `/` or `~`, because it sends that file to GitHub; a path inside the repository does not ask;
+- `podman` and `docker` `system prune`, volume removal, a `run` that mounts host paths or is privileged, `podman run --env-host`, and `podman unshare`;
 - `aspire deploy` and `agent-ctrl apply`.
 
 An ask rule always wins over an allow rule, so ask rules stay narrow.
@@ -76,7 +80,7 @@ Hooks run when the unsandboxed git commands run. For that reason `.git/hooks`, `
 
 ### Bypass mode
 
-Bypass mode is selectable with Shift+Tab. In a recorded check, an unsandboxed `cat` of a read-denied path was still refused in bypass mode. Commands that read a file indirectly are not guaranteed to match a deny rule, and bypass approves every unsandboxed retry and excluded command. Bypass therefore weakens the secret guarantee. Use it only for narrow, trusted work.
+Bypass mode is selectable with Shift+Tab. In a recorded check, an unsandboxed `cat` of a read-denied path was still refused in bypass mode. Commands that read a file indirectly are not guaranteed to match a deny rule, and bypass approves every excluded command. Bypass therefore weakens the secret guarantee. Use it only for narrow, trusted work.
 
 ## Environment for .NET and Bun
 
@@ -101,11 +105,12 @@ The launcher makes the common git directory writable, so commits work from linke
 
 `claude --unsafe` starts one session with the sandbox off. It is the way out when the sandbox blocks work. That session does not offer bypass mode, so the permission prompts stay as the remaining guard. The launcher removes every `--unsafe` argument, wherever it appears. Run the `evals/ac` harness from an `--unsafe` session or a plain terminal, because its nested `claude -p` runs need the gateway token.
 
-Closing the unsandboxed retry and moving these rules into the Nix managed settings is deferred until two weeks of normal work pass without an `--unsafe` session.
+The unsandboxed retry is closed. Moving these rules into the Nix managed settings, with `failIfUnavailable: true`, is deferred until two weeks of normal work pass without an `--unsafe` session.
 
 ## Known limits
 
-- **Excluded commands run with full access.** `gh`, `git commit`, `git fetch`, `git pull`, `git push`, `podman`, `docker`, and `aspire` can each run code: a hook in a nested repository, `aspire run` of an edited AppHost, a container started another way. Ask rules match command text, so they narrow this and do not close it. Narrowing it costs prompts and is a separate decision.
+- **Excluded commands run with full access.** `git commit`, `git fetch`, `git pull`, `git push`, `aspire`, and the listed `gh`, `podman`, and `docker` subcommands can each run code: a hook in a nested repository, `aspire run` of an edited AppHost, a container started with options that no ask rule names, such as `--device` or `--userns`. Ask rules match command text, so they narrow this and do not close it. Closing it for commit, push, and `aspire` would cost a prompt for each, and is a separate decision.
+- **`git fetch` and `git pull` stay outside the sandbox.** The configuration of a nested repository can make them run a command.
 - **A writable package cache runs unsandboxed.** `~/.nuget/packages` is writable in every session. MSBuild files in that cache run when an excluded command such as `aspire run` builds, so a poisoned package can reach unsandboxed execution.
 - **`.claude/worktrees/` is not writable.** The `.claude` deny covers it. Create worktrees in sibling directories instead.
 - **Do not deny a glob over `/proc`.** A `Read(...)` deny is copied into the sandbox read deny, and the sandbox expands every glob into mount arguments (about three per path, at most 9000). `Read(//proc/**/environ)` matches every process and thread, so no Bash command starts any more. `/proc/<pid>/environ` stays readable to the Read tool.
