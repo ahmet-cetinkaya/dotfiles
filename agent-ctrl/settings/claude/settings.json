@@ -237,7 +237,10 @@
       "Bash(docker pull*)",
       "Bash(docker run *)",
       "Bash(aspire)",
-      "Bash(aspire *)"
+      "Bash(aspire *)",
+      "Bash(./dev-env aspire)",
+      "Bash(./dev-env aspire *)",
+      "Bash(make aspire)"
     ],
     "ask": [
       "Bash(git push *--force*)",
@@ -387,6 +390,9 @@
       "docker pull*",
       "docker run *",
       "aspire *",
+      "./dev-env aspire",
+      "./dev-env aspire *",
+      "make aspire",
       "agent-ctrl apply *"
     ],
     "filesystem": {
