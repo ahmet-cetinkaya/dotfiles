@@ -353,6 +353,7 @@
     ],
     "filesystem": {
       "allowWrite": ["~/.npm"],
+      "allowRead": ["~/.nuget/NuGet/NuGet.Config"],
       "denyWrite": [
         "~/.zshrc",
         "~/.zshenv",
