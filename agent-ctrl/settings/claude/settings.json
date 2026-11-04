@@ -17,6 +17,7 @@
     "CLAUDE_CODE_NEW_INIT": "1",
 
     "DOTNET_TieredPGO": "0",
+    "ASPIRE_CLI_START_TIMEOUT": "600",
 
     "GIT_ALLOW_PROTOCOL": "https:ssh",
 
@@ -235,7 +236,11 @@
       "Bash(aspire *)",
       "Bash(./dev-env aspire)",
       "Bash(./dev-env aspire *)",
-      "Bash(make aspire)"
+      "Bash(make aspire)",
+      "Bash(ASPIRE_CLI_START_TIMEOUT=* ./dev-env aspire)",
+      "Bash(ASPIRE_CLI_START_TIMEOUT=* ./dev-env aspire *)",
+      "Bash(ASPIRE_CLI_START_TIMEOUT=* make aspire)",
+      "Bash(ASPIRE_CLI_START_TIMEOUT=* aspire *)"
     ],
     "ask": [
       "Bash(git push *--force*)",
@@ -388,6 +393,10 @@
       "./dev-env aspire",
       "./dev-env aspire *",
       "make aspire",
+      "ASPIRE_CLI_START_TIMEOUT=* ./dev-env aspire",
+      "ASPIRE_CLI_START_TIMEOUT=* ./dev-env aspire *",
+      "ASPIRE_CLI_START_TIMEOUT=* make aspire",
+      "ASPIRE_CLI_START_TIMEOUT=* aspire *",
       "agent-ctrl apply *"
     ],
     "filesystem": {
