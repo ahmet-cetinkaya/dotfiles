@@ -446,7 +446,7 @@
         "registry.npmjs.org",
         "cache.nixos.org",
         "models.dev",
-        "192.168.1.2:3020",
+        "192.168.1.2",
         "*.nuget.org",
         "mcr.microsoft.com",
         "*.data.mcr.microsoft.com",
