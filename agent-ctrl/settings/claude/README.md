@@ -37,17 +37,7 @@ Run `claude auto-mode config` to see the effective rules, and `claude auto-mode 
 - **A shell command can read a credential file.** The Read tool deny does not cover `cat`. Only the classifier stops it, and Anthropic states that the classifier "doesn't replace an operating-system control such as sandboxing".
 - **Secret environment variables are visible to commands.** Without the sandbox, `credentials.envVars` does not apply, so the gateway token is in the environment of every command. The classifier blocks printing it.
 - **Bypass mode turns the classifier off.** Nothing offers it at startup any more. Do not switch to it with real credentials on the machine.
-- **Untrusted code needs other isolation.** For a downloaded repository or a pull request from outside, use a container, or the sandbox model below.
-
-## Back to the sandbox model
-
-The sandbox model ran every Bash command inside the Claude Code sandbox, started sessions through a launcher, and needed a grant for each tool that used Unix sockets, such as a browser, Docker, D-Bus, or nix. Its files are kept untracked in `backups/`: `settings.json.sandbox.bak`, `launcher.sh.sandbox.bak`, `sandbox-no-sockets.props.sandbox.bak`, and `README.md.sandbox.bak`. Commit `052144a3` holds the same files.
-
-To go back:
-
-1. Copy each `backups/*.sandbox.bak` file into this directory, without the suffix.
-2. Add `claude() { bash "$HOME/.agent-ctrl/settings/claude/launcher.sh" "$@"; }` back to `zsh/common.zshrc` and open a new shell.
-3. Run `agent-ctrl apply claude --override --no-prompt`.
+- **Untrusted code needs other isolation.** For a downloaded repository or a pull request from outside, use a container.
 
 ## Changing the policy
 
