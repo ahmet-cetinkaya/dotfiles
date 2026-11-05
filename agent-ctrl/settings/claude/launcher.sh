@@ -81,8 +81,10 @@ append_setting "$WRITE_ALLOW_PATH" "${dotnet_state_dirs[@]}"
 # the sandbox needs no global build setting that would also slow `aspire run`. The directory
 # stays outside the sandbox write list, so a sandboxed command cannot change the file.
 msbuild_import_dir="$HOME/.local/share/Microsoft/MSBuild/Current/Imports/Microsoft.Common.props/ImportBefore"
+msbuild_import_source="${BASH_SOURCE[0]%/*}/sandbox-no-sockets.props"
 mkdir -p "$msbuild_import_dir"
-cp -f "${BASH_SOURCE[0]%/*}/sandbox-no-sockets.props" "$msbuild_import_dir/"
+cmp -s "$msbuild_import_source" "$msbuild_import_dir/sandbox-no-sockets.props" ||
+  cp -f "$msbuild_import_source" "$msbuild_import_dir/"
 
 # ~/.aspire/bin comes first on PATH, so a file planted there would run instead of git or
 # sudo. The deny sits next to the grant so the two can never ship apart.
@@ -150,14 +152,36 @@ if (( ${#additional_dirs[@]} )); then
     --args "${additional_dirs[@]}"
 fi
 
+# A session often works across the checkouts of one repository, for example a test in a
+# sibling worktree. Every worktree of the repository is writable. Its .git file points git
+# at the shared hooks and config, and unsandboxed git commands follow it, so it stays
+# write-denied, and its .claude is denied below.
+repo_worktrees=()
+if [[ -n "$main_worktree" ]]; then
+  while IFS= read -r worktree_path; do
+    [[ -d "$worktree_path" && ! -L "$worktree_path" ]] && repo_worktrees+=("$worktree_path")
+  done < <(git -C "$worktree_root" worktree list --porcelain 2>/dev/null | sed -n 's/^worktree //p')
+fi
+if (( ${#repo_worktrees[@]} )); then
+  append_setting "$WRITE_ALLOW_PATH" "${repo_worktrees[@]}"
+  linked_git_files=()
+  for worktree_path in "${repo_worktrees[@]}"; do
+    [[ -f "$worktree_path/.git" ]] && linked_git_files+=("$worktree_path/.git")
+  done
+  (( ${#linked_git_files[@]} )) && append_setting "$WRITE_DENY_PATH" "${linked_git_files[@]}"
+fi
+
 # Claude Code loads settings, hooks, and skills from .claude, and hooks run outside the
-# sandbox, so no session may write the .claude of its start directory, its worktree, or
-# the main worktree. A deny on a path that does not exist may not be enforced, so the
+# sandbox, so no session may write the .claude of its start directory or of any worktree
+# of the repository. A deny on a path that does not exist may not be enforced, so the
 # directory is created first; an empty directory does not show in git. A symlinked
 # .claude is distrusted, so it is denied but never followed.
 claude_dirs=("$PWD/.claude")
 [[ -n "$worktree_root" ]] && claude_dirs+=("$worktree_root/.claude")
 [[ -n "$main_worktree" ]] && claude_dirs+=("$main_worktree/.claude")
+for worktree_path in "${repo_worktrees[@]}"; do
+  claude_dirs+=("$worktree_path/.claude")
+done
 for claude_dir in "${claude_dirs[@]}"; do
   [[ -L "$claude_dir" ]] || mkdir -p "$claude_dir"
 done

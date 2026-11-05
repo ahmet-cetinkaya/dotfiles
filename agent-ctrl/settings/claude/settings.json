@@ -192,7 +192,13 @@
       "Read(~/.zsh_history)",
       "Read(~/.bash_history)",
       "Read(**/.env)",
-      "Read(**/.env.*)"
+      "Read(**/.env.local)",
+      "Read(**/.env.*.local)",
+      "Read(**/.env.development)",
+      "Read(**/.env.dev)",
+      "Read(**/.env.staging)",
+      "Read(**/.env.production)",
+      "Read(**/.env.prod)"
     ],
     "allow": [
       "Bash(git commit)",
@@ -232,6 +238,13 @@
       "Bash(docker rm*)",
       "Bash(docker pull*)",
       "Bash(docker run *)",
+      "Bash(docker compose *)",
+      "Bash(podman compose *)",
+      "Bash(podman-compose *)",
+      "Bash(agent-browser *)",
+      "Bash(npx playwright *)",
+      "Bash(bunx playwright *)",
+      "Bash(pnpm exec playwright *)",
       "Bash(aspire)",
       "Bash(aspire *)",
       "Bash(./dev-env aspire)",
@@ -389,6 +402,13 @@
       "docker rm*",
       "docker pull*",
       "docker run *",
+      "docker compose *",
+      "podman compose *",
+      "podman-compose *",
+      "agent-browser *",
+      "npx playwright *",
+      "bunx playwright *",
+      "pnpm exec playwright *",
       "aspire *",
       "./dev-env aspire",
       "./dev-env aspire *",
@@ -400,7 +420,7 @@
       "agent-ctrl apply *"
     ],
     "filesystem": {
-      "allowWrite": ["~/.npm"],
+      "allowWrite": ["~/.npm", "/tmp"],
       "allowRead": ["~/.nuget/NuGet/NuGet.Config"],
       "denyWrite": [
         "~/.zshrc",
