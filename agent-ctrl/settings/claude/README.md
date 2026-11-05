@@ -5,7 +5,9 @@ This directory holds the Claude Code configuration that `agent-ctrl apply claude
 | File | Purpose |
 | --- | --- |
 | `settings.json` | Becomes `~/.claude/settings.json`: permissions, auto mode rules, environment, hooks, and status line. |
+| `launcher.sh` | Starts `claude`. The `claude` function in `zsh/common.zshrc` calls it. It adds `--allow-dangerously-skip-permissions`, so Shift+Tab can switch a session to bypass mode. A session still starts in auto mode. |
 | `notify.sh` | Desktop notification that the Notification and Stop hooks call. |
+| `archived/` | Earlier configurations, one folder per topic. |
 
 `settings.json` is strict JSON: Claude Code reports a comment or a trailing comma as a settings error. The reasons for each rule are in this document. The `$schema` key points to the published schema, so an editor can complete and check the keys.
 
@@ -36,7 +38,7 @@ Run `claude auto-mode config` to see the effective rules, and `claude auto-mode 
 
 - **A shell command can read a credential file.** The Read tool deny does not cover `cat`. Only the classifier stops it, and Anthropic states that the classifier "doesn't replace an operating-system control such as sandboxing".
 - **Secret environment variables are visible to commands.** Without the sandbox, `credentials.envVars` does not apply, so the gateway token is in the environment of every command. The classifier blocks printing it.
-- **Bypass mode turns the classifier off.** Nothing offers it at startup any more. Do not switch to it with real credentials on the machine.
+- **Bypass mode turns the classifier off.** The launcher makes it selectable with Shift+Tab, and a session never starts in it. Switch to it only for a task that needs it, and switch back afterwards. In bypass mode only the `permissions.deny` and `permissions.ask` rules still guard the session.
 - **Untrusted code needs other isolation.** For a downloaded repository or a pull request from outside, use a container.
 
 ## Changing the policy
