@@ -1,0 +1,533 @@
+{
+  "$schema": "https://json.schemastore.org/claude-code-settings.json",
+  "showThinkingSummaries": true,
+  "askUserQuestionTimeout": "10m",
+  "preferredNotifChannel": "notifications_disabled",
+  "agent": "lead",
+  "attribution": {
+    "commit": "",
+    "pr": "",
+    "sessionUrl": false
+  },
+  "disableRemoteControl": true,
+
+  "env": {
+    "DISABLE_AUTOUPDATER": "1",
+    "PYTHONSAFEPATH": "1",
+    "CLAUDE_CODE_NEW_INIT": "1",
+
+    "DOTNET_TieredPGO": "0",
+    "ASPIRE_CLI_START_TIMEOUT": "600",
+
+    "GIT_ALLOW_PROTOCOL": "https:ssh",
+
+    "ANTHROPIC_BASE_URL": "${OMNIROUTE_BASE_URL}",
+    "ANTHROPIC_AUTH_TOKEN": "${OMNIROUTE_AUTH_TOKEN}",
+
+    "ANTHROPIC_DEFAULT_FABLE_MODEL": "cc/claude-fable-5-1[1m]",
+    "ANTHROPIC_DEFAULT_OPUS_MODEL": "cc/claude-opus-5-5[1m]",
+    "ANTHROPIC_DEFAULT_SONNET_MODEL": "cc/claude-sonnet-5-5[1m]",
+    "ANTHROPIC_DEFAULT_HAIKU_MODEL": "cc/claude-haiku-5-5",
+
+    "CLAUDE_CODE_SUBAGENT_MODEL": "sonnet",
+
+    "CLAUDE_CODE_ENABLE_TODO_TOOLS": "1"
+  },
+
+  "modelPicker": {
+    "replaceBuiltInOptions": true,
+    "options": [
+      {
+        "model": "cc/claude-fable-5-1[1m]",
+        "label": "Claude Fable 5.1",
+        "behavesAs": "claude-fable-5-1"
+      },
+      {
+        "model": "cc/claude-opus-5-5[1m]",
+        "label": "Claude Opus 5.5",
+        "behavesAs": "claude-opus-5-5"
+      },
+      {
+        "model": "cc/claude-sonnet-5-5[1m]",
+        "label": "Claude Sonnet 5.5",
+        "behavesAs": "claude-sonnet-5-5"
+      },
+      {
+        "model": "cc/claude-haiku-5-5",
+        "label": "Claude Haiku 5.5",
+        "behavesAs": "claude-haiku-5-5"
+      },
+      {
+        "model": "cx/gpt-6-luna[1m]",
+        "label": "GPT-6 Luna",
+        "behavesAs": "claude-haiku-5-5"
+      },
+      {
+        "model": "glm/glm-5.3[1m]",
+        "label": "GLM 5.3",
+        "behavesAs": "claude-opus-5-5"
+      },
+      {
+        "model": "glm/glm-5.3-flash[1m]",
+        "label": "GLM 5.3 Flash",
+        "behavesAs": "claude-sonnet-5-5"
+      },
+      {
+        "model": "combo/max-models",
+        "label": "Max Models",
+        "behavesAs": "claude-fable-5-1"
+      },
+      {
+        "model": "combo/high-models",
+        "label": "High Models",
+        "behavesAs": "claude-opus-5-5"
+      },
+      {
+        "model": "combo/mid-models",
+        "label": "Mid Models",
+        "behavesAs": "claude-sonnet-5-5"
+      },
+      {
+        "model": "combo/lite-models",
+        "label": "Lite Models",
+        "behavesAs": "claude-haiku-5-5"
+      },
+      {
+        "model": "auto/coding:free",
+        "label": "Auto Coding Free",
+        "behavesAs": "claude-sonnet-5-5"
+      }
+    ]
+  },
+
+  "modelSettings": {
+    "cx/gpt-6-luna[1m]": {
+      "autoCompactWindow": 800000
+    },
+
+    "combo/max-models": {
+      "autoCompactWindow": 800000
+    },
+    "combo/high-models": {
+      "autoCompactWindow": 800000
+    },
+    "combo/mid-models": {
+      "autoCompactWindow": 800000
+    },
+    "combo/lite-models": {
+      "autoCompactWindow": 800000
+    }
+  },
+
+  "hooks": {
+    "Notification": [
+      {
+        "matcher": "permission_prompt|idle_prompt|elicitation_dialog",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "sh \"$HOME/.agent-ctrl/settings/claude/notify.sh\" \"ℹ️ Girdi bekliyor\""
+          }
+        ]
+      }
+    ],
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "sh \"$HOME/.agent-ctrl/settings/claude/notify.sh\" \"✅ Tamamlandı\""
+          }
+        ]
+      }
+    ]
+  },
+
+  "enabledPlugins": {
+    "keep-awake@claude-community": true,
+    "cc-plugin-you-should-know@builtin": true
+  },
+
+  "statusLine": {
+    "type": "command",
+    "command": "bunx -y ccstatusline@2.2.30",
+    "padding": 0,
+    "refreshInterval": 10
+  },
+
+  "permissions": {
+    "additionalDirectories": ["${SECOND_BRAIN_DIR}"],
+    "deny": [
+      "Read(~/.ssh/**)",
+      "Read(~/.gnupg/**)",
+      "Read(~/.aws/**)",
+      "Read(~/.config/gh/**)",
+      "Read(~/.docker/**)",
+      "Read(~/.npmrc)",
+      "Read(~/.config/google-chrome/**)",
+      "Read(~/.config/chromium/**)",
+      "Read(~/.config/BraveSoftware/**)",
+      "Read(~/.thunderbird/**)",
+      "Read(~/.claude/.credentials.json)",
+      "Read(~/.claude/settings.json)",
+      "Read(~/Configs/agent-ctrl/.env)",
+      "Read(~/.codex/auth.json)",
+      "Read(~/.gemini/oauth_creds.json)",
+      "Read(~/.gemini/google_accounts.json)",
+      "Read(~/.local/share/opencode/auth.json)",
+      "Read(~/.nuget/NuGet/NuGet.Config)",
+      "Read(~/.config/Slack/**)",
+      "Read(~/.config/Code/User/globalStorage/**)",
+      "Read(~/.config/VSCodium/User/globalStorage/**)",
+      "Read(~/.claude.json)",
+      "Read(~/Configs/zsh/.env)",
+      "Read(~/.microsoft/usersecrets/**)",
+      "Read(~/.azure/**)",
+      "Read(~/.git-credentials)",
+      "Read(~/.netrc)",
+      "Read(~/.kube/**)",
+      "Read(~/.config/github-copilot/**)",
+      "Read(~/.mozilla/**)",
+      "Read(~/.local/share/keyrings/**)",
+      "Read(~/.zsh_history)",
+      "Read(~/.bash_history)",
+      "Read(**/.env)",
+      "Read(**/.env.local)",
+      "Read(**/.env.*.local)",
+      "Read(**/.env.development)",
+      "Read(**/.env.dev)",
+      "Read(**/.env.staging)",
+      "Read(**/.env.production)",
+      "Read(**/.env.prod)"
+    ],
+    "allow": [
+      "Bash(git commit)",
+      "Bash(git commit *)",
+      "Bash(git fetch)",
+      "Bash(git fetch *)",
+      "Bash(git pull)",
+      "Bash(git pull *)",
+      "Bash(git branch)",
+      "Bash(git branch *)",
+      "Bash(git push)",
+      "Bash(git push *)",
+      "Bash(gh pr *)",
+      "Bash(gh issue *)",
+      "Bash(gh run *)",
+      "Bash(gh workflow *)",
+      "Bash(gh search *)",
+      "Bash(gh repo *)",
+      "Bash(gh release *)",
+      "Bash(gh api)",
+      "Bash(gh api *)",
+      "Bash(gh auth status*)",
+      "Bash(gh status)",
+      "Bash(podman ps*)",
+      "Bash(podman logs*)",
+      "Bash(podman images*)",
+      "Bash(podman inspect*)",
+      "Bash(podman stop*)",
+      "Bash(podman rm*)",
+      "Bash(podman pull*)",
+      "Bash(podman run *)",
+      "Bash(docker ps*)",
+      "Bash(docker logs*)",
+      "Bash(docker images*)",
+      "Bash(docker inspect*)",
+      "Bash(docker stop*)",
+      "Bash(docker rm*)",
+      "Bash(docker pull*)",
+      "Bash(docker run *)",
+      "Bash(docker compose *)",
+      "Bash(podman compose *)",
+      "Bash(podman-compose *)",
+      "Bash(agent-browser *)",
+      "Bash(npx playwright *)",
+      "Bash(bunx playwright *)",
+      "Bash(pnpm exec playwright *)",
+      "Bash(aspire)",
+      "Bash(aspire *)",
+      "Bash(./dev-env aspire)",
+      "Bash(./dev-env aspire *)",
+      "Bash(make aspire)",
+      "Bash(ASPIRE_CLI_START_TIMEOUT=* ./dev-env aspire)",
+      "Bash(ASPIRE_CLI_START_TIMEOUT=* ./dev-env aspire *)",
+      "Bash(ASPIRE_CLI_START_TIMEOUT=* make aspire)",
+      "Bash(ASPIRE_CLI_START_TIMEOUT=* aspire *)"
+    ],
+    "ask": [
+      "Bash(git push *--force*)",
+      "Bash(git push *-f)",
+      "Bash(git push *-f *)",
+      "Bash(git push *--delete*)",
+      "Bash(git push *--mirror*)",
+      "Bash(git push * :*)",
+      "Bash(git push *+*)",
+      "Bash(git push *-d)",
+      "Bash(git push *-d *)",
+      "Bash(git push *-fu*)",
+      "Bash(git push *-uf*)",
+      "Bash(git push *--prune*)",
+      "Bash(git push *--rece*)",
+      "Bash(git push *--exe*)",
+      "Bash(git fetch *--upl*)",
+      "Bash(git pull *--upl*)",
+      "Bash(gh pr merge *)",
+      "Bash(gh repo delete *)",
+      "Bash(gh repo archive *)",
+      "Bash(gh repo rename *)",
+      "Bash(gh repo edit *)",
+      "Bash(gh release create *)",
+      "Bash(gh release delete *)",
+      "Bash(gh issue delete *)",
+      "Bash(gh api)",
+      "Bash(gh api *)",
+      "Bash(gh secret *)",
+      "Bash(gh auth token*)",
+      "Bash(gh auth status *-t*)",
+      "Bash(gh ssh-key *)",
+      "Bash(gh gpg-key *)",
+      "Bash(gh extension *)",
+      "Bash(gh extensions *)",
+      "Bash(gh ext *)",
+      "Bash(gh alias *)",
+      "Bash(gh config set *)",
+      "Bash(gh gist create *)",
+      "Bash(gh gist new *)",
+      "Bash(gh *--body-file /*)",
+      "Bash(gh *--body-file ~*)",
+      "Bash(gh *--body-file=/*)",
+      "Bash(gh *--body-file=~*)",
+      "Bash(gh * -F /*)",
+      "Bash(gh * -F ~*)",
+      "Bash(podman run *--env-host*)",
+      "Bash(podman system prune*)",
+      "Bash(podman volume rm *)",
+      "Bash(podman volume prune*)",
+      "Bash(podman run *-v*)",
+      "Bash(podman unshare*)",
+      "Bash(podman run *--volume*)",
+      "Bash(podman run *--mount*)",
+      "Bash(podman run *--privileged*)",
+      "Bash(docker system prune*)",
+      "Bash(docker volume rm *)",
+      "Bash(docker volume prune*)",
+      "Bash(docker run *-v*)",
+      "Bash(docker run *--volume*)",
+      "Bash(docker run *--mount*)",
+      "Bash(docker run *--privileged*)",
+      "Bash(aspire deploy*)",
+      "Bash(agent-ctrl apply *)",
+      "mcp__serena__execute_shell_command",
+      "Edit(~/Configs/zsh/**)",
+      "Edit(~/Configs/agent-ctrl/settings/claude/**)",
+      "Edit(~/Configs/nixos/modules/apps/ai/**)",
+      "Edit(**/.claude/additional-dirs.local)",
+      "Edit(~/.bashrc)",
+      "Edit(~/.bash_profile)",
+      "Edit(~/.profile)",
+      "Edit(~/.zshrc)",
+      "Edit(~/.zshenv)",
+      "Edit(~/.zprofile)",
+      "Edit(~/.config/systemd/**)",
+      "Edit(~/.config/autostart/**)",
+      "Edit(~/.config/environment.d/**)",
+      "Edit(~/.local/bin/**)",
+      "Edit(~/.aspire/bin/**)",
+      "Edit(~/.dotnet/tools/**)",
+      "Edit(~/.bun/bin/**)",
+      "Edit(~/.cargo/bin/**)",
+      "Edit(~/.npm-global/bin/**)",
+      "Edit(~/.pub-cache/bin/**)",
+      "Edit(~/go/bin/**)",
+      "Edit(~/.qoder/entry/**)",
+      "Edit(~/.gitconfig)",
+      "Edit(~/.config/git/**)",
+      "Edit(~/.config/gh/**)",
+      "Edit(~/.ssh/**)",
+      "Edit(~/.claude.json)",
+      "Edit(~/.claude/settings*.json)",
+      "Edit(~/.claude/CLAUDE.md)",
+      "Edit(~/.claude/agents/**)",
+      "Edit(~/.claude/commands/**)",
+      "Edit(~/.claude/skills/**)",
+      "Edit(~/.claude/hooks/**)",
+      "Edit(~/.claude/plugins/**)",
+      "Edit(**/.claude/settings*.json)",
+      "Edit(**/.mcp.json)",
+      "Edit(**/.git)",
+      "Edit(**/.git/**)"
+    ]
+  },
+
+  "sandbox": {
+    "enabled": true,
+    "autoAllowBashIfSandboxed": true,
+    "allowUnsandboxedCommands": false,
+    "excludedCommands": [
+      "gh pr *",
+      "gh issue *",
+      "gh run *",
+      "gh workflow *",
+      "gh search *",
+      "gh repo *",
+      "gh release *",
+      "gh api",
+      "gh api *",
+      "gh auth status*",
+      "gh status",
+      "git push",
+      "git push *",
+      "git commit",
+      "git commit *",
+      "git fetch",
+      "git fetch *",
+      "git pull",
+      "git pull *",
+      "git branch",
+      "git branch *",
+      "podman ps*",
+      "podman logs*",
+      "podman images*",
+      "podman inspect*",
+      "podman stop*",
+      "podman rm*",
+      "podman pull*",
+      "podman run *",
+      "docker ps*",
+      "docker logs*",
+      "docker images*",
+      "docker inspect*",
+      "docker stop*",
+      "docker rm*",
+      "docker pull*",
+      "docker run *",
+      "docker compose *",
+      "podman compose *",
+      "podman-compose *",
+      "agent-browser *",
+      "npx playwright *",
+      "bunx playwright *",
+      "pnpm exec playwright *",
+      "aspire *",
+      "./dev-env aspire",
+      "./dev-env aspire *",
+      "make aspire",
+      "ASPIRE_CLI_START_TIMEOUT=* ./dev-env aspire",
+      "ASPIRE_CLI_START_TIMEOUT=* ./dev-env aspire *",
+      "ASPIRE_CLI_START_TIMEOUT=* make aspire",
+      "ASPIRE_CLI_START_TIMEOUT=* aspire *",
+      "agent-ctrl apply *"
+    ],
+    "filesystem": {
+      "allowWrite": ["~/.npm", "/tmp"],
+      "allowRead": ["~/.nuget/NuGet/NuGet.Config"],
+      "denyWrite": [
+        "~/.zshrc",
+        "~/.zshenv",
+        "~/.bashrc",
+        "~/.profile",
+        "~/Configs/zsh",
+        "~/.config/autostart",
+        "~/.config/environment.d",
+        "~/.config/systemd",
+        "~/.local/bin",
+        "~/.local/share/applications",
+        "~/.dotnet/tools",
+        "~/.claude/settings.json",
+        "~/.claude.json",
+        "~/Configs/agent-ctrl/settings/claude",
+        "~/Configs/nixos"
+      ],
+      "denyRead": [
+        "~/.ssh",
+        "~/.gnupg",
+        "~/.aws",
+        "~/.microsoft/usersecrets",
+        "~/.zsh_history",
+        "~/.bash_history",
+        "~/.config/gh",
+        "~/.docker",
+        "~/.npmrc",
+        "~/.config/google-chrome",
+        "~/.config/chromium",
+        "~/.config/BraveSoftware",
+        "~/.thunderbird",
+        "~/.claude/.credentials.json",
+        "~/.claude/settings.json",
+        "~/Configs/agent-ctrl/.env",
+        "~/.codex/auth.json",
+        "~/.gemini/oauth_creds.json",
+        "~/.gemini/google_accounts.json",
+        "~/.local/share/opencode/auth.json",
+        "~/.config/Slack",
+        "~/.config/Code/User/globalStorage",
+        "~/.config/VSCodium/User/globalStorage",
+        "~/.claude.json",
+        "~/Configs/zsh/.env"
+      ]
+    },
+    "network": {
+      "strictAllowlist": false,
+      "allowedDomains": [
+        "github.com",
+        "*.github.com",
+        "*.githubusercontent.com",
+        "registry.npmjs.org",
+        "cache.nixos.org",
+        "models.dev",
+        "HOME_SERVER_HOST",
+        "*.nuget.org",
+        "mcr.microsoft.com",
+        "*.data.mcr.microsoft.com",
+        "registry-1.docker.io",
+        "auth.docker.io",
+        "production.cloudflare.docker.com",
+        "aka.ms",
+        "dotnetcli.azureedge.net",
+        "builds.dotnet.microsoft.com"
+      ],
+      "deniedDomains": [
+        "pastebin.com",
+        "transfer.sh",
+        "*.ngrok.io",
+        "*.ngrok-free.app",
+        "webhook.site",
+        "requestbin.net",
+        "*.trycloudflare.com"
+      ]
+    },
+    "credentials": {
+      "envVars": [
+        {
+          "name": "ANTHROPIC_AUTH_TOKEN",
+          "mode": "deny"
+        },
+        {
+          "name": "OMNIROUTE_AUTH_TOKEN",
+          "mode": "deny"
+        },
+        {
+          "name": "OMNIROUTE_API_KEY",
+          "mode": "deny"
+        },
+        {
+          "name": "DOKPLOY_API_KEY",
+          "mode": "deny"
+        },
+        {
+          "name": "HF_TOKEN",
+          "mode": "deny"
+        },
+        {
+          "name": "CLAUDE_CODE_MESSAGING_TOKEN",
+          "mode": "deny"
+        },
+        {
+          "name": "WHPH_MCP_TOKEN",
+          "mode": "deny"
+        }
+      ]
+    }
+  }
+}
