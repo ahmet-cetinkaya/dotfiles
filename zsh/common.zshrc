@@ -160,6 +160,8 @@ alias oc='opencode'
 alias cc='claude'
 # Launch policy lives in agent-ctrl.
 claude() { bash "$HOME/.agent-ctrl/settings/claude/launcher.sh" "$@"; }
+# Same, with the Bash sandbox on.
+claude-strict() { bash "$HOME/.agent-ctrl/settings/claude/strict/launcher.sh" "$@"; }
 
 ## Startup
 #inshellisense
