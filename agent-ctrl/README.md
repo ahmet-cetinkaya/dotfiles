@@ -57,9 +57,9 @@ agent-ctrl apply opencode --path /tmp/agent-ctrl-opencode --override --no-prompt
 
 Then apply to the live target without `--path`, for example `agent-ctrl apply claude --override --no-prompt`. The Claude apply replaces `~/.claude/settings.json` with `settings/claude/settings.json`, dropping preferences Claude Code saved there, and merges only `mcpServers` into `~/.claude.json`. Applying to real home configuration is a separate user-authorized action.
 
-## Claude sandbox
+## Claude settings
 
-The Claude settings, the sandbox policy, and the launcher are described in [settings/claude/README.md](settings/claude/README.md).
+The Claude settings and the auto mode guard model are described in [settings/claude/README.md](settings/claude/README.md).
 
 ## Claude and OpenCode coexistence
 

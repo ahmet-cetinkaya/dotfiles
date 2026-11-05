@@ -1,5 +1,7 @@
 # Claude Code Güvenlik Katmanları — Durum Tablosu
 
+> **Geçmiş belge.** 2026-11-05'ten beri Claude Code sandbox'sız, auto mode ile çalışıyor ve launcher kaldırıldı. Güncel model `settings/claude/README.md`'de. Aşağıdaki tablo 2026-10-05 durumunu gösterir.
+
 Bu doküman, agent-ctrl üzerinden Claude Code'a uyguladığımız güvenlik katmanlarını özetler. Tam liste repoya alınmayan yerel bir yedektedir; şu an **Lite** moddayız ve katmanları kademeli olarak geri ekleyeceğiz.
 
 - **Full**: Katmanın tam uygulandığı hâli (yedekteki settings.json + agents.nix + launcher).
