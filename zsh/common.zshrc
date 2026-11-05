@@ -158,8 +158,6 @@ alias vim='NVIM_APPNAME=nvim-ac nvim'
 
 alias oc='opencode'
 alias cc='claude'
-# Keep launch policy in agent-ctrl; the launcher validates local symlink grants before exec.
-claude() { bash "$HOME/.agent-ctrl/settings/claude/launcher.sh" "$@"; }
 
 ## Startup
 #inshellisense
