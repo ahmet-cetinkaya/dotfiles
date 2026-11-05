@@ -41,11 +41,11 @@ Run `claude auto-mode config` to see the effective rules, and `claude auto-mode 
 
 ## Back to the sandbox model
 
-The sandbox model ran every Bash command inside the Claude Code sandbox, started sessions through a launcher, and needed a grant for each tool that used Unix sockets, such as a browser, Docker, D-Bus, or nix. Its files are kept next to this one, untracked: `settings.json.sandbox.bak`, `launcher.sh.sandbox.bak`, `sandbox-no-sockets.props.sandbox.bak`, and `README.md.sandbox.bak`. Commit `052144a3` holds the same files.
+The sandbox model ran every Bash command inside the Claude Code sandbox, started sessions through a launcher, and needed a grant for each tool that used Unix sockets, such as a browser, Docker, D-Bus, or nix. Its files are kept untracked in `backups/`: `settings.json.sandbox.bak`, `launcher.sh.sandbox.bak`, `sandbox-no-sockets.props.sandbox.bak`, and `README.md.sandbox.bak`. Commit `052144a3` holds the same files.
 
 To go back:
 
-1. Copy each `*.sandbox.bak` file over the file without the suffix.
+1. Copy each `backups/*.sandbox.bak` file into this directory, without the suffix.
 2. Add `claude() { bash "$HOME/.agent-ctrl/settings/claude/launcher.sh" "$@"; }` back to `zsh/common.zshrc` and open a new shell.
 3. Run `agent-ctrl apply claude --override --no-prompt`.
 
