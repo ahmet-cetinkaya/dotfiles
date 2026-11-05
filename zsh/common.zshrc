@@ -158,6 +158,8 @@ alias vim='NVIM_APPNAME=nvim-ac nvim'
 
 alias oc='opencode'
 alias cc='claude'
+# Launch policy lives in agent-ctrl.
+claude() { bash "$HOME/.agent-ctrl/settings/claude/launcher.sh" "$@"; }
 
 ## Startup
 #inshellisense
