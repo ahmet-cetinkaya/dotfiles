@@ -9,6 +9,18 @@ This directory holds the Claude Code configuration that `agent-ctrl apply claude
 | `notify.sh` | Desktop notification that the Notification and Stop hooks call. |
 | `strict/` | `claude-strict`: the same auto mode with the Bash sandbox on. See its README. |
 
+### ACBrain hooks
+
+`SessionStart`, `UserPromptSubmit`, and `SessionEnd` run the ACBrain vault scripts in `<project>/_system/scripts/hooks/` with Bun. The settings are global, so each command first checks that the script exists in `$CLAUDE_PROJECT_DIR` and otherwise exits 0. In every other project the hooks do nothing.
+
+| Hook | Script | Effect |
+| --- | --- | --- |
+| `SessionStart` | `session-context.mjs` | Prints the vault companion files (`_system/Core.md`, `Kurallar.md`, the newest `Last-Session.md` card, open `Threads.md` items) into the session context. Starts a background search index sync. |
+| `UserPromptSubmit` | `prompt-context.mjs` | Searches the vault FTS5 index (`~/.cache/acbrain/`) for the prompt. Adds at most 3 strongly matching passages (2,000 characters). A passage is added once per session. |
+| `SessionEnd` | `session-summary.mjs` | Detaches a worker that writes a pending summary card to `_system/Last-Session.md` with `claude -p`, then starts the daily concept compile. It skips short sessions and sessions in which the agent already wrote the card. |
+
+The `claude -p` child runs outside the vault with `ACBRAIN_CHILD=1`, `--setting-sources local`, `--strict-mcp-config`, and `--no-session-persistence`. The child therefore loads none of these hooks, and the notification hooks do not fire for it. Events are logged without content to `~/.cache/acbrain/agent.log`.
+
 `settings.json` is strict JSON: Claude Code reports a comment or a trailing comma as a settings error. The reasons for each rule are in this document. The `$schema` key points to the published schema, so an editor can complete and check the keys.
 
 ## Guard model
