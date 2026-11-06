@@ -15,9 +15,9 @@ This directory holds the Claude Code configuration that `agent-ctrl apply claude
 
 | Hook | Script | Effect |
 | --- | --- | --- |
-| `SessionStart` | `session-context.mjs` | Prints the vault companion files (`_system/Core.md`, `Kurallar.md`, the newest `Last-Session.md` card, open `Threads.md` items) into the session context. Starts a background search index sync. |
+| `SessionStart` | `session-context.mjs` | Prints the session ID, the vault companion files (`_system/Core.md`, `Kurallar.md`, open `Threads.md` items), and the newest session note from `_system/Oturumlar/` into the session context. Starts a background search index sync. |
 | `UserPromptSubmit` | `prompt-context.mjs` | Searches the vault FTS5 index (`~/.cache/acbrain/`) for the prompt. Adds at most 3 strongly matching passages (2,000 characters). A passage is added once per session. |
-| `SessionEnd` | `session-summary.mjs` | Detaches a worker that writes a pending summary card to `_system/Last-Session.md` with `claude -p`, then starts the daily concept compile. It skips short sessions and sessions in which the agent already wrote the card. |
+| `SessionEnd` | `session-summary.mjs` | Detaches a worker that writes a pending session note to `_system/Oturumlar/` with `claude -p`, then starts the daily concept compile. It skips short sessions and sessions that already have a note with the same `session:` ID. |
 
 The `claude -p` child runs outside the vault with `ACBRAIN_CHILD=1`, `--setting-sources local`, `--strict-mcp-config`, and `--no-session-persistence`. The child therefore loads none of these hooks, and the notification hooks do not fire for it. Events are logged without content to `~/.cache/acbrain/agent.log`.
 
