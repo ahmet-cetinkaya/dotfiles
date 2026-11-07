@@ -3,9 +3,10 @@
   inputs,
   ...
 }: let
+  zenPackages = inputs.zen-browser.packages.${pkgs.stdenv.hostPlatform.system};
   zen = pkgs.symlinkJoin {
     name = "zen-browser";
-    paths = [inputs.zen-browser.packages.${pkgs.stdenv.hostPlatform.system}.default];
+    paths = [zenPackages.default];
     nativeBuildInputs = [pkgs.makeWrapper];
     postBuild = ''
       wrapProgram "$out/bin/zen" \
@@ -26,8 +27,6 @@ in {
   environment.systemPackages = with pkgs; [
     # Browsers
     zen
-    brave
-    firefox
     chromium
   ];
 

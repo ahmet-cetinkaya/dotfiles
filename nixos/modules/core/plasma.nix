@@ -18,7 +18,15 @@
 
   environment.plasma6.excludePackages = with pkgs.kdePackages; [
     konsole
+    kate # ships KWrite too; it is a symlink-style frontend of Kate now
+    elisa
+    okular # replaced by pdfcraft-bin (productivity.nix)
   ];
+
+  # plasma6 defaults this to true (services/desktop-managers/plasma6.nix),
+  # pulling kmail/kontact/merkuro/akonadi as direct systemPackages — the
+  # excludePackages list cannot remove them because they enter elsewhere.
+  programs.kde-pim.enable = false;
 
   environment.systemPackages = with pkgs; [
     kde-rounded-corners
@@ -66,6 +74,8 @@
           ${kwriteconfig6} --file "$HOME/.config/kwinrc" --group Wayland --key EnableEarlyOutput false
           ${kwriteconfig6} --file "$HOME/.config/kxkbrc" --group Layout --key LayoutList us,tr
           ${kwriteconfig6} --file "$HOME/.config/kxkbrc" --group Layout --key Use --type bool true
+          # Baloo's content extractor reached 6 GB on source trees and was OOM-killed.
+          ${kwriteconfig6} --file "$HOME/.config/baloofilerc" --group General --key "exclude folders" "$HOME/Code/,$HOME/Android/"
         '';
     })
   ];
